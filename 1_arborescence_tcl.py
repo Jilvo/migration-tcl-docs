@@ -381,6 +381,7 @@ def compare_list_arbo_csv_bi():
                     "GL",
                     "HF",
                     "HL",
+                    "MA",
                     "SE",
                     "SF",
                     "SM",

@@ -40,6 +40,13 @@ Succès : 9408
 Échecs : 474
 Soit 95%
 
+## Tram 1 Claude Bernard -> Saint André :
+Temps : 2 secondes
+Succès : 175
+Échecs : 0
+Soit 100%
+
+
 # Optimisation
 ## Station Bellecour avec en parrallèle une extraction des prêt
 ### Création abro + analyse : 
