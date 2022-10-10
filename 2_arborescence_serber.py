@@ -13,7 +13,7 @@ from timeit import default_timer as timer
 start = timer()
 
 # DIRNAME = f"""H:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
-DIRNAME = f"""Y:\{str(500000)}"""
+DIRNAME = f"""G:\{str(500000)}"""
 # DIRNAME = f"""H:\Tcl\Prêt Plans"""
 list_arbo = []
 
@@ -66,20 +66,10 @@ def find_ref_fournisseur():
     keys = chemin d'un fichier
     values = liste des sous dossiers,nom de fichier affiné
     """
-    # df = pd.read_csv("output_datas/arborescence_tcl.csv")
-    # df = pd.read_csv("output_datas/arborescence_tcl_bellecour.csv")
-    # df = pd.read_csv(
-    #     "output_datas/arborescence_tcl_pret.csv",
-    #     error_bad_lines=False,
-    #     encoding="utf-8-sig",
-    # )
-    # df = pd.read_csv(
-    #     "output_datas/arborescence_tcl_bellecour_opti.csv",
-    #     error_bad_lines=False,
-    #     encoding="utf-8-sig",
-    # )
+
     df = pd.read_csv(
         "output_datas/arborescence_serber_0.csv",
+        sep=";",
         error_bad_lines=False,
         encoding="utf-8-sig",
     )
@@ -90,10 +80,6 @@ def find_ref_fournisseur():
         list_split = split_arbo(row["0"])
         dict_arbo[row["0"]] = list_split
     for keys, index_element in dict_arbo.items():
-        # print("****")
-        # print("index_element", index_element)
-        # if ".see" in index_element[-1]:
-        #     print("on rentre dedans")
         for item in index_element:
             # print("item", item)
             # for parse in LIST_PARSE_WORD:
@@ -136,20 +122,6 @@ def find_ref_fournisseur():
             del index_element[1]
         if re.match("(^\D{6}$)", index_element[0]):
             del index_element[0]
-    #     print("liste finale", index_element)
-    # print(dict_arbo)
-    # df_success = pd.DataFrame(
-    #     {
-    #         "Chemin du fichier": list_path,
-    #         "lists": list_list,
-    #     },
-    # )
-    # df_success.to_csv(
-    #     "output_datas/travail liste pret.csv",
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
     return dict_arbo
 
 
@@ -165,14 +137,6 @@ def compare_list_arbo_csv_bi():
         encoding="unicode_escape",
         delimiter=";",
     )
-    # df = pd.read_csv(
-    #     "input_datas/Extraction Pret.csv",
-    #     encoding="unicode_escape",
-    #     delimiter=";",
-    # )
-    # print(df_p)
-    # print(df_p["Référence fournisseur"])
-    # print(df_p["Référence fiche"])
     list_success_path = []
     list_success_list = []
     list_success_values = []
@@ -215,6 +179,15 @@ def compare_list_arbo_csv_bi():
                     ref_fourn_no_space = ref_fourn.replace(" ", "")
 
                     if value_split in ref_fourn_no_space:
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        break
+                if len(value) > 12 and re.match("(\w{6,})", value):
+                    value_cut = re.findall("(\w{6,})", value)
+                    value_cut = value_cut[0]
+                    if value_cut.replace(" ", "") in ref_fourn.replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
@@ -298,7 +271,7 @@ def compare_list_arbo_csv_bi():
 #     if "station" in i:
 #         print("trouve")
 #     print(i)
-create_arbo()
+# create_arbo()
 compare_list_arbo_csv_bi()
 
 end = timer()

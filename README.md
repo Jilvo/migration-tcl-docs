@@ -75,7 +75,7 @@ Soit : 70%
 ## 50000
 ### Création nouveau script :
 Temps : 1267 secondes
-Succès : 239
-Échecs : 219
-Soit : 48% 
+Succès : 299
+Échecs : 160
+Soit : 65% 
 
