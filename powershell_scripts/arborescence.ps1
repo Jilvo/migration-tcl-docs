@@ -1,0 +1,1 @@
+Export-CSV –Path ‘chemin’ –Encoding default –Delimiter ‘ ;’ –NoTypeInformation
