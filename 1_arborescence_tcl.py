@@ -79,6 +79,7 @@ def find_ref_fournisseur():
         sep=";",
         error_bad_lines=False,
         encoding="utf-8-sig",
+        # encoding = "cp1252"
     )
     dict_arbo = {}
     for index, row in df.iterrows():
@@ -223,6 +224,7 @@ def compare_list_arbo_csv_bi():
                     or value[:2] == "AF"
                     or value[:2] == "AK"
                     or value[:2] == "AL"
+                    or value[:2] == "AN"
                     or value[:2] == "AO"
                     or value[:2] == "AS"
                     or value[:2] == "AV"
@@ -231,6 +233,7 @@ def compare_list_arbo_csv_bi():
                     or value[:2] == "BG"
                     or value[:2] == "BH"
                     or value[:2] == "BO"
+                    or value[:2] == "BS"
                     or value[:2] == "BV"
                     or value[:2] == "BW"
                     or value[:2] == "CC"
@@ -252,8 +255,10 @@ def compare_list_arbo_csv_bi():
                     or value[:2] == "EV"
                     or value[:2] == "FH"
                     or value[:2] == "FI"
+                    or value[:2] == "FY"
                     or value[:2] == "FP"
                     or value[:2] == "FT"
+                    or value[:2] == "HA"
                     or value[:2] == "HL"
                     or value[:2] == "IS"
                 ):

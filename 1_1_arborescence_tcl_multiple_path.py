@@ -20,15 +20,10 @@ start = timer()
 #     f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations\Massena""",
 # ]
 dirname = [
-    f"""F:\Tcl\{str(501)} - Tramway T1 - stations\Thiers Lafayette""",
-    f"""F:\Tcl\{str(501)} - Tramway T1 - stations\Collège Bellecombe""",
-    f"""F:\Tcl\{str(501)} - Tramway T1 - stations\Le Tonkin""",
-    f"""F:\Tcl\{str(501)} - Tramway T1 - stations\Condorcet""",
-    # f"""F:\Tcl\{str(501)} - Tramway T1 - stations\Universite Lyon I + s. station""",
-    f"""F:\Tcl\{str(501)} - Tramway T1 - stations\La Doua Gaston Berger + Local Sig""",
-    f"""F:\Tcl\{str(501)} - Tramway T1 - stations\Insa Einstein + s.st Einstein""",
-    f"""F:\Tcl\{str(501)} - Tramway T1 - stations\Croix - Luizet""",
-    f"""F:\Tcl\{str(501)} - Tramway T1 - stations\IUT Feyssine + s.st Feyssine""",
+    # f"""F:\Tcl\{str(501)} - Tramway T1 - stations\Musée des Confluences""",
+    # f"""F:\Tcl\{str(501)} - Tramway T1 - stations\Halle Tony Garnier""",
+    # f"""F:\Tcl\{str(501)} - Tramway T1 - stations\ENS Lyon""",
+    f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations\Hotel de Ville A et C""",
 ]
 
 # DIRNAME = f"""H:\Tcl\Prêt Plans"""
@@ -58,7 +53,7 @@ def create_arbo():
     #     encoding="utf-8-sig",
     # )
     df.to_csv(
-        "output_datas/arborescence_tcl_t1_lafayette_feyssine.csv",
+        "output_datas/arborescence_hotel_de_ville.csv",
         sep="\t",
         index=False,
         encoding="utf-8-sig",
@@ -93,15 +88,15 @@ def find_ref_fournisseur():
     #     encoding="utf-8-sig",
     # )
     df = pd.read_csv(
-        "output_datas/arborescence_tcl_t1_lafayette_feyssine.csv",
+        "output_datas/listes des succes ligne A Cordeliers Massena.csv",
         sep=";",
         error_bad_lines=False,
         encoding="utf-8-sig",
     )
     dict_arbo = {}
     for index, row in df.iterrows():
-        list_split = split_arbo(row["0"])
-        dict_arbo[row["0"]] = list_split
+        list_split = split_arbo(row["Chemin du fichier"])
+        dict_arbo[row["Chemin du fichier"]] = list_split
     for index_element in dict_arbo.values():
         for item in index_element:
             # for parse in LIST_PARSE_WORD:
@@ -171,7 +166,7 @@ def compare_list_arbo_csv_bi():
     Input : input_datas/*.csv"""
     dict_arbo = find_ref_fournisseur()
     df = pd.read_csv(
-        "input_datas/Plans T1-Thiers Lafayette à IUT Feyssine.csv",
+        "input_datas/Plans HDV A ou C.csv",
         encoding="unicode_escape",
         delimiter=";",
     )
@@ -245,6 +240,7 @@ def compare_list_arbo_csv_bi():
                         or value[:2] == "AF"
                         or value[:2] == "AK"
                         or value[:2] == "AL"
+                        or value[:2] == "AN"
                         or value[:2] == "AO"
                         or value[:2] == "AS"
                         or value[:2] == "AV"
@@ -253,6 +249,7 @@ def compare_list_arbo_csv_bi():
                         or value[:2] == "BG"
                         or value[:2] == "BH"
                         or value[:2] == "BO"
+                        or value[:2] == "BS"
                         or value[:2] == "BV"
                         or value[:2] == "BW"
                         or value[:2] == "CC"
@@ -274,8 +271,10 @@ def compare_list_arbo_csv_bi():
                         or value[:2] == "EV"
                         or value[:2] == "FH"
                         or value[:2] == "FI"
+                        or value[:2] == "FY"
                         or value[:2] == "FP"
                         or value[:2] == "FT"
+                        or value[:2] == "HA"
                         or value[:2] == "HL"
                         or value[:2] == "IS"
                     ):
@@ -606,38 +605,21 @@ def compare_list_arbo_csv_bi():
     )
     print(df_success.shape)
 
-    # df_success.to_csv(
-    #     "output_datas/listes des succes bellecour.csv",
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
-    # df_failed.to_csv(
-    #     "output_datas/listes des echecs bellecour.csv",
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
     df_success.to_csv(
-        "output_datas/listes des succes ligne T1 Thierry Lafayette IUT Feyssine.csv",
+        "output_datas/listes des succes ligne A Rattrapage Hotel de ville.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",
     )
     df_failed.to_csv(
-        "output_datas/listes des echecs ligne T1 Thierry Lafayette IUT Feyssine.csv",
+        "output_datas/listes des echecs ligne A Rattrapage Hotel de ville.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",
     )
 
 
-# parse_file = open("input_datas\parse_filter.txt", "r")
-# for i in parse_file:
-#     if "station" in i:
-#         print("trouve")
-#     print(i)
-create_arbo()
+# create_arbo()
 compare_list_arbo_csv_bi()
 
 end = timer()

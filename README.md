@@ -75,7 +75,14 @@ Soit : 70%
 ## 50000
 ### Création nouveau script :
 Temps : 1267 secondes
-Succès : 299
-Échecs : 160
-Soit : 65% 
+Succès : 380
+Échecs : 78
+Soit : 83% 
 
+
+# SEMALY
+### Analyse matching PDF et TIF:
+Temps : 614 secondes
+Succès : 6205
+Échecs : 5386
+Soit : 53% 
