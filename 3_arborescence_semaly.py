@@ -9,8 +9,8 @@ start = timer()
 
 DIRNAME = f"""Z:\PDF"""
 
-# with open("output_datas/arborescence_hotel_de_ville.csv") as f:
-#     print(f)
+with open("input_datas/20220410 Bellecour A & D Provisoires.xls") as f:
+    print(f)
 
 
 def create_arbo():
@@ -79,7 +79,7 @@ def create_arbo():
     # )
 
 
-create_arbo()
+# create_arbo()
 
 end = timer()
 print(end - start)

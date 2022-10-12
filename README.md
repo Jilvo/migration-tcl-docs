@@ -86,3 +86,26 @@ Temps : 614 secondes
 Succès : 6205
 Échecs : 5386
 Soit : 53% 
+
+
+
+# Script tri fichier ExtractionTCLDoc Complete
+## Croix paquet :
+Temps 32 secondes
+Succès : 737
+Échecs : 1
+Soit : 99% 
+
+## Ligne C :
+Temps : 940 secondes
+Succès : 8818
+Échecs : 179
+Soit : 98% 
+
+## Ligne T1 :
+Temps : 3716  secondes
+Succès : 6870
+Échecs : 539
+Soit : 90% 
+
+

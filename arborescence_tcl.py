@@ -12,8 +12,8 @@ from timeit import default_timer as timer
 
 start = timer()
 
-# DIRNAME = f"""H:\Tcl\{str(105)} à {str(122)} - Métro A - stations\Bellecour"""
-DIRNAME = f"""F:\Tcl\{str(200)} - Métro C - communs"""
+DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
+# DIRNAME = f"""F:\Tcl\{str(200)} - Métro C - communs"""
 # DIRNAME = f"""H:\Tcl\Prêt Plans"""
 list_arbo = []
 
@@ -21,7 +21,7 @@ with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
     LIST_PARSE_WORD = f.read().splitlines()
 
 
-def create_arbo():
+def create_arbo(DIRNAME, name_file_arbo):
     """On crée l'arborescence"""
     for path, subdirs, files in os.walk(DIRNAME):
         for name in files:
@@ -40,7 +40,7 @@ def create_arbo():
     #     encoding="utf-8-sig",
     # )
     df.to_csv(
-        "output_datas/arborescence_tcl_ligne_c_commun.csv",
+        name_file_arbo,
         sep="\t",
         index=False,
         encoding="utf-8-sig",
@@ -60,7 +60,7 @@ def split_arbo(
     return path.split("\\")
 
 
-def find_ref_fournisseur():
+def find_ref_fournisseur(name_file_arbo):
     """
     Création d'une d'un dict des réfs fournisseurs
     keys = chemin d'un fichier
@@ -75,7 +75,7 @@ def find_ref_fournisseur():
     #     encoding="utf-8-sig",
     # )
     df = pd.read_csv(
-        "output_datas/arborescence_tcl_ligne_c_commun.csv",
+        name_file_arbo,
         sep=";",
         error_bad_lines=False,
         encoding="utf-8-sig",
@@ -146,15 +146,18 @@ def find_ref_fournisseur():
     return dict_arbo
 
 
-def compare_list_arbo_csv_bi():
+def compare_list_arbo_csv_bi(
+    name_file_arbo, df_extraction, name_file_success, name_file_failed
+):
     """On itère les lists afin de trouver la référence fournisseur
     Input : input_datas/*.csv"""
-    dict_arbo = find_ref_fournisseur()
-    df = pd.read_csv(
-        "input_datas/Plans_Communs C.csv",
-        encoding="unicode_escape",
-        delimiter=";",
-    )
+    dict_arbo = find_ref_fournisseur(name_file_arbo)
+    df = df_extraction
+    # df = pd.read_csv(
+    #     "input_datas/20221010_ExtratTCLDoc complete.csv",
+    #     encoding="unicode_escape",
+    #     delimiter=";",
+    # )
     # df = pd.read_csv(
     #     "input_datas/Extraction Pret.csv",
     #     encoding="unicode_escape",
@@ -173,6 +176,9 @@ def compare_list_arbo_csv_bi():
         print(keys)
         flag = False
         for value in values:
+            # for ref_fourn, ref_fiche in zip(
+            #     df["Référence fournisseur"], df["Référence fiche"]
+            # ):
             for ref_fourn, ref_fiche in zip(
                 df["Référence fournisseur"], df["Référence fiche"]
             ):
@@ -588,26 +594,26 @@ def compare_list_arbo_csv_bi():
     #     encoding="utf-8-sig",
     # )
     df_success.to_csv(
-        "output_datas/listes des succes ligne C commun.csv",
+        name_file_success,
         sep=";",
         index=False,
         encoding="utf-8-sig",
     )
     df_failed.to_csv(
-        "output_datas/listes des echecs ligne C commun.csv",
+        name_file_failed,
         sep=";",
         index=False,
         encoding="utf-8-sig",
     )
 
 
-# parse_file = open("input_datas\parse_filter.txt", "r")
-# for i in parse_file:
-#     if "station" in i:
-#         print("trouve")
-#     print(i)
-create_arbo()
-compare_list_arbo_csv_bi()
+# # parse_file = open("input_datas\parse_filter.txt", "r")
+# # for i in parse_file:
+# #     if "station" in i:
+# #         print("trouve")
+# #     print(i)
+# # create_arbo()
+# compare_list_arbo_csv_bi()
 
 end = timer()
 print(end - start)
