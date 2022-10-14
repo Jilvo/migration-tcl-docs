@@ -1,5 +1,5 @@
 """
-Ce Script crée l'arborescence d'un chemin et la retourne sous format CSV
+Ce Script crée l'arborescence du serveur SERBER et la retourne sous format CSV
 Input : None
 Output : output_datas/arborescence_tcl.csv
 """

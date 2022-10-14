@@ -17,7 +17,7 @@ list_arbo = []
 
 def create_arbo():
     """On crée l'arborescence"""
-    for path, subdirs, files in os.walk(DIRNAME_SERBER, name_file_arbo):
+    for path, subdirs, files in os.walk(DIRNAME_SERBER):
         for name in files:
             try:
                 print(os.path.join(path, name))
@@ -28,7 +28,7 @@ def create_arbo():
         list_arbo,
     )
     df.to_csv(
-        name_file_arbo,
+        "output_datas\arborescence_semaly_tif.csv",
         sep="\t",
         index=False,
         encoding="utf-8-sig",

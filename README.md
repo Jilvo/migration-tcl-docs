@@ -1,3 +1,7 @@
+# How to run files :
+## Configuration PC:
+## Lancement des fichiers :
+
 # Statistics
 ## Métro Croix Paquet:
 ### Comparaison basique:
@@ -120,26 +124,30 @@ Succès : 99311
 Échecs : 12002
 Soit : 89% 
 
-## SERBER 500000:
+## SERBER 100000:
 Temps : 1614 secondes
-Succès : 9307
-Échecs : 0
+Succès : 1705
+Échecs : 2681
 Soit : 100%
 
 ## SERBER 500000:
 Temps : 145 secondes
-Succès : 858
-Échecs : 0
-Soit : 100%
+Succès : 401
+Échecs : 95
+Soit : 80 %
 
-## SERBER Complet:
+<!-- ## SERBER Complet:
 Temps : 22334 secondes
 Succès : 14316
 Échecs : 16078
-Soit : 44%
+Soit : 44% -->
 
 ## SEMALY TIF:
 Temps : 35513 secondes
 Soit : 100%
 
-
+## MR TRAM
+Temps : 3 secondes
+Succès : 
+Échecs : 819
+Soit : %

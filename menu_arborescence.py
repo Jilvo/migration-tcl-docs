@@ -181,10 +181,10 @@ class MainExtraction:
         list_a_traiter = None
         df_extraction = None
         # ---------- MODIFIER ICI ----------
-        # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
-        DIRNAME = (
-            f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
-        )
+        DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
+        # DIRNAME = (
+        #     f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
+        # )
         # DIRNAME_SERBER = f"""G:\{str(500000)}"""
 
         if input_user != 8:
@@ -197,11 +197,11 @@ class MainExtraction:
                     "output_datas/listes des echecs Prêt Complet test.csv"
                 )
             else:
-                name_file_arbo = "output_datas/arborescence_tcl.csv"
+                name_file_arbo = "output_datas/arborescence_ligne_a.csv"
                 name_file_success = (
-                    "output_datas/listes des succes TCL Complet test.csv"
+                    "output_datas/listes des succes TCL LIGNE A test.csv"
                 )
-                name_file_failed = "output_datas/listes des echecs TCL Complet test.csv"
+                name_file_failed = "output_datas/listes des echecs TCL LIGNE A test.csv"
 
             list_a_traiter = self.create_list_station(input_user)
             df_extraction = self.extraction_tcl_doc_file(list_a_traiter)
@@ -210,7 +210,7 @@ class MainExtraction:
                 name_file_arbo, df_extraction, name_file_success, name_file_failed
             )
         else:
-            DIRNAME_SERBER = f"""G:\{str(100000)}"""
+            DIRNAME_SERBER = f"""G:\{str(1)}00000"""
             name_file_arbo = "output_datas/arborescence_serber 100000.csv"
             name_file_success = "output_datas/listes des succes serber 100000.csv"
             name_file_failed = "output_datas/listes des echecs serber 100000.csv"
