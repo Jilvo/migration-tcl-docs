@@ -82,10 +82,10 @@ Soit : 83%
 
 # SEMALY
 ### Analyse matching PDF et TIF:
-Temps : 614 secondes
-Succès : 6205
-Échecs : 5386
-Soit : 53% 
+Temps : 670 secondes
+Succès : 11585
+Échecs : 3
+Soit : 99% 
 
 
 
@@ -107,5 +107,39 @@ Temps : 3716  secondes
 Succès : 6870
 Échecs : 539
 Soit : 90% 
+
+## Prêt 2017 : 
+Temps : 3725  secondes
+Succès : 19203
+Échecs : 1693
+Soit : 92% 
+
+## Prêt Complet : 
+Temps : 3725  secondes
+Succès : 99311
+Échecs : 12002
+Soit : 89% 
+
+## SERBER 500000:
+Temps : 1614 secondes
+Succès : 9307
+Échecs : 0
+Soit : 100%
+
+## SERBER 500000:
+Temps : 145 secondes
+Succès : 858
+Échecs : 0
+Soit : 100%
+
+## SERBER Complet:
+Temps : 22334 secondes
+Succès : 14316
+Échecs : 16078
+Soit : 44%
+
+## SEMALY TIF:
+Temps : 35513 secondes
+Soit : 100%
 
 

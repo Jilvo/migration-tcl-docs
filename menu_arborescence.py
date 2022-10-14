@@ -142,39 +142,84 @@ class MainExtraction:
         )
         return df_extraction
 
+    def extraction_serber(self):
+        df = pd.read_csv(
+            "input_datas/20221010_ExtratTCLDoc complete modifié sans AR.csv",
+            encoding="cp1252",
+            sep=";",
+        )
+        list_extaction = []
+
+        for index, row in df.iterrows():
+            try:
+                if "SERBER" in row["ARMOIRE"]:
+                    list_extaction.append(
+                        [
+                            row["NUMERO_REF_FOURN"],
+                            row["REFFIC"],
+                            row["ARMOIRE"],
+                        ],
+                    )
+            except Exception as e:
+                pass
+        # print(list_extaction)
+        df_extraction = pd.DataFrame(
+            list_extaction,
+            columns=["Référence fournisseur", "Référence fiche", "Armoire"],
+        )
+        print("df_extraction dans la fonction", df_extraction)
+        return df_extraction
+
     def main(self):
         start = timer()
 
         print("********************************")
         print(
-            f"""1 - Choisir d'extraire une ligne complete \n2 - Choisir une station\n4 - Ne rien extraire\n9 - Réaliser une extraction des prêts """
+            f"""1 - Choisir d'extraire une ligne complete \n2 - Choisir une station\n4 - Ne rien extraire\n8 - Réaliser une extraction de SERBER\n9 - Réaliser une extraction des prêts """
         )
         input_user = int(input("Que voulez vous extraire ? (1 ou 2) :  "))
         list_a_traiter = None
         df_extraction = None
-        if input_user >= 1 and input_user <= 4:
-            list_a_traiter = self.create_list_station(input_user)
-            df_extraction = self.extraction_tcl_doc_file(list_a_traiter)
-        elif input_user == 9:
-            df_extraction = self.extraction_pret_tcl()
-        print("La listes des arrêt à traiter est ", list_a_traiter)
-
-        # DIRNAME = (
-        #     f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
-        # )
-
         # ---------- MODIFIER ICI ----------
         # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
-        DIRNAME = f"""F:\Tcl\Prêt Plans\Prêt 2017"""
-        name_file_arbo = "output_datas/arborescence_tcl_pret_2017.csv"
-        name_file_success = "output_datas/listes des succes Prêt 2017 test.csv"
-        name_file_failed = "output_datas/listes des echecs Prêt 2017 test.csv"
-        # ---------- MODIFIER ICI ----------
-        arborescence_tcl.create_arbo(DIRNAME, name_file_arbo)
-
-        arborescence_tcl.compare_list_arbo_csv_bi(
-            name_file_arbo, df_extraction, name_file_success, name_file_failed
+        DIRNAME = (
+            f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
         )
+        # DIRNAME_SERBER = f"""G:\{str(500000)}"""
+
+        if input_user != 8:
+            if input_user == 9:
+                name_file_arbo = "output_datas/arborescence_tcl_pret.csv"
+                name_file_success = (
+                    "output_datas/listes des succes Prêt Complet test.csv"
+                )
+                name_file_failed = (
+                    "output_datas/listes des echecs Prêt Complet test.csv"
+                )
+            else:
+                name_file_arbo = "output_datas/arborescence_tcl.csv"
+                name_file_success = (
+                    "output_datas/listes des succes TCL Complet test.csv"
+                )
+                name_file_failed = "output_datas/listes des echecs TCL Complet test.csv"
+
+            list_a_traiter = self.create_list_station(input_user)
+            df_extraction = self.extraction_tcl_doc_file(list_a_traiter)
+            arborescence_tcl.create_arbo(DIRNAME, name_file_arbo)
+            arborescence_tcl.compare_list_arbo_csv_bi(
+                name_file_arbo, df_extraction, name_file_success, name_file_failed
+            )
+        else:
+            DIRNAME_SERBER = f"""G:\{str(100000)}"""
+            name_file_arbo = "output_datas/arborescence_serber 100000.csv"
+            name_file_success = "output_datas/listes des succes serber 100000.csv"
+            name_file_failed = "output_datas/listes des echecs serber 100000.csv"
+            df_extraction = self.extraction_serber()
+            arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
+            arborescence_serber.compare_list_arbo_csv_bi(
+                name_file_arbo, df_extraction, name_file_success, name_file_failed
+            )
+        print("La listes des arrêt à traiter est ", list_a_traiter)
         print("Nombre de références dans l'extraction", df_extraction)
         print(DIRNAME)
         end = timer()
