@@ -174,27 +174,27 @@ class MainExtraction:
         list_extaction = []
 
         for index, row in df.iterrows():
-            # try:
-            #     if "SERBER" in row["ARMOIRE"]:
-            #         list_extaction.append(
-            #             [
-            #                 row["NUMERO_REF_FOURN"],
-            #                 row["REFFIC"],
-            #                 row["ARMOIRE"],
-            #             ],
-            #         )
-            # except Exception as e:
-            #     pass
             try:
-                list_extaction.append(
-                    [
-                        row["NUMERO_REF_FOURN"],
-                        row["REFFIC"],
-                        row["ARMOIRE"],
-                    ],
-                )
+                if "SERBER" in row["ARMOIRE"]:
+                    list_extaction.append(
+                        [
+                            row["NUMERO_REF_FOURN"],
+                            row["REFFIC"],
+                            row["ARMOIRE"],
+                        ],
+                    )
             except Exception as e:
                 pass
+            # try:
+            #     list_extaction.append(
+            #         [
+            #             row["NUMERO_REF_FOURN"],
+            #             row["REFFIC"],
+            #             row["ARMOIRE"],
+            #         ],
+            #     )
+            # except Exception as e:
+            #     pass
         # print(list_extaction)
         df_extraction = pd.DataFrame(
             list_extaction,
@@ -214,8 +214,8 @@ class MainExtraction:
         list_a_traiter = None
         df_extraction = None
         # ---------- MODIFIER ICI ----------
-        # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
-        DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T1 - stations"""
+        DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
+        # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T1 - stations"""
         # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations"""
         # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
 
@@ -236,11 +236,13 @@ class MainExtraction:
                     "output_datas/listes des echecs Prêt Complet test.csv"
                 )
             else:
-                name_file_arbo = "output_datas/arborescence_ligne_t1.csv"
+                name_file_arbo = "output_datas/arborescence_ligne_a.csv"
                 name_file_success = (
-                    "output_datas/listes des succes TCL Ligne T1 test.csv"
+                    "output_datas/listes des succes TCL Ligne Metro A test.csv"
                 )
-                name_file_failed = "output_datas/listes des echecs TCL T1 test.csv"
+                name_file_failed = (
+                    "output_datas/listes des echecs TCL Ligne Metro A test.csv"
+                )
 
             list_a_traiter = self.create_list_station(input_user)
             df_extraction = self.extraction_tcl_doc_file(list_a_traiter)
@@ -249,17 +251,16 @@ class MainExtraction:
                 name_file_arbo, df_extraction, name_file_success, name_file_failed
             )
         else:
-            DIRNAME_SERBER = f"""G:\{str(5)}00000"""
-            # name_file_arbo = "output_datas/arborescence_serber 500000.csv"
-            name_file_arbo = "output_datas/listes des echecs serber 500000.csv"
-            name_file_success = (
-                "output_datas/listes des succes serber 500000 reprise.csv"
-            )
+            # DIRNAME_SERBER = f"""G:\{str(5)}00000"""
+            DIRNAME_SERBER = f"""G:"""
+            name_file_arbo = "output_datas/arborescence_serber_complet_test.csv"
+            # name_file_arbo = "output_datas/listes des echecs serber 500000.csv"
+            name_file_success = "output_datas/listes des succes serber complet test.csv"
             name_file_failed = (
-                "output_datas/listes des echecs serber 500000 reprise.csv"
+                "output_datas/listes des echecs succes serber complet test.csv"
             )
             df_extraction = self.extraction_serber()
-            # arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
+            arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
             arborescence_serber.compare_list_arbo_csv_bi(
                 name_file_arbo, df_extraction, name_file_success, name_file_failed
             )
