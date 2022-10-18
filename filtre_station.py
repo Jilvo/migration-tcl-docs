@@ -27,7 +27,16 @@ def get_station():
         encoding="cp1252",
         sep=";",
     )
-    print(df["Site"].values.tolist())
+
+    dict_stations = {}
+    for site, doss in zip(
+        df["Site"].values.tolist(), df["Nom Dossier"].values.tolist()
+    ):
+        dict_stations[doss] = site
+    # print(df["Site"].values.tolist())
+    # print(df["Nom Dossier"].values.tolist())
+    print(dict_stations)
+    for i
     for i in list_files:
         list_path = split_arbo(i)
         print("LISTE", list_path)
@@ -39,7 +48,7 @@ def get_station():
         if "stations" in list_path[2]:
             print("la station est ", list_path[3])
             if list_path[3].upper() in df["Site"].values.tolist():
-                print(df["Site"].values.tolist())
+                pass
             print("c'est une station", list_path)
 
 

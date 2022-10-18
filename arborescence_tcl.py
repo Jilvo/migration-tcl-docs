@@ -96,8 +96,12 @@ def find_ref_fournisseur(name_file_arbo):
         encoding="cp1252",
         sep=";",
     )
-    df_stations = df_stations["Site"].values.tolist()
-
+    # df_stations = df_stations["Site"].values.tolist()
+    dict_stations = {}
+    for site, doss in zip(
+        df_stations["Site"].values.tolist(), df_stations["Nom Dossier"].values.tolist()
+    ):
+        dict_stations[doss] = site
     dict_arbo = {}
     for index, row in df.iterrows():
         list_split_station = []
@@ -107,10 +111,48 @@ def find_ref_fournisseur(name_file_arbo):
         # print("list_split[3].upper()", list_split[3].upper())
         # print("df_stations", df_stations)
         if "communs" in list_split[2]:
-            pass
-        elif "interstations" in list_split[2]:
+            if "2 - Métro ABC" in list_split[2]:
+                list_split_station.append("COMMUNS  A , B & C")
+            elif "3 - Métro AB" in list_split[2]:
+                list_split_station.append("COMMUNS  A & B")
+            elif "0 - Métro A" in list_split[2]:
+                list_split_station.append("COMMUNS  A")
+            elif "2 - Métro B" in list_split[2]:
+                list_split_station.append("COMMUNS B")
+            elif "0 - Métro C" in list_split[2]:
+                list_split_station.append("COMMUNS C")
+            elif "0 - Métro D" in list_split[2]:
+                list_split_station.append("COMMUNS  D")
+            elif "1 - Métro -" in list_split[2]:
+                list_split_station.append("COMMUNS METRO")
+            elif "2 - Funiculaires" in list_split[2]:
+                list_split_station.append("COMMUNS FUN")
+            elif "0 - Tramway T1" in list_split[2]:
+                list_split_station.append("COMMUNS TRAMWAY T1")
+            elif "0 - Tramway T2" in list_split[2]:
+                list_split_station.append("COMMUNS TRAMWAY T2")
+            elif "0 - Tramway T3" in list_split[2]:
+                list_split_station.append("COMMUNS TRAMWAY T3")
+            elif "0 - Tramway T4" in list_split[2]:
+                list_split_station.append("COMMUNS TRAMWAY T4")
+            elif "0 - Tramway T5" in list_split[2]:
+                list_split_station.append("COMMUNS TRAMWAY T5")
+            elif "0 - Tramway T6" in list_split[2]:
+                list_split_station.append("COMMUNS TRAMWAY T6")
+            elif "0 - Tramway - communs" in list_split[2]:
+                list_split_station.append("COMMUNS TRAMWAY")
             continue
-        if "stations" in list_split[2]:
+        elif "interstations" in list_split[2]:
+            if "101 - Métro A - interstations" in list_split[2]:
+                list_split_station.append("INTERSTATIONS  A")
+            elif "103 - Métro B - interstations" in list_split[2]:
+                list_split_station.append("INTERSTATIONS  B")
+            elif "201 - Métro C - interstations" in list_split[2]:
+                list_split_station.append("INTERSTATIONS  C")
+            elif "301 - Métro D - interstations" in list_split[2]:
+                list_split_station.append("INTERSTATIONS  D")
+            continue
+        elif "stations" in list_split[2]:
             # print(
             #     f"re.sub(" ", " ", list_split[3].upper())",
             #     re.sub("[-|_|(| ]", "", list_split[3].upper()),
@@ -120,21 +162,19 @@ def find_ref_fournisseur(name_file_arbo):
             #     [re.sub("[-|_|(| ]", "", i.upper()) for i in df_stations],
             # )
             list_station_for_filter = []
-            for stat in df_stations:
-
-                if re.sub("[-|_|(| ]", "", list_split[3].upper()) in re.sub(
-                    "[-|_|(| ]", "", stat.upper()
-                ):
+            for key, value in dict_stations.items():
+                if list_split[3] == key:
+                    # for stat in df_stations:
+                    #     if re.sub("[-|_|(| ]", "", list_split[3].upper()) in re.sub(
+                    #         "[-|_|(| ]", "", stat.upper()
+                    #     ):
                     # if list_split[3].upper() in df_stations:
 
                     # str_station = str_station.replace("-", " ")
-                    # str_station = str_station.replace(" et ", " & ")
-                    # str_station = str_station.replace(" é ", " e ")
-                    # str_station = str_station.replace(" è ", " e ")
-                    # str_station = str_station.replace(" è ", " e ")
-
-                    list_station_for_filter.append(stat)
-                list_split_station.append(list_station_for_filter)
+                    # print("value", value)
+                    list_station_for_filter.append(value)
+                    continue
+            list_split_station.append(list_station_for_filter)
         print("list_split_station", list_split_station)
         dict_arbo[row["0"]] = list_split_station
         # dict_arbo[row["0"]] = list_split_station
@@ -230,16 +270,17 @@ def compare_list_arbo_csv_bi(
     list_failed_list = []
     print("df", df)
     for keys, values in dict_arbo.items():
-        print(keys)
+        # print(keys)
         flag = False
-        print("values", values)
+        # print("values", values)
         for value in values[0]:
-            print(values[1])
+            # print(values[1])
             # for ref_fourn, ref_fiche in zip(
             #     df["Référence fournisseur"], df["Référence fiche"]
             # ):
             for ref_fourn, ref_fiche in zip(
-                df[values[1]]["Référence fournisseur"], df[values[1]]["Référence fiche"]
+                df[values[1][0]]["Référence fournisseur"],
+                df[values[1][0]]["Référence fiche"],
             ):
                 # print(ref_fourn)
                 ### Recherche basique

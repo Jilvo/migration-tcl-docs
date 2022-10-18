@@ -31,7 +31,9 @@ def create_arbo(DIRNAME, name_file_arbo):
             except Exception as e:
                 print(e.args)
     df = pd.DataFrame(
-        list_arbo,
+        {
+            "Chemin du fichier": list_arbo,
+        },
     )
     # df.to_csv(
     #     "output_datas/arborescence_tcl_pret.csv",
@@ -88,8 +90,8 @@ def find_ref_fournisseur(name_file_arbo):
     list_path = []
     list_list = []
     for index, row in df.iterrows():
-        list_split = split_arbo(row["0"])
-        dict_arbo[row["0"]] = list_split
+        list_split = split_arbo(row["Chemin du fichier"])
+        dict_arbo[row["Chemin du fichier"]] = list_split
     for keys, index_element in dict_arbo.items():
         # print("****")
         # print("index_element", index_element)
@@ -129,10 +131,10 @@ def find_ref_fournisseur(name_file_arbo):
         # for parse in LIST_PARSE_WORD:
 
         # del index_element[0]
-        # try:
-        #     if re.match("^(.+)\.", index_element[-1]):
-        #         last_item_to_parse = re.findall("^(.+)\.", index_element[-1])
-        #         index_element[-1] = last_item_to_parse[0]
+        try:
+            if re.match("^(.+)\.", index_element[-1]):
+                last_item_to_parse = re.findall("^(.+)\.", index_element[-1])
+                index_element[-1] = last_item_to_parse[0]
         #     if len(index_element[0]) == 3:
         #         del index_element[0]
         #     if re.match("(.*\D{8,}.*)", index_element[0]):
@@ -141,8 +143,8 @@ def find_ref_fournisseur(name_file_arbo):
         #         del index_element[1]
         #     if re.match("(^\D{6}$)", index_element[0]):
         #         del index_element[0]
-        # except Exception as e:
-        #     pass
+        except Exception as e:
+            pass
     #     print("liste finale", index_element)
     # print(dict_arbo)
     # df_success = pd.DataFrame(
@@ -207,84 +209,92 @@ def compare_list_arbo_csv_bi(
                     conc_values = values[1] + values[2]
                     if re.match("(\D{2}\d{3}\d+)", values[2]):
                         pass
-                    if re.match("(\D{2}\d{3})$", values[2]):
+                    elif re.match("(\D{2}\d{3})$", values[2]):
                         conc_values = (
                             values[1] + values[2][:-3] + "000" + values[2][-3:]
                         )
-                    if re.match("(\D{2}\d{3}\D+)", values[2]):
+                    elif re.match("(\D{2}\d{3}\D+)", values[2]):
                         a = re.findall("(\D{2}\d{3})", values[2])
                         a = a[0]
                         conc_values = values[1] + a[:-3] + "000" + a[-3:]
+                    elif values[1][-3:] == values[2][:3]:
+                        conc_values = values[1] + values[2][3:]
                     if conc_values.replace(" ", "") in ref_fourn.replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         break
-
-                if len(value) == 9 and re.match("\D{2}\d{6}\D{1}", value):
-                    value_formate = value[:2] + " " + value[2 - len(value) :]
-                    # ref_fourn_no_space = ref_fourn.replace(" ", "")
-
-                    if value_formate in ref_fourn:
+                    conc_values_exact = values[1] + values[2]
+                    if conc_values_exact.replace(" ", "") in ref_fourn.replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         break
+                # if len(value) == 9 and re.match("\D{2}\d{6}\D{1}", value):
+                #     value_formate = value[:2] + " " + value[2 - len(value) :]
+                #     # ref_fourn_no_space = ref_fourn.replace(" ", "")
 
-                if len(value) >= 14 and re.match("\d{6}.\d{2}\D{2}\d{3}", value):
-                    value_split = re.findall("\d{6}.\d{2}\D{2}\d{3}", value)
-                    value_split = value_split[0]
-                    value_split = (
-                        value_split[: len(value_split) - 3] + "000" + value_split[-3:]
-                    )
-                    ref_fourn_no_space = ref_fourn.replace(" ", "")
+                #     if value_formate in ref_fourn:
+                #         flag = True
+                #         list_success_path.append(keys)
+                #         list_success_list.append(ref_fiche)
+                #         list_success_values.append(values)
+                #         break
 
-                    if value_split in ref_fourn_no_space:
-                        flag = True
-                        list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
-                        list_success_values.append(values)
-                        break
-                if len(value) > 12 and re.match("(\w{6,})", value):
-                    value_cut = re.findall("(\w{6,})", value)
-                    value_cut = value_cut[0]
-                    if value_cut.replace(" ", "") in ref_fourn.replace(" ", ""):
-                        flag = True
-                        list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
-                        list_success_values.append(values)
-                        break
-                if re.match("(\\uf022\w*)", value):
-                    value_cut = re.sub("(\\uf022\w*)", "", value)
-                    value_cut = value_cut[:-3] + "000" + value_cut[-3:]
-                    if value_cut.replace(" ", "") in ref_fourn.replace(" ", ""):
-                        flag = True
-                        list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
-                        list_success_values.append(values)
-                        break
+                # if len(value) >= 14 and re.match("\d{6}.\d{2}\D{2}\d{3}", value):
+                #     value_split = re.findall("\d{6}.\d{2}\D{2}\d{3}", value)
+                #     value_split = value_split[0]
+                #     value_split = (
+                #         value_split[: len(value_split) - 3] + "000" + value_split[-3:]
+                #     )
+                #     ref_fourn_no_space = ref_fourn.replace(" ", "")
 
-                if re.match("^(\D{1}\d{2}\D{2}\d{3})$", value):
-                    value_cut = re.findall("^(\D{1}\d{2}\D{2}\d{3})$", value)
-                    value_cut = value_cut[0]
-                    value_cut = value_cut[:-3] + "000" + value_cut[-3:]
-                    if value_cut.replace(" ", "") in ref_fourn.replace(" ", ""):
-                        flag = True
-                        list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
-                        list_success_values.append(values)
-                        break
-                values_add_zero = value[3:] + "000" + value[-3:]
-                values_add_zero = values_add_zero.upper()
+                #     if value_split in ref_fourn_no_space:
+                #         flag = True
+                #         list_success_path.append(keys)
+                #         list_success_list.append(ref_fiche)
+                #         list_success_values.append(values)
+                #         break
+                # if len(value) > 12 and re.match("(\w{6,})", value):
+                #     value_cut = re.findall("(\w{6,})", value)
+                #     value_cut = value_cut[0]
+                #     if value_cut.replace(" ", "") in ref_fourn.replace(" ", ""):
+                #         flag = True
+                #         list_success_path.append(keys)
+                #         list_success_list.append(ref_fiche)
+                #         list_success_values.append(values)
+                #         break
+                # if re.match("(\\uf022\w*)", value):
+                #     value_cut = re.sub("(\\uf022\w*)", "", value)
+                #     value_cut = value_cut[:-3] + "000" + value_cut[-3:]
+                #     if value_cut.replace(" ", "") in ref_fourn.replace(" ", ""):
+                #         flag = True
+                #         list_success_path.append(keys)
+                #         list_success_list.append(ref_fiche)
+                #         list_success_values.append(values)
+                #         break
 
-                if values_add_zero.replace(" ", "") in ref_fourn.replace(" ", ""):
-                    flag = True
-                    list_success_path.append(keys)
-                    list_success_list.append(ref_fiche)
-                    list_success_values.append(values)
-                    break
+                # if re.match("^(\D{1}\d{2}\D{2}\d{3})$", value):
+                #     value_cut = re.findall("^(\D{1}\d{2}\D{2}\d{3})$", value)
+                #     value_cut = value_cut[0]
+                #     value_cut = value_cut[:-3] + "000" + value_cut[-3:]
+                #     if value_cut.replace(" ", "") in ref_fourn.replace(" ", ""):
+                #         flag = True
+                #         list_success_path.append(keys)
+                #         list_success_list.append(ref_fiche)
+                #         list_success_values.append(values)
+                #         break
+                # values_add_zero = value[3:] + "000" + value[-3:]
+                # values_add_zero = values_add_zero.upper()
+
+                # if values_add_zero.replace(" ", "") in ref_fourn.replace(" ", ""):
+                #     flag = True
+                #     list_success_path.append(keys)
+                #     list_success_list.append(ref_fiche)
+                #     list_success_values.append(values)
+                #     break
 
                 # if len(values) == 2 and len(values[1]) > 3:
                 #     value_cut = None
@@ -325,30 +335,30 @@ def compare_list_arbo_csv_bi(
     )
     print(df_success.shape)
 
-    # df_success.to_csv(
-    #     name_file_success,
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
-    # df_failed.to_csv(
-    #     name_file_failed,
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
     df_success.to_csv(
-        "output_datas/listes des succes.csv",
+        name_file_success,
         sep=";",
         index=False,
         encoding="utf-8-sig",
     )
     df_failed.to_csv(
-        "output_datas/listes des echecs.csv",
+        name_file_failed,
         sep=";",
         index=False,
         encoding="utf-8-sig",
     )
+    # df_success.to_csv(
+    #     "output_datas/listes des succes.csv",
+    #     sep=";",
+    #     index=False,
+    #     encoding="utf-8-sig",
+    # )
+    # df_failed.to_csv(
+    #     "output_datas/listes des echecs.csv",
+    #     sep=";",
+    #     index=False,
+    #     encoding="utf-8-sig",
+    # )
 
 
 # parse_file = open("input_datas\parse_filter.txt", "r")

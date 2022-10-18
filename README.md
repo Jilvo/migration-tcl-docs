@@ -2,7 +2,7 @@
 ## Configuration PC:
 ## Lancement des fichiers :
 
-# Statistics
+# Première Itération : 
 ## Métro Croix Paquet:
 ### Comparaison basique:
 Temps : 3 secondes
@@ -51,7 +51,7 @@ Succès : 175
 Soit 100%
 
 
-# Optimisation
+# Seconde itération en filtrant ligne par ligne Optimisation
 ## Station Bellecour avec en parrallèle une extraction des prêt
 ### Création abro + analyse : 
 Temps : 21 sec 
@@ -131,9 +131,9 @@ Succès : 1705
 
 ## SERBER 500000:
 Temps : 145 secondes
-Succès : 401
-Échecs : 95
-Soit : 80 %
+Succès : 380
+Échecs : 78
+Soit : 83%
 
 ## SERBER Complet:
 Temps : 62000 secondes
@@ -149,3 +149,12 @@ Temps : 3 secondes
 Succès : 
 Échecs : 819
 Soit : %
+
+
+# Troisième itération en filtrant station par station:
+
+## Ligne C :
+Temps : 940 secondes
+Succès : 8757
+Échecs : 179
+Soit : 98% 
