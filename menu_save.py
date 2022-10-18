@@ -4,7 +4,6 @@ import pandas as pd
 import re
 from timeit import default_timer as timer
 import arborescence_tcl
-import arborescence_serber
 
 
 class MainExtraction:
@@ -102,44 +101,22 @@ class MainExtraction:
         # print(df["LIBSITE"].head())
 
         list_extaction = []
-        dict_df = {}
-        # NOUVELLE METHODE PAR LIGNE VIA DICT DE DATAFAME
-        for station in list_a_traiter:
-            list_station = []
-            print("station actuelle : ", station)
-            for index, row in df.iterrows():
-                if row["LIBSITE"] in station:
-                    list_station.append(
-                        [
-                            row["NUMERO_REF_FOURN"],
-                            row["REFFIC"],
-                            row["LIBSITE"],
-                        ],
-                    )
-            df_extraction = pd.DataFrame(
-                list_station,
-                columns=["Référence fournisseur", "Référence fiche", "Station"],
-            )
-            dict_df[station] = df_extraction
 
-        # ANCIENNE METHODE FILTRE PAR LIGNE
-        # for index, row in df.iterrows():
-        #     if row["LIBSITE"] in list_a_traiter:
-        #         list_extaction.append(
-        #             [
-        #                 row["NUMERO_REF_FOURN"],
-        #                 row["REFFIC"],
-        #                 row["LIBSITE"],
-        #             ],
-        #         )
-        # print(list_extaction)
-        # df_extraction = pd.DataFrame(
-        #     list_extaction,
-        #     columns=["Référence fournisseur", "Référence fiche", "Station"],
-        # )
-        # return df_extraction
-        print(dict_df)
-        return dict_df
+        for index, row in df.iterrows():
+            if row["LIBSITE"] in list_a_traiter:
+                list_extaction.append(
+                    [
+                        row["NUMERO_REF_FOURN"],
+                        row["REFFIC"],
+                        row["LIBSITE"],
+                    ],
+                )
+        print(list_extaction)
+        df_extraction = pd.DataFrame(
+            list_extaction,
+            columns=["Référence fournisseur", "Référence fiche", "Station"],
+        )
+        return df_extraction
 
     def extraction_pret_tcl(self):
         df = pd.read_csv(
@@ -204,15 +181,10 @@ class MainExtraction:
         list_a_traiter = None
         df_extraction = None
         # ---------- MODIFIER ICI ----------
-        # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
-        DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations"""
-        # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
-
-        # DIRNAME = [
-        #     f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet""",
-        #     f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Rousse""",
-        # ]
-
+        DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
+        # DIRNAME = (
+        #     f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
+        # )
         # DIRNAME_SERBER = f"""G:\{str(500000)}"""
 
         if input_user != 8:
@@ -225,11 +197,11 @@ class MainExtraction:
                     "output_datas/listes des echecs Prêt Complet test.csv"
                 )
             else:
-                name_file_arbo = "output_datas/arborescence_ligne_c.csv"
+                name_file_arbo = "output_datas/arborescence_ligne_a.csv"
                 name_file_success = (
-                    "output_datas/listes des succes TCL Ligne C test.csv"
+                    "output_datas/listes des succes TCL LIGNE A test.csv"
                 )
-                name_file_failed = "output_datas/listes des echecs TCL Ligne C test.csv"
+                name_file_failed = "output_datas/listes des echecs TCL LIGNE A test.csv"
 
             list_a_traiter = self.create_list_station(input_user)
             df_extraction = self.extraction_tcl_doc_file(list_a_traiter)
@@ -238,10 +210,10 @@ class MainExtraction:
                 name_file_arbo, df_extraction, name_file_success, name_file_failed
             )
         else:
-            DIRNAME_SERBER = f"""G:\{str(5)}00000"""
-            name_file_arbo = "output_datas/arborescence_serber 500000.csv"
-            name_file_success = "output_datas/listes des succes serber 500000.csv"
-            name_file_failed = "output_datas/listes des echecs serber 500000.csv"
+            DIRNAME_SERBER = f"""G:\{str(1)}00000"""
+            name_file_arbo = "output_datas/arborescence_serber 100000.csv"
+            name_file_success = "output_datas/listes des succes serber 100000.csv"
+            name_file_failed = "output_datas/listes des echecs serber 100000.csv"
             df_extraction = self.extraction_serber()
             arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
             arborescence_serber.compare_list_arbo_csv_bi(

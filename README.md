@@ -128,7 +128,6 @@ Soit : 89%
 Temps : 1614 secondes
 Succès : 1705
 Échecs : 2681
-Soit : 100%
 
 ## SERBER 500000:
 Temps : 145 secondes
@@ -136,11 +135,10 @@ Succès : 401
 Échecs : 95
 Soit : 80 %
 
-<!-- ## SERBER Complet:
-Temps : 22334 secondes
-Succès : 14316
-Échecs : 16078
-Soit : 44% -->
+## SERBER Complet:
+Temps : 62000 secondes
+Succès : 16000
+Échecs : 14000
 
 ## SEMALY TIF:
 Temps : 35513 secondes

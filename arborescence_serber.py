@@ -108,15 +108,12 @@ def find_ref_fournisseur(name_file_arbo):
                 # print("2 chiffres et 8 lettres ou plus, on delete", item)
                 index_element.remove(item)
                 continue
-            if re.match("(ind.)", item):
-                index_element.remove(item)
-                continue
-            if re.match("(PAGE)", item):
-                index_element.remove(item)
-                continue
-            if not re.match("(\d+)", item):
-                index_element.remove(item)
-                continue
+            # if re.match("(ind.)", item):
+            #     index_element.remove(item)
+            #     continue
+            # if re.match("(PAGE)", item):
+            #     index_element.remove(item)
+            #     continue
             for parse in LIST_PARSE_WORD:
                 try:
                     if parse in item:
@@ -132,20 +129,20 @@ def find_ref_fournisseur(name_file_arbo):
         # for parse in LIST_PARSE_WORD:
 
         # del index_element[0]
-        try:
-            if re.match("^(.+)\.", index_element[-1]):
-                last_item_to_parse = re.findall("^(.+)\.", index_element[-1])
-                index_element[-1] = last_item_to_parse[0]
-            if len(index_element[0]) == 3:
-                del index_element[0]
-            if re.match("(.*\D{8,}.*)", index_element[0]):
-                del index_element[0]
-            if re.match("(^\D{6}\d{1}\D{2}$)", index_element[1]):
-                del index_element[1]
-            if re.match("(^\D{6}$)", index_element[0]):
-                del index_element[0]
-        except Exception as e:
-            pass
+        # try:
+        #     if re.match("^(.+)\.", index_element[-1]):
+        #         last_item_to_parse = re.findall("^(.+)\.", index_element[-1])
+        #         index_element[-1] = last_item_to_parse[0]
+        #     if len(index_element[0]) == 3:
+        #         del index_element[0]
+        #     if re.match("(.*\D{8,}.*)", index_element[0]):
+        #         del index_element[0]
+        #     if re.match("(^\D{6}\d{1}\D{2}$)", index_element[1]):
+        #         del index_element[1]
+        #     if re.match("(^\D{6}$)", index_element[0]):
+        #         del index_element[0]
+        # except Exception as e:
+        #     pass
     #     print("liste finale", index_element)
     # print(dict_arbo)
     # df_success = pd.DataFrame(
@@ -205,6 +202,25 @@ def compare_list_arbo_csv_bi(
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
                     break
+                ## CONCATENER 2 item de la list
+                if len(values) >= 3:
+                    conc_values = values[1] + values[2]
+                    if re.match("(\D{2}\d{3}\d+)", values[2]):
+                        pass
+                    if re.match("(\D{2}\d{3})$", values[2]):
+                        conc_values = (
+                            values[1] + values[2][:-3] + "000" + values[2][-3:]
+                        )
+                    if re.match("(\D{2}\d{3}\D+)", values[2]):
+                        a = re.findall("(\D{2}\d{3})", values[2])
+                        a = a[0]
+                        conc_values = values[1] + a[:-3] + "000" + a[-3:]
+                    if conc_values.replace(" ", "") in ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        break
 
                 if len(value) == 9 and re.match("\D{2}\d{6}\D{1}", value):
                     value_formate = value[:2] + " " + value[2 - len(value) :]
@@ -270,68 +286,23 @@ def compare_list_arbo_csv_bi(
                     list_success_values.append(values)
                     break
 
-                if len(values) == 2 and len(values[1]) > 3:
-                    value_cut = None
-                    if values[0][:-3] == values[1][:3]:
-                        value_cut = values[0][:-3] + values[1]
-                    else:
-                        value_cut = values[0] + values[1]
-                    value_cut.upper()
-                    value_cut_add_zero = value_cut[3:] + "000" + value_cut[-3:]
-                    if value_cut.replace(" ", "") in ref_fourn.replace(" ", ""):
-                        flag = True
-                        list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
-                        list_success_values.append(values)
-                        break
-                    elif value_cut_add_zero.replace(" ", "") in ref_fourn.replace(
-                        " ", ""
-                    ):
-                        flag = True
-                        list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
-                        list_success_values.append(values)
-                        break
-
-                # if re.match("(.+)\\", value):
-                #     if re.match("(.+)(\d{4,})\\", value):
-                #         value_cut = re.findall("(.+)\\", value)
-                #         value_cut = value_cut[0] + value_cut[1]
-                #     elif re.match("(.+)(\d{3})\\", value):
-                #         value_cut = re.findall("(.+)\\", value)
-                #         value_cut = value_cut[0] + "000" + value_cut[1]
+                # if len(values) == 2 and len(values[1]) > 3:
+                #     value_cut = None
+                #     if values[0][:-3] == values[1][:3]:
+                #         value_cut = values[0][:-3] + values[1]
+                #     else:
+                #         value_cut = values[0] + values[1]
+                #     value_cut.upper()
+                #     value_cut_add_zero = value_cut[3:] + "000" + value_cut[-3:]
                 #     if value_cut.replace(" ", "") in ref_fourn.replace(" ", ""):
                 #         flag = True
                 #         list_success_path.append(keys)
                 #         list_success_list.append(ref_fiche)
                 #         list_success_values.append(values)
                 #         break
-
-                # if re.sub("[^A-Za-z0-9]+", "", value) in re.sub(
-                #     "[^A-Za-z0-9]+", "", ref_fourn
-                # ):
-                #     flag = True
-                #     list_success_path.append(keys)
-                #     list_success_list.append(ref_fiche)
-                #     list_success_values.append(values)
-                #     break
-                # if re.match("(.*\d{6}\D{1}\d{2}\D{2}\d{3})", value):
-                #     ref_fourn_no_spaces = ref_fourn.replace(" ", "")
-                #     value_regex = re.findall("(.*\d{6}\D{1}\d{2}\D{2}\d{3})", value)
-                #     value_regex = value_regex[0]
-                #     value_update = (
-                #         value_regex[: len(value_regex) - 3] + "000" + value_regex[-3:]
-                #     )
-                #     if value in ref_fourn_no_spaces:
-                #         flag = True
-                #         list_success_path.append(keys)
-                #         list_success_list.append(ref_fiche)
-                #         list_success_values.append(values)
-                #         break
-                # if re.match("(.*\D{2}\d{3}$)", value):
-                #     ref_fourn_no_spaces = ref_fourn.replace(" ", "")
-                #     value_update = value[: len(value) - 3] + "000" + value[-3:]
-                #     if value in ref_fourn_no_spaces:
+                #     elif value_cut_add_zero.replace(" ", "") in ref_fourn.replace(
+                #         " ", ""
+                #     ):
                 #         flag = True
                 #         list_success_path.append(keys)
                 #         list_success_list.append(ref_fiche)
@@ -354,30 +325,30 @@ def compare_list_arbo_csv_bi(
     )
     print(df_success.shape)
 
-    df_success.to_csv(
-        name_file_success,
-        sep=";",
-        index=False,
-        encoding="utf-8-sig",
-    )
-    df_failed.to_csv(
-        name_file_failed,
-        sep=";",
-        index=False,
-        encoding="utf-8-sig",
-    )
     # df_success.to_csv(
-    #     "output_datas/listes des succes.csv",
+    #     name_file_success,
     #     sep=";",
     #     index=False,
     #     encoding="utf-8-sig",
     # )
     # df_failed.to_csv(
-    #     "output_datas/listes des echecs.csv",
+    #     name_file_failed,
     #     sep=";",
     #     index=False,
     #     encoding="utf-8-sig",
     # )
+    df_success.to_csv(
+        "output_datas/listes des succes.csv",
+        sep=";",
+        index=False,
+        encoding="utf-8-sig",
+    )
+    df_failed.to_csv(
+        "output_datas/listes des echecs.csv",
+        sep=";",
+        index=False,
+        encoding="utf-8-sig",
+    )
 
 
 # parse_file = open("input_datas\parse_filter.txt", "r")

@@ -23,13 +23,23 @@ with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
 
 def create_arbo(DIRNAME, name_file_arbo):
     """On crée l'arborescence"""
-    for path, subdirs, files in os.walk(DIRNAME):
-        for name in files:
-            try:
-                print(os.path.join(path, name))
-                list_arbo.append(os.path.join(path, name))
-            except Exception as e:
-                print(e.args)
+    if type(DIRNAME) == str:
+        for path, subdirs, files in os.walk(DIRNAME):
+            for name in files:
+                try:
+                    print(os.path.join(path, name))
+                    list_arbo.append(os.path.join(path, name))
+                except Exception as e:
+                    print(e.args)
+    else:
+        for dir in DIRNAME:
+            for path, subdirs, files in os.walk(dir):
+                for name in files:
+                    try:
+                        print(os.path.join(path, name))
+                        list_arbo.append(os.path.join(path, name))
+                    except Exception as e:
+                        print(e.args)
     df = pd.DataFrame(
         list_arbo,
     )
@@ -81,11 +91,57 @@ def find_ref_fournisseur(name_file_arbo):
         encoding="utf-8-sig",
         # encoding = "cp1252"
     )
+    df_stations = pd.read_csv(
+        "input_datas/listes_arrets_lignes.csv",
+        encoding="cp1252",
+        sep=";",
+    )
+    df_stations = df_stations["Site"].values.tolist()
+
     dict_arbo = {}
     for index, row in df.iterrows():
+        list_split_station = []
         list_split = split_arbo(row["0"])
-        dict_arbo[row["0"]] = list_split
-    for index_element in dict_arbo.values():
+        list_split_station.append(list_split)
+        # print("list_split[2]", list_split[2])
+        # print("list_split[3].upper()", list_split[3].upper())
+        # print("df_stations", df_stations)
+        if "communs" in list_split[2]:
+            pass
+        elif "interstations" in list_split[2]:
+            continue
+        if "stations" in list_split[2]:
+            # print(
+            #     f"re.sub(" ", " ", list_split[3].upper())",
+            #     re.sub("[-|_|(| ]", "", list_split[3].upper()),
+            # )
+            # print(
+            #     "re sub comprehsion list",
+            #     [re.sub("[-|_|(| ]", "", i.upper()) for i in df_stations],
+            # )
+            list_station_for_filter = []
+            for stat in df_stations:
+
+                if re.sub("[-|_|(| ]", "", list_split[3].upper()) in re.sub(
+                    "[-|_|(| ]", "", stat.upper()
+                ):
+                    # if list_split[3].upper() in df_stations:
+
+                    # str_station = str_station.replace("-", " ")
+                    # str_station = str_station.replace(" et ", " & ")
+                    # str_station = str_station.replace(" é ", " e ")
+                    # str_station = str_station.replace(" è ", " e ")
+                    # str_station = str_station.replace(" è ", " e ")
+
+                    list_station_for_filter.append(stat)
+                list_split_station.append(list_station_for_filter)
+        print("list_split_station", list_split_station)
+        dict_arbo[row["0"]] = list_split_station
+        # dict_arbo[row["0"]] = list_split_station
+    print("dict_arbo.values()", dict_arbo.values())
+    for i in dict_arbo.values():
+        index_element = i[0]
+        print("index_element", index_element)
         for item in index_element:
             # for parse in LIST_PARSE_WORD:
             # if parse in item or item == parse:
@@ -143,6 +199,7 @@ def find_ref_fournisseur(name_file_arbo):
         # if re.match("^(.+)\.", index_element[-1]):
         #     last_item_to_parse = re.findall("^(.+)\.", index_element[-1])
         # index_element[-1] = last_item_to_parse[0]
+    print(dict_arbo)
     return dict_arbo
 
 
@@ -171,16 +228,18 @@ def compare_list_arbo_csv_bi(
     list_success_values = []
     list_failed_path = []
     list_failed_list = []
-
+    print("df", df)
     for keys, values in dict_arbo.items():
         print(keys)
         flag = False
-        for value in values:
+        print("values", values)
+        for value in values[0]:
+            print(values[1])
             # for ref_fourn, ref_fiche in zip(
             #     df["Référence fournisseur"], df["Référence fiche"]
             # ):
             for ref_fourn, ref_fiche in zip(
-                df["Référence fournisseur"], df["Référence fiche"]
+                df[values[1]]["Référence fournisseur"], df[values[1]]["Référence fiche"]
             ):
                 # print(ref_fourn)
                 ### Recherche basique
