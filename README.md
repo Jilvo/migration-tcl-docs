@@ -159,6 +159,18 @@ Succès : 8757
 Échecs : 179
 Soit : 98% 
 
+## Ligne C Commun:
+Temps : 3128 secondes
+Succès : 20232
+Échecs : 179
+Soit : % 
+
+## Ligne C Interstations: :
+Temps : 940 secondes
+Succès : 8757
+Échecs : 179
+Soit : % 
+
 ## Ligne A : 
 Temps : 1939 secondes
 Succès : 73284
@@ -169,7 +181,7 @@ Soit : 95%
 Temps : 1794 secondes
 Succès : 37175
 Échecs : 4649
-Soit : 95% 
+Soit : % 
 
 ## SERBER Complet: 
 Temps : 43200 secondes

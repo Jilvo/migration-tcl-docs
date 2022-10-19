@@ -237,7 +237,7 @@ class MainExtraction:
                     "output_datas/listes des echecs Prêt Complet test.csv"
                 )
             else:
-                name_file_arbo = "output_datas/arborescence_ligne_c_commun.csv"
+                name_file_arbo = "output_datas/arborescence_ligne_c.csv"
                 name_file_success = (
                     "output_datas/listes des succes TCL Ligne Metro C commun test.csv"
                 )

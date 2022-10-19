@@ -36,7 +36,6 @@ def get_station():
     # print(df["Site"].values.tolist())
     # print(df["Nom Dossier"].values.tolist())
     print(dict_stations)
-    for i
     for i in list_files:
         list_path = split_arbo(i)
         print("LISTE", list_path)

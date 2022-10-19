@@ -273,7 +273,7 @@ def compare_list_arbo_csv_bi(
     list_failed_list = []
     print("df", df)
     for keys, values in dict_arbo.items():
-        # print(keys)
+        print(keys)
         flag = False
         # print("values", values)
         for value in values[0]:
@@ -293,17 +293,17 @@ def compare_list_arbo_csv_bi(
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
                     break
-                try:
-                    if re.sub("[^A-Za-z0-9]+", "", value) in re.sub(
-                        "[^A-Za-z0-9]+", "", ref_fourn
-                    ):
-                        flag = True
-                        list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
-                        list_success_values.append(values)
-                        break
-                except Exception as e:
-                    print(e.args)
+                # try:
+                if re.sub("[^A-Za-z0-9]+", "", value) in re.sub(
+                    "[^A-Za-z0-9]+", "", ref_fourn
+                ):
+                    flag = True
+                    list_success_path.append(keys)
+                    list_success_list.append(ref_fiche)
+                    list_success_values.append(values)
+                    break
+                # except Exception as e:
+                #     print(e.args)
                 # ### Recherche recherche en formatant au format alphanumérique
                 # ref_fourn_alphanumeric = "".join(
                 #     e for e in ref_fourn if ref_fourn.isalnum()
@@ -419,7 +419,8 @@ def compare_list_arbo_csv_bi(
                                 value_last_eight = value_last_eight.replace(
                                     value_last_eight[1], value_last_eight[1] + "-"
                                 )
-                    try:
+                    # try:
+                    if len(value) >= 8:
                         if value[-7] == value[-6]:
                             value_last_eight = value[-8:]
                             value_remove_double = (
@@ -454,8 +455,9 @@ def compare_list_arbo_csv_bi(
                                 value_last_eight = value_last_eight.replace(
                                     value_last_eight[1], value_last_eight[1] + " "
                                 )
-                    except Exception as e:
-                        print(e.args)
+                    # except Exception as e:
+                    #     print("ici")
+                    #     print(e.args)
                     if value_last_eight in ref_fourn:
                         flag = True
                         list_success_path.append(keys)
