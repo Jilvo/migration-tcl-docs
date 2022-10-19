@@ -158,3 +158,21 @@ Temps : 940 secondes
 Succès : 8757
 Échecs : 179
 Soit : 98% 
+
+## Ligne A : 
+Temps : 1939 secondes
+Succès : 73284
+Échecs : 3681
+Soit : 95% 
+
+## Ligne B : 
+Temps : 1794 secondes
+Succès : 37175
+Échecs : 4649
+Soit : 95% 
+
+## SERBER Complet: 
+Temps : 43200 secondes
+Succès : 19802
+Échecs : 10425
+Soit : 65% 

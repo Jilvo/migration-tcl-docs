@@ -111,47 +111,50 @@ def find_ref_fournisseur(name_file_arbo):
         # print("list_split[3].upper()", list_split[3].upper())
         # print("df_stations", df_stations)
         if "communs" in list_split[2]:
+            list_station_for_filter = []
+            # print("list_split[2]", list_split[2])
             if "2 - Métro ABC" in list_split[2]:
-                list_split_station.append("COMMUNS  A , B & C")
+                list_station_for_filter.append("COMMUNS  A , B & C")
             elif "3 - Métro AB" in list_split[2]:
-                list_split_station.append("COMMUNS  A & B")
+                list_station_for_filter.append("COMMUNS  A & B")
             elif "0 - Métro A" in list_split[2]:
-                list_split_station.append("COMMUNS  A")
+                list_station_for_filter.append("COMMUNS  A")
             elif "2 - Métro B" in list_split[2]:
-                list_split_station.append("COMMUNS B")
+                list_station_for_filter.append("COMMUNS  B")
             elif "0 - Métro C" in list_split[2]:
-                list_split_station.append("COMMUNS C")
+                list_station_for_filter.append("COMMUNS  C")
             elif "0 - Métro D" in list_split[2]:
-                list_split_station.append("COMMUNS  D")
+                list_station_for_filter.append("COMMUNS  D")
             elif "1 - Métro -" in list_split[2]:
-                list_split_station.append("COMMUNS METRO")
+                list_station_for_filter.append("COMMUNS METRO")
             elif "2 - Funiculaires" in list_split[2]:
-                list_split_station.append("COMMUNS FUN")
+                list_station_for_filter.append("COMMUNS FUN")
             elif "0 - Tramway T1" in list_split[2]:
-                list_split_station.append("COMMUNS TRAMWAY T1")
+                list_station_for_filter.append("COMMUNS TRAMWAY T1")
             elif "0 - Tramway T2" in list_split[2]:
-                list_split_station.append("COMMUNS TRAMWAY T2")
+                list_station_for_filter.append("COMMUNS TRAMWAY T2")
             elif "0 - Tramway T3" in list_split[2]:
-                list_split_station.append("COMMUNS TRAMWAY T3")
+                list_station_for_filter.append("COMMUNS TRAMWAY T3")
             elif "0 - Tramway T4" in list_split[2]:
-                list_split_station.append("COMMUNS TRAMWAY T4")
+                list_station_for_filter.append("COMMUNS TRAMWAY T4")
             elif "0 - Tramway T5" in list_split[2]:
-                list_split_station.append("COMMUNS TRAMWAY T5")
+                list_station_for_filter.append("COMMUNS TRAMWAY T5")
             elif "0 - Tramway T6" in list_split[2]:
-                list_split_station.append("COMMUNS TRAMWAY T6")
+                list_station_for_filter.append("COMMUNS TRAMWAY T6")
             elif "0 - Tramway - communs" in list_split[2]:
-                list_split_station.append("COMMUNS TRAMWAY")
-            continue
+                list_station_for_filter.append("COMMUNS TRAMWAY")
+            list_split_station.append(list_station_for_filter)
         elif "interstations" in list_split[2]:
+            list_split_station = []
             if "101 - Métro A - interstations" in list_split[2]:
-                list_split_station.append("INTERSTATIONS  A")
+                list_station_for_filter.append("INTERSTATIONS  A")
             elif "103 - Métro B - interstations" in list_split[2]:
-                list_split_station.append("INTERSTATIONS  B")
+                list_station_for_filter.append("INTERSTATIONS  B")
             elif "201 - Métro C - interstations" in list_split[2]:
-                list_split_station.append("INTERSTATIONS  C")
+                list_station_for_filter.append("INTERSTATIONS  C")
             elif "301 - Métro D - interstations" in list_split[2]:
-                list_split_station.append("INTERSTATIONS  D")
-            continue
+                list_station_for_filter.append("INTERSTATIONS  D")
+            list_split_station.append(list_station_for_filter)
         elif "stations" in list_split[2]:
             # print(
             #     f"re.sub(" ", " ", list_split[3].upper())",
@@ -175,10 +178,10 @@ def find_ref_fournisseur(name_file_arbo):
                     list_station_for_filter.append(value)
                     continue
             list_split_station.append(list_station_for_filter)
-        print("list_split_station", list_split_station)
+        # print("list_split_station", list_split_station)
         dict_arbo[row["0"]] = list_split_station
         # dict_arbo[row["0"]] = list_split_station
-    print("dict_arbo.values()", dict_arbo.values())
+    # print("dict_arbo.values()", dict_arbo.values())
     for i in dict_arbo.values():
         index_element = i[0]
         print("index_element", index_element)
@@ -274,7 +277,7 @@ def compare_list_arbo_csv_bi(
         flag = False
         # print("values", values)
         for value in values[0]:
-            # print(values[1])
+            # print("values[1", values[1])
             # for ref_fourn, ref_fiche in zip(
             #     df["Référence fournisseur"], df["Référence fiche"]
             # ):
@@ -282,7 +285,7 @@ def compare_list_arbo_csv_bi(
                 df[values[1][0]]["Référence fournisseur"],
                 df[values[1][0]]["Référence fiche"],
             ):
-                # print(ref_fourn)
+                # print("ref_fourn", ref_fourn)
                 ### Recherche basique
                 if value == ref_fourn:
                     flag = True
