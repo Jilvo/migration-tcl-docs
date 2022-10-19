@@ -210,12 +210,13 @@ class MainExtraction:
         print(
             f"""1 - Choisir d'extraire une ligne complete \n2 - Choisir une station\n4 - Ne rien extraire\n8 - Réaliser une extraction de SERBER\n9 - Réaliser une extraction des prêts """
         )
-        input_user = int(input("Que voulez vous extraire ? (1 ou 2) :  "))
+        input_user = int(input("Que voulez vous extraire ? (1 ou 2 ou 8 ou 9) :  "))
         list_a_traiter = None
         df_extraction = None
         # ---------- MODIFIER ICI ----------
         # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
-        DIRNAME = f"""F:\Tcl\{str(0)}01 - Métro - communs"""
+        # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T3 - stations"""
+        DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T3 - stations"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T1 - stations"""
         # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations"""
         # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
@@ -237,12 +238,12 @@ class MainExtraction:
                     "output_datas/listes des echecs Prêt Complet test.csv"
                 )
             else:
-                name_file_arbo = "output_datas/arborescence_metro_communs.csv"
+                name_file_arbo = "output_datas/arborescence_tram_t3.csv"
                 name_file_success = (
-                    "output_datas/listes des succes TCL Métro - communs test.csv"
+                    "output_datas/listes des succes TCL Tramway T3 test.csv"
                 )
                 name_file_failed = (
-                    "output_datas/listes des echecs TCL Métro - communs test.csv"
+                    "output_datas/listes des echecs TCL Tramway T3 test.csv"
                 )
 
             list_a_traiter = self.create_list_station(input_user)
