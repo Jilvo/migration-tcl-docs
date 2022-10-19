@@ -215,7 +215,7 @@ class MainExtraction:
         df_extraction = None
         # ---------- MODIFIER ICI ----------
         # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
-        DIRNAME = f"""F:\Tcl\{str(200)} - Métro C - communs"""
+        DIRNAME = f"""F:\Tcl\{str(0)}01 - Métro - communs"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T1 - stations"""
         # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations"""
         # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
@@ -237,12 +237,12 @@ class MainExtraction:
                     "output_datas/listes des echecs Prêt Complet test.csv"
                 )
             else:
-                name_file_arbo = "output_datas/arborescence_ligne_c.csv"
+                name_file_arbo = "output_datas/arborescence_metro_communs.csv"
                 name_file_success = (
-                    "output_datas/listes des succes TCL Ligne Metro C commun test.csv"
+                    "output_datas/listes des succes TCL Métro - communs test.csv"
                 )
                 name_file_failed = (
-                    "output_datas/listes des echecs TCL Ligne Metro C commun test.csv"
+                    "output_datas/listes des echecs TCL Métro - communs test.csv"
                 )
 
             list_a_traiter = self.create_list_station(input_user)

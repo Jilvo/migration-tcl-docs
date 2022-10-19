@@ -5,7 +5,7 @@ import pandas as pd
 # dirname = f"""H:\Tcl"""
 # dirname = f"""\\Serber\Terrain\MAGGALY"""
 # dirname = f"""F:\Tcl\{str(501)} - Tramway T1 - stations"""
-dirname = f"""F:\Tcl\{str(200)} - Métro C - communs"""
+dirname = f"""F:\Tcl\{str(500)} - Tramway - communs"""
 # dirname = f"""H:\Tcl\{str(1002)} - Métro ABC - communs"""
 # dirname = f"""H:/Tcl/130 à 137 - Métro B - stations/Brotteaux"""
 print(dirname)

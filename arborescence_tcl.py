@@ -113,36 +113,39 @@ def find_ref_fournisseur(name_file_arbo):
         if "communs" in list_split[2]:
             list_station_for_filter = []
             # print("list_split[2]", list_split[2])
-            if "2 - Métro ABC" in list_split[2]:
+            if "2 - Métro ABC - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS  A , B & C")
             elif "3 - Métro AB" in list_split[2]:
                 list_station_for_filter.append("COMMUNS  A & B")
             elif "0 - Métro A" in list_split[2]:
                 list_station_for_filter.append("COMMUNS  A")
-            elif "2 - Métro B" in list_split[2]:
+            elif "102 - Métro B - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS  B")
-            elif "0 - Métro C" in list_split[2]:
+            elif "200 - Métro C - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS  C")
-            elif "0 - Métro D" in list_split[2]:
+            elif "300 - Métro D - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS  D")
             elif "1 - Métro -" in list_split[2]:
                 list_station_for_filter.append("COMMUNS METRO")
-            elif "2 - Funiculaires" in list_split[2]:
+            elif "302 - Funiculaires - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS FUN")
-            elif "0 - Tramway T1" in list_split[2]:
+            elif "500 - Tramway T1 - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS TRAMWAY T1")
-            elif "0 - Tramway T2" in list_split[2]:
+            elif "500 - Tramway T2 - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS TRAMWAY T2")
-            elif "0 - Tramway T3" in list_split[2]:
+            elif "500 - Tramway T3 - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS TRAMWAY T3")
-            elif "0 - Tramway T4" in list_split[2]:
+            elif "500 - Tramway T4 - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS TRAMWAY T4")
-            elif "0 - Tramway T5" in list_split[2]:
+            elif "500 - Tramway T5 - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS TRAMWAY T5")
-            elif "0 - Tramway T6" in list_split[2]:
+            elif "500 - Tramway T6 - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS TRAMWAY T6")
-            elif "0 - Tramway - communs" in list_split[2]:
+            elif "500 - Tramway - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS TRAMWAY")
+            elif "500 - Tramway Rhone Express - communs" in list_split[2]:
+                list_station_for_filter.append("RHONEXPRESS")
+
             list_split_station.append(list_station_for_filter)
         elif "interstations" in list_split[2]:
             list_split_station = []
@@ -155,6 +158,14 @@ def find_ref_fournisseur(name_file_arbo):
             elif "301 - Métro D - interstations" in list_split[2]:
                 list_station_for_filter.append("INTERSTATIONS  D")
             list_split_station.append(list_station_for_filter)
+        elif "Liaison BD" in list_split[2]:
+            list_split_station = []
+            if "303 - Liaison BD" in list_split[2]:
+                list_station_for_filter.append("LIAISON B/D")
+            list_split_station.append(list_station_for_filter)
+        elif "Surface" in list_split[2]:
+            list_split_station = []
+            pass
         elif "stations" in list_split[2]:
             # print(
             #     f"re.sub(" ", " ", list_split[3].upper())",

@@ -162,17 +162,17 @@ Soit : 98%
 ## Ligne C Commun:
 Temps : 3128 secondes
 Succès : 20232
-Échecs : 179
+Échecs : 280
 Soit : % 
 
 ## Ligne C Interstations: :
 Temps : 940 secondes
-Succès : 8757
-Échecs : 179
+Succès : 39
+Échecs : 5
 Soit : % 
 
 ## Ligne A : 
-Temps : 1939 secondes
+Temps : 8289 secondes
 Succès : 73284
 Échecs : 3681
 Soit : 95% 
@@ -181,10 +181,38 @@ Soit : 95%
 Temps : 1794 secondes
 Succès : 37175
 Échecs : 4649
-Soit : % 
+Soit : 89% 
 
-## SERBER Complet: 
+## SERBER Complet : 
 Temps : 43200 secondes
 Succès : 19802
 Échecs : 10425
 Soit : 65% 
+
+## Rhone Express Communs : 
+Temps : 21 secondes
+Succès : 388
+Échecs : 378
+Soit : 50% 
+
+## TRAM Communs : 
+Temps : 577 secondes
+Succès : 7638
+Échecs : 2398
+Soit : 76% 
+
+## Funiculaires Communs
+Temps : 577 secondes
+Succès : 961
+Échecs : 140
+Soit : 87% 
+
+## Métro ABC Communs
+Temps : 577 secondes
+Succès : 3070
+Échecs : 339
+Soit : 90% 
+
+# A faire:
+## Métro Communs
+## voir surface multi site ?
