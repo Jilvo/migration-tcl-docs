@@ -12,9 +12,7 @@ from timeit import default_timer as timer
 
 start = timer()
 
-# DIRNAME = f"""H:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
 DIRNAME = f"""G:\{str(500000)}"""
-# DIRNAME = f"""H:\Tcl\Prêt Plans"""
 list_arbo = []
 
 with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
@@ -47,12 +45,6 @@ def create_arbo(DIRNAME, name_file_arbo):
         index=False,
         encoding="utf-8-sig",
     )
-    # df.to_csv(
-    #     "output_datas/arborescence_tcl.csv",
-    #     sep="\t",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
 
 
 def split_arbo(
@@ -68,18 +60,6 @@ def find_ref_fournisseur(name_file_arbo):
     keys = chemin d'un fichier
     values = liste des sous dossiers,nom de fichier affiné
     """
-    # df = pd.read_csv("output_datas/arborescence_tcl.csv")
-    # df = pd.read_csv("output_datas/arborescence_tcl_bellecour.csv")
-    # df = pd.read_csv(
-    #     "output_datas/arborescence_tcl_pret.csv",
-    #     error_bad_lines=False,
-    #     encoding="utf-8-sig",
-    # )
-    # df = pd.read_csv(
-    #     "output_datas/arborescence_tcl_bellecour_opti.csv",
-    #     error_bad_lines=False,
-    #     encoding="utf-8-sig",
-    # )
     df = pd.read_csv(
         name_file_arbo,
         sep=";",
@@ -347,27 +327,7 @@ def compare_list_arbo_csv_bi(
         index=False,
         encoding="utf-8-sig",
     )
-    # df_success.to_csv(
-    #     "output_datas/listes des succes.csv",
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
-    # df_failed.to_csv(
-    #     "output_datas/listes des echecs.csv",
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
 
-
-# parse_file = open("input_datas\parse_filter.txt", "r")
-# for i in parse_file:
-#     if "station" in i:
-#         print("trouve")
-#     print(i)
-# create_arbo()
-# compare_list_arbo_csv_bi()
 
 end = timer()
 print(end - start)

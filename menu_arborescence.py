@@ -234,6 +234,43 @@ class MainExtraction:
         print("df_extraction dans la fonction", df_extraction)
         return df_extraction
 
+    def extraction_serber_reprise(self):
+        df = pd.read_csv(
+            "input_datas/Extraction Serber avec filtre seconde passe.csv",
+            encoding="cp1252",
+            sep=";",
+        )
+        list_extaction = []
+
+        for index, row in df.iterrows():
+            try:
+                list_extaction.append(
+                    [
+                        row["NUMERO_REF_FOURN"],
+                        row["REFFIC"],
+                        row["ARMOIRE"],
+                    ],
+                )
+            except Exception as e:
+                pass
+            # try:
+            #     list_extaction.append(
+            #         [
+            #             row["NUMERO_REF_FOURN"],
+            #             row["REFFIC"],
+            #             row["ARMOIRE"],
+            #         ],
+            #     )
+            # except Exception as e:
+            #     pass
+        # print(list_extaction)
+        df_extraction = pd.DataFrame(
+            list_extaction,
+            columns=["Référence fournisseur", "Référence fiche", "Armoire"],
+        )
+        print("df_extraction dans la fonction", df_extraction)
+        return df_extraction
+
     def main(
         self, DIRNAME, name_file_arbo, name_file_success, name_file_failed, input_user
     ):
@@ -321,6 +358,9 @@ class MainExtraction:
             name_file_failed = (
                 "output_datas/listes des echecs succes serber complet test.csv"
             )
+            name_file_failed_rattrapage = (
+                "output_datas/listes des echecs succes serber complet test.csv"
+            )
             df_extraction = self.extraction_serber()
             arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
             arborescence_serber.compare_list_arbo_csv_bi(
@@ -328,6 +368,16 @@ class MainExtraction:
             )
             print("La listes des arrêt à traiter est ", list_a_traiter)
             print("Nombre de références dans l'extraction", df_extraction)
+            print("PREMIER SCAN TERMINE")
+            print("PASSAGE A LA REPRISE DES ECHECS SUR LE FICHIER FILTRÉ")
+            df_extraction_rattrapage = self.extraction_serber_reprise()
+            arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
+            arborescence_serber.compare_list_arbo_csv_bi(
+                name_file_arbo,
+                df_extraction,
+                name_file_success,
+                name_file_failed_rattrapage,
+            )
             print("DIRNAME", DIRNAME_SERBER)
         end = timer()
         print(end - start)
