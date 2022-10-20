@@ -8,6 +8,7 @@ import arborescence_tcl
 import arborescence_tcl_pret
 import arborescence_tcl_reprise_echecs
 import arborescence_serber
+from pprint import pprint
 
 
 class MainExtraction:
@@ -22,7 +23,7 @@ class MainExtraction:
             encoding="cp1252",
             sep=";",
         )
-        print(df)
+        # print(df)
         list_ligne = []
         list_arret = []
         list_provisoire = []
@@ -32,9 +33,10 @@ class MainExtraction:
             list_arret.append(row["Site"])
         new_ligne_list = list(dict.fromkeys(list_ligne))
         while input_user != 4:
+            print("------------------------")
             if input_user == 1:
-                print(input_user)
-                print(new_ligne_list)
+                print("Vous avez choisi ", input_user)
+                pprint(new_ligne_list)
                 input_user_ligne = input("Quelle ligne voulez vous extraire :  ")
                 for value in new_ligne_list:
                     if input_user_ligne in value:
@@ -48,7 +50,7 @@ class MainExtraction:
 
             elif input_user == 2:
                 print(input_user)
-                print(list_arret)
+                pprint(list_arret)
                 # user_response = "O"
                 # while user_response == "O":
                 self.found_station = False
@@ -88,7 +90,7 @@ class MainExtraction:
                 break
             print("Liste actuelle : ", list_extraction)
             print(
-                f"""1 - Ajouter une ligne complete\n2 - Ajouter une station\n3 - Supprimer une station\n4 - Pour quitter"""
+                f"""1 - Ajouter une ligne complete\n2 - Ajouter une station\n3 - Supprimer une station\n4 - Pour lancer la recherche"""
             )
             input_user = int(input("Que voulez vous extraire ? (1 ou 2 ou 3) :  "))
 
@@ -244,11 +246,12 @@ class MainExtraction:
         df_extraction = None
         # ---------- MODIFIER ICI ----------
         # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
+        DIRNAME = f"""F:\Tcl\{str(130)} à 137 - Métro B - stations"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T3 - stations"""
         # DIRNAME = f"""F:\Tcl\Prêt Plans\Prêt 2018"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T4 - stations"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T5 - stations"""
-        DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations"""
+        # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations"""
         # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
 
         # DIRNAME = [
@@ -273,13 +276,13 @@ class MainExtraction:
                 )
                 print("Nombre de références dans l'extraction", df_extraction_pret)
             else:
-                name_file_arbo = "output_datas/arborescence_ligne_c.csv"
+                name_file_arbo = "output_datas/arborescence_ligne_b.csv"
                 name_file_success = (
-                    "output_datas/listes des succes TCL Ligne C fusion test.csv"
+                    "output_datas/listes des succes TCL Ligne B fusion test.csv"
                 )
-                name_file_failed = "output_datas/listes des echecs TCL Ligne C test.csv"
-                name_file_success_rattrapage = "output_datas/listes des succes TCL Ligne C append rattrapage sur ligne complete test.csv"
-                name_file_failed_rattrapage = "output_datas/listes des echecs TCL Ligne C append rattrapage sur ligne complete test.csv"
+                name_file_failed = "output_datas/listes des echecs TCL Ligne B test.csv"
+                name_file_success_rattrapage = "output_datas/listes des succes TCL Ligne B append rattrapage sur ligne complete test.csv"
+                name_file_failed_rattrapage = "output_datas/listes des echecs TCL Ligne B append rattrapage sur ligne complete test.csv"
 
                 list_a_traiter = self.create_list_station(input_user)
                 df_extraction = self.extraction_tcl_doc_file(list_a_traiter)
