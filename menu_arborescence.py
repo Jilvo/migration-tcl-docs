@@ -234,21 +234,25 @@ class MainExtraction:
         print("df_extraction dans la fonction", df_extraction)
         return df_extraction
 
-    def main(self):
+    def main(
+        self, DIRNAME, name_file_arbo, name_file_success, name_file_failed, input_user
+    ):
+        ### A DECOMMENTER DIRNAME,name_file_arbo,name_file_success,name_file_failed,input_user
         start = timer()
 
         print("********************************")
         print(
             f"""1 - Choisir d'extraire une ligne complete \n2 - Choisir une station\n4 - Ne rien extraire\n8 - Réaliser une extraction de SERBER\n9 - Réaliser une extraction des prêts """
         )
+
         input_user = int(input("Que voulez vous extraire ? (1 ou 2 ou 8 ou 9) :  "))
         list_a_traiter = None
         df_extraction = None
         # ---------- MODIFIER ICI ----------
         # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
-        DIRNAME = f"""F:\Tcl\{str(130)} à 137 - Métro B - stations"""
+        # DIRNAME = f"""F:\Tcl\{str(130)} à 137 - Métro B - stations"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T3 - stations"""
-        # DIRNAME = f"""F:\Tcl\Prêt Plans\Prêt 2018"""
+        DIRNAME = f"""F:\Tcl\Prêt Plans\Prêt 2018"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T4 - stations"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T5 - stations"""
         # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations"""
@@ -306,10 +310,11 @@ class MainExtraction:
                     name_file_failed_rattrapage,
                 )
                 print("SECOND SCAN TERMINE")
+            print("DIRNAME", DIRNAME)
 
         else:
-            # DIRNAME_SERBER = f"""G:\{str(5)}00000"""
-            DIRNAME_SERBER = f"""G:"""
+            DIRNAME_SERBER = f"""G:\{str(5)}00000"""
+            # DIRNAME_SERBER = f"""G:"""
             name_file_arbo = "output_datas/arborescence_serber_complet_test.csv"
             # name_file_arbo = "output_datas/listes des echecs serber 500000.csv"
             name_file_success = "output_datas/listes des succes serber complet test.csv"
@@ -323,12 +328,19 @@ class MainExtraction:
             )
             print("La listes des arrêt à traiter est ", list_a_traiter)
             print("Nombre de références dans l'extraction", df_extraction)
-        print("DIRNAME", DIRNAME)
+            print("DIRNAME", DIRNAME_SERBER)
         end = timer()
         print(end - start)
         # print("Voulez-vous repriser les echecs avec la ligne complete ")
 
 
 Extraction = MainExtraction()
-Extraction.main()
+Extraction.main(
+    DIRNAME=None,
+    name_file_arbo=None,
+    name_file_success=None,
+    name_file_failed=None,
+    name_file_failed_rattrapage=None,
+    input_user=None,
+)
 # Extraction.extraction_tcl_doc_file()
