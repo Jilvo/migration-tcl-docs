@@ -111,6 +111,7 @@ def compare_list_arbo_csv_bi(
     list_success_path = []
     list_success_list = []
     list_success_values = []
+    list_quel_values = []
     list_failed_path = []
     list_failed_list = []
 
@@ -118,17 +119,19 @@ def compare_list_arbo_csv_bi(
         print(keys)
         flag = False
         for value in values:
+            value_basic = value
             for ref_fourn, ref_fiche in zip(
                 df["Référence fournisseur"], df["Référence fiche"]
             ):
 
                 value = value.upper()
-                value = re.sub("(\W?V.*)", "", value)
+                value = re.sub("(\W?[V|-].*)", "", value)
                 # print(ref_fourn)
                 ### Recherche basique
                 if value == ref_fourn:
                     flag = True
                     list_success_path.append(keys)
+                    list_quel_values.append(value)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
                     break
@@ -150,6 +153,7 @@ def compare_list_arbo_csv_bi(
                     if conc_values.replace(" ", "") in ref_fourn.replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
+                        list_quel_values.append(conc_values)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         break
@@ -157,9 +161,32 @@ def compare_list_arbo_csv_bi(
                     if conc_values_exact.replace(" ", "") in ref_fourn.replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
+                        list_quel_values.append(conc_values_exact)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         break
+                if len(value) >= 6 and values.index(value_basic) > 2:
+                    value_cut_number = re.sub("(\W+[V|-|.|_|\d]+)$", "", value)
+                    if value_cut_number.replace(" ", "") in ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_quel_values.append(value_cut_number)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        break
+                    value_cut_number = (
+                        value_cut_number[:-3] + "000" + value_cut_number[-3:]
+                    )
+                    if value_cut_number.replace(" ", "") in ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_quel_values.append(value_cut_number)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        break
+            if flag == True:
+                print("DEJA AJOUTE")
+                break
         if flag == False:
             list_failed_path.append(keys)
             list_failed_list.append(values)
@@ -167,6 +194,7 @@ def compare_list_arbo_csv_bi(
         {
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
+            "Valeur": list_quel_values,
             "lists": list_success_values,
         },
     )

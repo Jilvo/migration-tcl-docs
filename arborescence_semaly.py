@@ -17,7 +17,7 @@ list_arbo = []
 
 def create_arbo():
     """On crée l'arborescence"""
-    for path, subdirs, files in os.walk(DIRNAME_SERBER):
+    for path, subdirs, files in os.walk(DIRNAME):
         for name in files:
             try:
                 print(os.path.join(path, name))
@@ -28,7 +28,7 @@ def create_arbo():
         list_arbo,
     )
     df.to_csv(
-        "output_datas\arborescence_semaly_tif.csv",
+        "output_datas/arborescence_semaly_tif.csv",
         sep="\t",
         index=False,
         encoding="utf-8-sig",
@@ -50,7 +50,10 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
         encoding="utf-8-sig",
     )
     df_semaly_pdu = pd.read_csv(
-        "input_datas\Semaly.csv", sep=";", error_bad_lines=False, encoding="cp1252"
+        "input_datas\Semaly Pierre.csv",
+        sep=";",
+        error_bad_lines=False,
+        encoding="cp1252",
     )
     list_arbo = []
     list_success_path = []
@@ -63,6 +66,7 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
     list_indice = []
     list_libelle = []
     list_code_ouvrage = []
+    list_intitule_ouvrage = []
     list_ligne = []
     list_extension = []
     print(df_tif)
@@ -88,6 +92,7 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
                 list_libelle.append(row_pdu["LIBELLE"])
                 list_success_path.append(path_to_check)
                 list_code_ouvrage.append(row_pdu["Code Ouvrage"])
+                list_intitule_ouvrage.append(row_pdu["Intitulé Ouvrage"])
                 list_ligne.append(row_pdu["Ligne"])
                 list_extension.append(row_pdu["Extension"])
             else:
@@ -104,6 +109,7 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
                 "LIBELLE": list_libelle,
                 "Chemin": list_success_path,
                 "Code Ouvrage": list_code_ouvrage,
+                "Intitulé Ouvrage": list_intitule_ouvrage,
                 "Ligne": list_ligne,
                 "Extension": list_extension,
             }
@@ -227,7 +233,7 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
 #     # )
 
 
-# create_arbo()
+create_arbo()
 comp_between_arbo_and_arborescence_semaly_pdu()
 
 end = timer()

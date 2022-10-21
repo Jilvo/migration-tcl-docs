@@ -508,7 +508,9 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         break
-
+            if flag == True:
+                print("DEJA AJOUTE")
+                break
         if flag == False:
             list_failed_path.append(keys)
             list_failed_list.append(values)
