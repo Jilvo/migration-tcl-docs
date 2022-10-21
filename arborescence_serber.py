@@ -165,6 +165,41 @@ def compare_list_arbo_csv_bi(
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         break
+                    if re.match("[|V|A|-|.|_|]", values[2]) and len(values[2]) > 5:
+                        if values[2][0] != "A" and values[2][0] != "V":
+                            value_remove_v = re.findall("(.+)[|V|A|-|.|_|]", values[2])
+                            value_remove_v = value_remove_v[0]
+                            value_remove_v = value_remove_v.replace(" ", "")
+                            if re.match("(\D{2}\d{3})", value_remove_v):
+                                conc_values = (
+                                    values[1]
+                                    + value_remove_v[2][:-3]
+                                    + "000"
+                                    + value_remove_v[2][-3:]
+                                )
+                                if conc_values.replace(" ", "") in ref_fourn.replace(
+                                    " ", ""
+                                ):
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_quel_values.append(conc_values)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    break
+                            else:
+                                conc_values = values[1] + value_remove_v
+                                if conc_values.replace(" ", "") in ref_fourn.replace(
+                                    " ", ""
+                                ):
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_quel_values.append(conc_values)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    break
+                        else:
+                            pass
+
                 if len(value) >= 6 and values.index(value_basic) > 2:
                     value_cut_number = re.sub("(\W+[V|-|.|_|\d]+)$", "", value)
                     if value_cut_number.replace(" ", "") in ref_fourn.replace(" ", ""):

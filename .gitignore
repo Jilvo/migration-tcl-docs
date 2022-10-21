@@ -1,6 +1,7 @@
 
 output_datas/
 input_datas/OLD/
+input_datas/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
