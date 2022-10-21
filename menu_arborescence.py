@@ -236,7 +236,7 @@ class MainExtraction:
 
     def extraction_serber_reprise(self):
         df = pd.read_csv(
-            "input_datas/Extraction Serber avec filtre seconde passe.csv",
+            "input_datas/Extraction Serber juste AA et non serber.csv",
             encoding="cp1252",
             sep=";",
         )
@@ -272,7 +272,13 @@ class MainExtraction:
         return df_extraction
 
     def main(
-        self, DIRNAME, name_file_arbo, name_file_success, name_file_failed, input_user
+        self,
+        DIRNAME,
+        name_file_arbo,
+        name_file_success,
+        name_file_failed,
+        name_file_failed_rattrapage,
+        input_user,
     ):
         ### A DECOMMENTER DIRNAME,name_file_arbo,name_file_success,name_file_failed,input_user
         start = timer()
@@ -350,21 +356,25 @@ class MainExtraction:
             print("DIRNAME", DIRNAME)
 
         else:
-            DIRNAME_SERBER = f"""G:\{str(5)}00000"""
+            DIRNAME_SERBER = f"""G:\{str(1)}00000"""
             # DIRNAME_SERBER = f"""G:"""
-            name_file_arbo = "output_datas/arborescence_serber_complet_test.csv"
-            # name_file_arbo = "output_datas/listes des echecs serber 500000.csv"
-            name_file_success = "output_datas/listes des succes serber complet test.csv"
+            name_file_arbo = "output_datas/arborescence_serber_100000_test.csv"
+            # name_file_arbo = "output_datas/listes des echecs serber 100000.csv"
+            name_file_success = (
+                "output_datas/listes des succes serber 100000 fusion test.csv"
+            )
             name_file_failed = (
-                "output_datas/listes des echecs succes serber complet test.csv"
+                "output_datas/listes des echecs succes serber 100000 test.csv"
             )
-            name_file_failed_rattrapage = (
-                "output_datas/listes des echecs succes serber complet test.csv"
-            )
+            name_file_failed_rattrapage = "output_datas/listes des echecs succes serber 100000 rattrapage test.csv"
             df_extraction = self.extraction_serber()
             arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
             arborescence_serber.compare_list_arbo_csv_bi(
-                name_file_arbo, df_extraction, name_file_success, name_file_failed
+                name_file_arbo,
+                df_extraction,
+                name_file_success,
+                name_file_failed,
+                nb_passage=1,
             )
             print("La listes des arrêt à traiter est ", list_a_traiter)
             print("Nombre de références dans l'extraction", df_extraction)
@@ -373,11 +383,13 @@ class MainExtraction:
             df_extraction_rattrapage = self.extraction_serber_reprise()
             arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
             arborescence_serber.compare_list_arbo_csv_bi(
-                name_file_arbo,
+                name_file_failed,
                 df_extraction,
                 name_file_success,
                 name_file_failed_rattrapage,
+                nb_passage=2,
             )
+            print("SECOND SCAN TERMINE")
             print("DIRNAME", DIRNAME_SERBER)
         end = timer()
         print(end - start)
