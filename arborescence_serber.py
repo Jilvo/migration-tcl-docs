@@ -24,8 +24,11 @@ def create_arbo(DIRNAME, name_file_arbo):
     for path, subdirs, files in os.walk(DIRNAME):
         for name in files:
             try:
-                print(os.path.join(path, name))
-                list_arbo.append(os.path.join(path, name))
+                if "Arch_mac" in os.path.join(path, name):
+                    continue
+                else:
+                    print(os.path.join(path, name))
+                    list_arbo.append(os.path.join(path, name))
             except Exception as e:
                 print(e.args)
     df = pd.DataFrame(
