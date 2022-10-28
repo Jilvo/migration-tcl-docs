@@ -9,7 +9,9 @@ start = timer()
 # DIRNAME_MRTRAM = (
 #     f"""H:\MR tramway\{str(0)}0 Documentation de conception T1T2 02042009"""
 # )
-DIRNAME_MRTRAM = f"""H:\MR tramway\{str(0)}0 MR LEA"""
+DIRNAME_MRTRAM = (
+    f"""F:\BE PERSO (M)\Millot J\{str(0)} Documentation de conception T4 juin 2010"""
+)
 
 
 def split_arbo(
@@ -140,7 +142,7 @@ def create_arbo():
     )
 
     df.to_csv(
-        "output_datas/mr_tram_t3.csv",
+        "output_datas/mr_tram_t4.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",

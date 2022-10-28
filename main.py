@@ -1,5 +1,5 @@
 """
-Script principal dans lequel sont lancées les lignes.
+Script principal dans lequel sont lancées les lignes complètes, SERBER,PRET...
 """
 import menu_arborescence
 
