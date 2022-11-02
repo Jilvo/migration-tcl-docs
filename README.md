@@ -1,5 +1,5 @@
 # Migration GED technique Keolis
-
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/VichithLy/pokedex-vue-tailwindcss/blob/master/LICENSE)
 ## Sommaire :
 
 <details>

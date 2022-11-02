@@ -60,7 +60,10 @@ def create_file_semaly_pdf():
 
     print(df_arbo)
     print(df_with_meta)
-    df_meta_listes_url = df_with_meta["Chemin \ modifié"].tolist()
+    df_meta_listes_url = []
+    # for index_meta, row_meta in df_with_meta.iterrows():
+    #     df_meta_listes_url.append(row_meta["Chemin"].upper())
+    df_meta_listes_url = df_with_meta["Chemin"].tolist()
     print(df_meta_listes_url)
     list_success_path = []
     list_failed_path = []
@@ -76,10 +79,12 @@ def create_file_semaly_pdf():
     # list_ligne = []
     # list_extension = []
     for index, row in df_arbo.iterrows():
-        convert_path = row["Chemin modif"]
-        # print(convert_path)
-        if row["Chemin modif"] in df_meta_listes_url:
-            index_list = df_meta_listes_url.index(row["Chemin modif"])
+        # print(row["Chemin modif"])
+        # print("df_meta_listes_url", df_meta_listes_url)
+        if row["Chemin modif"].upper() in df_meta_listes_url:
+            # print("ok")
+            index_list = df_meta_listes_url.index(row["Chemin modif"].upper())
+
             # print(df_with_meta.loc[index_list])
             # print("****************************************************************")
             # print(df_with_meta.loc[index_list, "Plan"])
@@ -121,13 +126,13 @@ def create_file_semaly_pdf():
         }
     )
     df_success.to_csv(
-        "output_datas/listes des succes Semaly TIF into PDF.csv",
+        "output_datas/listes des succes Semaly TIF into PDF 3.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",
     )
     df_failed.to_csv(
-        "output_datas/listes des echecs Semaly TIF into PDF.csv",
+        "output_datas/listes des echecs Semaly TIF into PDF 3.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",
@@ -213,13 +218,13 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
             }
         )
         df_success.to_csv(
-            "output_datas/listes des succes Semaly TIF into PDF.csv",
+            "output_datas/listes des succes Semaly TIF into PDF 3.csv",
             sep=";",
             index=False,
             encoding="utf-8-sig",
         )
         df_failed.to_csv(
-            "output_datas/listes des echecs Semaly TIF into PDF.csv",
+            "output_datas/listes des echecs Semaly TIF into PDF 3.csv",
             sep=";",
             index=False,
             encoding="utf-8-sig",
