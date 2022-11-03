@@ -112,6 +112,7 @@ def compare_list_arbo_csv_bi(
     dict_arbo = find_ref_fournisseur(name_file_arbo)
     df = df_extraction
     list_success_path = []
+    list_version = []
     list_success_list = []
     list_success_values = []
     list_quel_values = []
@@ -225,15 +226,38 @@ def compare_list_arbo_csv_bi(
             if flag == True:
                 print("DEJA AJOUTE")
                 break
-        if flag == False:
+        if flag == True:
+            path = keys
+            # path = "".join(values)
+            if "ind" in path:
+                regex_version = re.findall("ind(.?\w*)", path)
+                regex_version = regex_version[0]
+                regex_version = regex_version.replace(".", "")
+                if len(regex_version) < 4:
+                    list_version.append(regex_version)
+                else:
+                    list_version.append(" ")
+                continue
+            elif re.search("V\w*", path):
+                regex_version = re.findall("(V\w*)", path)
+                regex_version = regex_version[0]
+                regex_version = regex_version.replace(".", "")
+                if len(regex_version) < 4:
+                    list_version.append(regex_version)
+                else:
+                    list_version.append(" ")
+            else:
+                list_version.append(" ")
+        elif flag == False:
             list_failed_path.append(keys)
             list_failed_list.append(values)
     df_success = pd.DataFrame(
         {
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
-            "Valeur": list_quel_values,
-            "lists": list_success_values,
+            "Version": list_version,
+            # "Valeur": list_quel_values,
+            # "lists": list_success_values,
         },
     )
     print(df_success)

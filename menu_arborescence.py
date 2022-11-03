@@ -292,23 +292,21 @@ class MainExtraction:
         list_a_traiter = None
         df_extraction = None
         # ---------- MODIFIER ICI ----------
+        # DIRNAME = f"""F:\Tcl\Prêt Plans"""
+
         # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
         # DIRNAME = f"""F:\Tcl\{str(130)} à 137 - Métro B - stations"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T3 - stations"""
-        DIRNAME = f"""F:\Tcl\{str(1)}05 à 122 - Métro A - stations\Bonnevay\Station\{str(0)}4 Télétrans\AL99ALM0901FB0000E20GS050307"""
-        # DIRNAME = f"""F:\Tcl\Prêt Plans"""
+        # DIRNAME = f"""F:\Tcl\{str(1)}05 à 122 - Métro A - stations\Bonnevay\Station\{str(0)}4 Télétrans\AL99ALM0901FB0000E20GS050307"""
         # DIRNAME = f"""F:\Tcl\{str(0)}02 - Métro ABC - communs"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T5 - stations"""
-        # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations"""
+        DIRNAME = f"""F:\Tcl\{str(305)} à {str(322)} - Métro D - stations"""
         # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
 
         # DIRNAME = [
         #     f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet""",
         #     f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Rousse""",
         # ]
-
-        # DIRNAME_SERBER = f"""G:\{str(500000)}"""
-
         if input_user != 8:
             if input_user == 9:
                 name_file_arbo = "output_datas/arborescence_tcl_pret_total.csv"
@@ -324,14 +322,14 @@ class MainExtraction:
                 )
                 print("Nombre de références dans l'extraction", df_extraction_pret)
             else:
-                name_file_arbo = "output_datas/arborescence_ligne_abc_commun.csv"
-                name_file_success = "output_datas/listes des succes ABC commun.csv"
-                name_file_failed = "output_datas/listes des echecs ABC commun.csv"
+                name_file_arbo = "output_datas/arborescence_ligne_d.csv"
+                name_file_success = "output_datas/listes des succes Ligne D.csv"
+                name_file_failed = "output_datas/listes des echecs Ligne D.csv"
                 name_file_success_rattrapage = (
-                    "output_datas/listes des succes ABC commun rattrapage.csv"
+                    "output_datas/listes des succes Ligne D rattrapage.csv"
                 )
                 name_file_failed_rattrapage = (
-                    "output_datas/listes des echecs ABC commun rattrapage.csv"
+                    "output_datas/listes des echecs Ligne D rattrapage.csv"
                 )
 
                 list_a_traiter = self.create_list_station(input_user)
@@ -359,14 +357,16 @@ class MainExtraction:
             print("DIRNAME", DIRNAME)
 
         else:
-            # DIRNAME_SERBER = f"""G:\{str(1)}00000"""
-            DIRNAME_SERBER = f"""G:"""
-            name_file_arbo = "output_datas/arborescence_serber_complet.csv"
+            DIRNAME_SERBER = f"""G:\{str(1)}00000"""
+            # DIRNAME_SERBER = f"""G:"""
+            name_file_arbo = "output_datas/arborescence_serber_10000_version.csv"
             # name_file_arbo = "output_datas/listes des echecs serber complet.csv"
-            name_file_success = "output_datas/listes des succes serber complet.csv"
-            name_file_failed = "output_datas/listes des echecs serber complet.csv"
+            name_file_success = (
+                "output_datas/listes des succes serber 10000_version.csv"
+            )
+            name_file_failed = "output_datas/listes des echecs serber 10000_version.csv"
             name_file_failed_rattrapage = (
-                "output_datas/listes des echecs serber complet rattrapage.csv"
+                "output_datas/listes des echecs serber 10000_version rattrapage.csv"
             )
             df_extraction = self.extraction_serber()
             arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
@@ -383,7 +383,7 @@ class MainExtraction:
             print("PASSAGE A LA REPRISE DES ECHECS SUR LE FICHIER FILTRÉ")
             df_extraction_rattrapage = self.extraction_serber_reprise()
             print(df_extraction_rattrapage)
-            arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
+            # arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
             arborescence_serber.compare_list_arbo_csv_bi(
                 name_file_failed,
                 df_extraction_rattrapage,
