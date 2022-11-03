@@ -262,6 +262,7 @@ def compare_list_arbo_csv_bi(
     df_extraction,
     name_file_success,
     name_file_failed,
+    extract_all_darfeuille=False,
 ):
     """On itère les lists afin de trouver la référence fournisseur
     Input : input_datas/*.csv"""
@@ -297,8 +298,7 @@ def compare_list_arbo_csv_bi(
             #     df["Référence fournisseur"], df["Référence fiche"]
             # ):
             for ref_fourn, ref_fiche in zip(
-                df[values[1][0]]["Référence fournisseur"],
-                df[values[1][0]]["Référence fiche"],
+                df["Référence fournisseur"], df["Référence fiche"]
             ):
                 # print("ref_fourn", ref_fourn)
                 ### Recherche basique

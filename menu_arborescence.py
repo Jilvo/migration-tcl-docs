@@ -5,6 +5,7 @@ import re
 from timeit import default_timer as timer
 import time
 import arborescence_tcl
+import arborescence_tcl_tout_darfeuille
 import arborescence_tcl_pret
 import arborescence_tcl_reprise_echecs
 import arborescence_serber
@@ -287,11 +288,13 @@ class MainExtraction:
                     row["LIBSITE"],
                 ],
             )
-        df_extraction_rattrapage = pd.DataFrame(
+        # print(list_extaction)
+        df_extraction = pd.DataFrame(
             list_extaction,
             columns=["Référence fournisseur", "Référence fiche", "Station"],
         )
-        return df_extraction_rattrapage
+        print(df_extraction)
+        return df_extraction
 
     def main(
         self,
@@ -361,7 +364,7 @@ class MainExtraction:
                 if input_user == 3:
                     df_extraction = self.extraction_tout_tcl_doc()
                     # arborescence_tcl.create_arbo(DIRNAME, name_file_arbo)
-                    arborescence_tcl.compare_list_arbo_csv_bi(
+                    arborescence_tcl_tout_darfeuille.compare_list_arbo_csv_bi(
                         name_file_arbo,
                         df_extraction,
                         name_file_success,
