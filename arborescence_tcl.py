@@ -148,7 +148,7 @@ def find_ref_fournisseur(name_file_arbo):
 
             list_split_station.append(list_station_for_filter)
         elif "interstations" in list_split[2]:
-            list_split_station = []
+            list_station_for_filter = []
             if "101 - Métro A - interstations" in list_split[2]:
                 list_station_for_filter.append("INTERSTATIONS  A")
             elif "103 - Métro B - interstations" in list_split[2]:
@@ -159,7 +159,7 @@ def find_ref_fournisseur(name_file_arbo):
                 list_station_for_filter.append("INTERSTATIONS  D")
             list_split_station.append(list_station_for_filter)
         elif "Liaison BD" in list_split[2]:
-            list_split_station = []
+            list_station_for_filter = []
             if "303 - Liaison BD" in list_split[2]:
                 list_station_for_filter.append("LIAISON B/D")
             list_split_station.append(list_station_for_filter)
@@ -288,10 +288,12 @@ def compare_list_arbo_csv_bi(
         flag = False
         # print("values", values)
         for value in values[0]:
+            print("values", values)
             # print("values[1", values[1])
             # for ref_fourn, ref_fiche in zip(
             #     df["Référence fournisseur"], df["Référence fiche"]
             # ):
+
             for ref_fourn, ref_fiche in zip(
                 df[values[1][0]]["Référence fournisseur"],
                 df[values[1][0]]["Référence fiche"],

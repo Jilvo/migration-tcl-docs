@@ -271,6 +271,28 @@ class MainExtraction:
         print("df_extraction dans la fonction", df_extraction)
         return df_extraction
 
+    def extraction_tout_tcl_doc(self):
+        df = pd.read_csv(
+            "input_datas/20221010_ExtratTCLDoc complete modifié.csv",
+            encoding="cp1252",
+            sep=";",
+        )
+        list_extaction = []
+
+        for index, row in df.iterrows():
+            list_extaction.append(
+                [
+                    row["NUMERO_REF_FOURN"],
+                    row["REFFIC"],
+                    row["LIBSITE"],
+                ],
+            )
+        df_extraction_rattrapage = pd.DataFrame(
+            list_extaction,
+            columns=["Référence fournisseur", "Référence fiche", "Station"],
+        )
+        return df_extraction_rattrapage
+
     def main(
         self,
         DIRNAME,
@@ -285,7 +307,7 @@ class MainExtraction:
 
         print("********************************")
         print(
-            f"""1 - Choisir d'extraire une ligne complete \n2 - Choisir une station\n4 - Ne rien extraire\n8 - Réaliser une extraction de SERBER\n9 - Réaliser une extraction des prêts """
+            f"""1 - Choisir d'extraire une ligne complete \n2 - Choisir une station\n3 - Comparer le dossier à l'extraction complète de DARFEUILLE \n4 - Ne rien extraire\n8 - Réaliser une extraction de SERBER\n9 - Réaliser une extraction des prêts """
         )
 
         input_user = int(input("Que voulez vous extraire ? (1 ou 2 ou 8 ou 9) :  "))
@@ -300,7 +322,8 @@ class MainExtraction:
         # DIRNAME = f"""F:\Tcl\{str(1)}05 à 122 - Métro A - stations\Bonnevay\Station\{str(0)}4 Télétrans\AL99ALM0901FB0000E20GS050307"""
         # DIRNAME = f"""F:\Tcl\{str(0)}02 - Métro ABC - communs"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T5 - stations"""
-        DIRNAME = f"""F:\Tcl\{str(305)} à {str(322)} - Métro D - stations"""
+        DIRNAME = f"""F:\Tcl\{str(500)} - Tramway Rhone Express - communs"""
+        # DIRNAME = f"""F:\Tcl\{str(305)} à {str(322)} - Métro D - stations"""
         # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
 
         # DIRNAME = [
@@ -322,38 +345,54 @@ class MainExtraction:
                 )
                 print("Nombre de références dans l'extraction", df_extraction_pret)
             else:
-                name_file_arbo = "output_datas/arborescence_ligne_d.csv"
-                name_file_success = "output_datas/listes des succes Ligne D.csv"
-                name_file_failed = "output_datas/listes des echecs Ligne D.csv"
+                name_file_arbo = "output_datas/arborescence_rhoneexpress_commun.csv"
+                name_file_success = (
+                    "output_datas/listes des succes Rhone express commun.csv"
+                )
+                name_file_failed = (
+                    "output_datas/listes des echecs Rhone express commun.csv"
+                )
                 name_file_success_rattrapage = (
-                    "output_datas/listes des succes Ligne D rattrapage.csv"
+                    "output_datas/listes des succes Rhone express commun rattrapage.csv"
                 )
                 name_file_failed_rattrapage = (
-                    "output_datas/listes des echecs Ligne D rattrapage.csv"
+                    "output_datas/listes des echecs Rhone express commun rattrapage.csv"
                 )
-
-                list_a_traiter = self.create_list_station(input_user)
-                df_extraction = self.extraction_tcl_doc_file(list_a_traiter)
-                arborescence_tcl.create_arbo(DIRNAME, name_file_arbo)
-                arborescence_tcl.compare_list_arbo_csv_bi(
-                    name_file_arbo, df_extraction, name_file_success, name_file_failed
-                )
-                print("La listes des arrêt à traiter est ", list_a_traiter)
-                print("Nombre de références dans l'extraction", df_extraction)
-                print("PREMIER SCAN TERMINE")
-                print("PASSAGE A LA REPRISE DES ECHECS SUR LA LIGNE COMPLETE")
-                df_extraction_rattrapage = self.extraction_tcl_doc_rattrapage_echecs(
-                    list_a_traiter
-                )
-                # time.sleep(5)
-                # Comparaison echecs avec la ligne complete
-                arborescence_tcl_reprise_echecs.compare_list_arbo_csv_bi_rattrapage(
-                    name_file_failed,
-                    df_extraction_rattrapage,
-                    name_file_success,
-                    name_file_failed_rattrapage,
-                )
-                print("SECOND SCAN TERMINE")
+                if input_user == 3:
+                    df_extraction = self.extraction_tout_tcl_doc()
+                    # arborescence_tcl.create_arbo(DIRNAME, name_file_arbo)
+                    arborescence_tcl.compare_list_arbo_csv_bi(
+                        name_file_arbo,
+                        df_extraction,
+                        name_file_success,
+                        name_file_failed,
+                    )
+                else:
+                    list_a_traiter = self.create_list_station(input_user)
+                    df_extraction = self.extraction_tcl_doc_file(list_a_traiter)
+                    arborescence_tcl.create_arbo(DIRNAME, name_file_arbo)
+                    arborescence_tcl.compare_list_arbo_csv_bi(
+                        name_file_arbo,
+                        df_extraction,
+                        name_file_success,
+                        name_file_failed,
+                    )
+                    print("La listes des arrêt à traiter est ", list_a_traiter)
+                    print("Nombre de références dans l'extraction", df_extraction)
+                    print("PREMIER SCAN TERMINE")
+                    print("PASSAGE A LA REPRISE DES ECHECS SUR LA LIGNE COMPLETE")
+                    df_extraction_rattrapage = (
+                        self.extraction_tcl_doc_rattrapage_echecs(list_a_traiter)
+                    )
+                    # time.sleep(5)
+                    # Comparaison echecs avec la ligne complete
+                    arborescence_tcl_reprise_echecs.compare_list_arbo_csv_bi_rattrapage(
+                        name_file_failed,
+                        df_extraction_rattrapage,
+                        name_file_success,
+                        name_file_failed_rattrapage,
+                    )
+                    print("SECOND SCAN TERMINE")
             print("DIRNAME", DIRNAME)
 
         else:

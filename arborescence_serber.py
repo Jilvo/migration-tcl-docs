@@ -238,6 +238,15 @@ def compare_list_arbo_csv_bi(
                 else:
                     list_version.append(" ")
                 continue
+            elif re.search("\w(V\w*)", path):
+                regex_version = re.findall("\w(V\w*)", path)
+                regex_version = regex_version[0]
+                regex_version = regex_version.replace(".", "")
+                if len(regex_version) < 4:
+                    list_version.append(regex_version)
+                else:
+                    list_version.append(" ")
+                continue
             elif re.search("V\w*", path):
                 regex_version = re.findall("(V\w*)", path)
                 regex_version = regex_version[0]
