@@ -106,7 +106,6 @@ def find_ref_fournisseur(name_file_arbo):
     for index, row in df.iterrows():
         list_split_station = []
         list_split = split_arbo(row["0"])
-        print(list_split)
         list_split_station.append(list_split)
         # print("list_split[2]", list_split[2])
         # print("list_split[3].upper()", list_split[3].upper())
@@ -167,17 +166,11 @@ def find_ref_fournisseur(name_file_arbo):
         elif "900 - Lignes Fortes - C1 C2 C3 C13" in list_split[2]:
             list_station_for_filter = []
             if "C1 C2" in list_split[3]:
-                print("C1 C2")
                 list_station_for_filter.append("LIGNES FORTES C1/C2")
-                print(list_station_for_filter)
             elif "C3" in list_split[3]:
-                print("C3")
                 list_station_for_filter.append("LIGNE FORTE C3")
-                print(list_station_for_filter)
             elif "C13" in list_split[3]:
-                print("C13")
                 list_station_for_filter.append("LIGNE FORTE C13")
-                print(list_station_for_filter)
             list_split_station.append(list_station_for_filter)
         elif "Surface" in list_split[2]:
             list_station_for_filter = []
@@ -275,7 +268,6 @@ def find_ref_fournisseur(name_file_arbo):
         # if re.match("^(.+)\.", index_element[-1]):
         #     last_item_to_parse = re.findall("^(.+)\.", index_element[-1])
         # index_element[-1] = last_item_to_parse[0]
-    print(dict_arbo)
     return dict_arbo
 
 
@@ -330,6 +322,12 @@ def compare_list_arbo_csv_bi(
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
                     break
+                if value.replace(" ", "") == ref_fourn.replace(" ", ""):
+                    flag = True
+                    list_success_path.append(keys)
+                    list_success_list.append(ref_fiche)
+                    list_success_values.append(values)
+                    break
                 # try:
                 if re.sub("[^A-Za-z0-9]+", "", value) in re.sub(
                     "[^A-Za-z0-9]+", "", ref_fourn
@@ -373,6 +371,7 @@ def compare_list_arbo_csv_bi(
                     or value[:2] == "AN"
                     or value[:2] == "AO"
                     or value[:2] == "AS"
+                    or value[:2] == "AT"
                     or value[:2] == "AV"
                     or value[:2] == "AY"
                     or value[:2] == "BD"
@@ -380,6 +379,7 @@ def compare_list_arbo_csv_bi(
                     or value[:2] == "BH"
                     or value[:2] == "BO"
                     or value[:2] == "BS"
+                    or value[:2] == "BU"
                     or value[:2] == "BV"
                     or value[:2] == "BW"
                     or value[:2] == "CC"
@@ -398,6 +398,7 @@ def compare_list_arbo_csv_bi(
                     or value[:2] == "EK"
                     or value[:2] == "EO"
                     or value[:2] == "EP"
+                    or value[:2] == "ER"
                     or value[:2] == "EV"
                     or value[:2] == "FH"
                     or value[:2] == "FI"
@@ -550,6 +551,18 @@ def compare_list_arbo_csv_bi(
                         value_dash_remove_space_add_zero = value.replace(
                             dash, dash + "-0"
                         )
+                        value_dash_zero = value[:2] + "-0" + value[-2:]
+                        if value_dash_zero.replace(" ", "") in ref_fourn.replace(
+                            " ", ""
+                        ):
+                            if "AQ" in ref_fourn:
+                                flag = True
+                                list_success_path.append(keys)
+                                list_success_list.append(ref_fiche)
+                                list_success_values.append(values)
+                                break
+                            else:
+                                pass
                         if value_dash in ref_fourn:
                             flag = True
                             list_success_path.append(keys)
@@ -705,6 +718,13 @@ def compare_list_arbo_csv_bi(
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         break
+                if value[:-1].replace(" ", "") == ref_fourn.replace(" ", ""):
+                    flag = True
+                    list_success_path.append(keys)
+                    list_success_list.append(ref_fiche)
+                    list_success_values.append(values)
+                    break
+
             if flag == True:
                 print("DEJA AJOUTE")
                 break

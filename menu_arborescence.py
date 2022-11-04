@@ -304,6 +304,7 @@ class MainExtraction:
         name_file_failed,
         name_file_failed_rattrapage,
         input_user,
+        list_a_traiter,
     ):
         ### A DECOMMENTER DIRNAME,name_file_arbo,name_file_success,name_file_failed,input_user
         start = timer()
@@ -323,11 +324,16 @@ class MainExtraction:
         # DIRNAME = f"""F:\Tcl\{str(130)} à 137 - Métro B - stations"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T3 - stations"""
         # DIRNAME = f"""F:\Tcl\{str(900)} - Lignes Fortes - C1 C2 C3 C13"""
+        # DIRNAME = f"""F:\Tcl\{str(500)} - Tramway T1 - communs"""
         DIRNAME = f"""F:\Tcl\{str(800)} à {str(843)} - Surface"""
 
         # DIRNAME = [
-        #     f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet""",
-        #     f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Rousse""",
+        #     f"""F:\Tcl\{str(500)} - Tramway T1 - communs""",
+        #     f"""F:\Tcl\{str(500)} - Tramway T2 - communs""",
+        #     f"""F:\Tcl\{str(500)} - Tramway T3 - communs""",
+        #     f"""F:\Tcl\{str(500)} - Tramway T4 - communs""",
+        #     f"""F:\Tcl\{str(500)} - Tramway T5 - communs""",
+        #     f"""F:\Tcl\{str(500)} - Tramway T6 - communs""",
         # ]
         if input_user != 8:
             if input_user == 9:
@@ -344,15 +350,13 @@ class MainExtraction:
                 )
                 print("Nombre de références dans l'extraction", df_extraction_pret)
             else:
-                name_file_arbo = "output_datas/arborescence_surface.csv"
-                name_file_success = "output_datas/listes des succes Surface.csv"
-                name_file_failed = "output_datas/listes des echecs Surface.csv"
-                name_file_success_rattrapage = (
-                    "output_datas/listes des succes Surface rattrapage.csv"
+                name_file_arbo = (
+                    "output_datas/arborescence_surface_face_horsligneforte.csv"
                 )
-                name_file_failed_rattrapage = (
-                    "output_datas/listes des echecs Surface rattrapage.csv"
-                )
+                name_file_success = "output_datas/listes des succes Surface comparé a hors ligne forte.csv"
+                name_file_failed = "output_datas/listes des echecs Surface comparé a hors ligne forte.csv"
+                name_file_success_rattrapage = "output_datas/listes des succes Surface comparé a hors ligne forte rattrapage.csv"
+                name_file_failed_rattrapage = "output_datas/listes des echecs Surface comparé a hors ligne forte rattrapage.csv"
                 if input_user == 3:
                     df_extraction = self.extraction_tout_tcl_doc()
                     # arborescence_tcl.create_arbo(DIRNAME, name_file_arbo)
@@ -363,7 +367,11 @@ class MainExtraction:
                         name_file_failed,
                     )
                 else:
-                    list_a_traiter = self.create_list_station(input_user)
+                    if list_a_traiter == None:
+                        list_a_traiter = self.create_list_station(input_user)
+                        print(list_a_traiter)
+                    else:
+                        pass
                     df_extraction = self.extraction_tcl_doc_file(list_a_traiter)
                     arborescence_tcl.create_arbo(DIRNAME, name_file_arbo)
                     arborescence_tcl.compare_list_arbo_csv_bi(
@@ -440,5 +448,6 @@ Extraction.main(
     name_file_failed=None,
     name_file_failed_rattrapage=None,
     input_user=None,
+    list_a_traiter=None,
 )
 # Extraction.extraction_tcl_doc_file()
