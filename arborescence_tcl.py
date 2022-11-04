@@ -106,6 +106,7 @@ def find_ref_fournisseur(name_file_arbo):
     for index, row in df.iterrows():
         list_split_station = []
         list_split = split_arbo(row["0"])
+        print(list_split)
         list_split_station.append(list_split)
         # print("list_split[2]", list_split[2])
         # print("list_split[3].upper()", list_split[3].upper())
@@ -163,9 +164,30 @@ def find_ref_fournisseur(name_file_arbo):
             if "303 - Liaison BD" in list_split[2]:
                 list_station_for_filter.append("LIAISON B/D")
             list_split_station.append(list_station_for_filter)
+        elif "900 - Lignes Fortes - C1 C2 C3 C13" in list_split[2]:
+            list_station_for_filter = []
+            if "C1 C2" in list_split[3]:
+                print("C1 C2")
+                list_station_for_filter.append("LIGNES FORTES C1/C2")
+                print(list_station_for_filter)
+            elif "C3" in list_split[3]:
+                print("C3")
+                list_station_for_filter.append("LIGNE FORTE C3")
+                print(list_station_for_filter)
+            elif "C13" in list_split[3]:
+                print("C13")
+                list_station_for_filter.append("LIGNE FORTE C13")
+                print(list_station_for_filter)
+            list_split_station.append(list_station_for_filter)
         elif "Surface" in list_split[2]:
-            list_split_station = []
-            pass
+            list_station_for_filter = []
+            if "00 Ligne Aérienne Trolleybus" in list_split[3]:
+                list_station_for_filter.append("SURFACE L.A.")
+            elif "Surface - communs" in list_split[3]:
+                list_station_for_filter.append("COMMUNS SURFACE")
+            else:
+                list_station_for_filter.append("SURFACE")
+            list_split_station.append(list_station_for_filter)
         elif "stations" in list_split[2]:
             # print(
             #     f"re.sub(" ", " ", list_split[3].upper())",

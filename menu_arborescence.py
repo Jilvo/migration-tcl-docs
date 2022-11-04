@@ -322,12 +322,8 @@ class MainExtraction:
         # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
         # DIRNAME = f"""F:\Tcl\{str(130)} à 137 - Métro B - stations"""
         # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T3 - stations"""
-        # DIRNAME = f"""F:\Tcl\{str(1)}05 à 122 - Métro A - stations\Bonnevay\Station\{str(0)}4 Télétrans\AL99ALM0901FB0000E20GS050307"""
-        # DIRNAME = f"""F:\Tcl\{str(0)}02 - Métro ABC - communs"""
-        # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T5 - stations"""
-        DIRNAME = f"""F:\Tcl\{str(500)} - Tramway Rhone Express - communs"""
-        # DIRNAME = f"""F:\Tcl\{str(305)} à {str(322)} - Métro D - stations"""
-        # DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
+        # DIRNAME = f"""F:\Tcl\{str(900)} - Lignes Fortes - C1 C2 C3 C13"""
+        DIRNAME = f"""F:\Tcl\{str(800)} à {str(843)} - Surface"""
 
         # DIRNAME = [
         #     f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet""",
@@ -348,18 +344,14 @@ class MainExtraction:
                 )
                 print("Nombre de références dans l'extraction", df_extraction_pret)
             else:
-                name_file_arbo = "output_datas/arborescence_rhoneexpress_commun.csv"
-                name_file_success = (
-                    "output_datas/listes des succes Rhone express commun.csv"
-                )
-                name_file_failed = (
-                    "output_datas/listes des echecs Rhone express commun.csv"
-                )
+                name_file_arbo = "output_datas/arborescence_surface.csv"
+                name_file_success = "output_datas/listes des succes Surface.csv"
+                name_file_failed = "output_datas/listes des echecs Surface.csv"
                 name_file_success_rattrapage = (
-                    "output_datas/listes des succes Rhone express commun rattrapage.csv"
+                    "output_datas/listes des succes Surface rattrapage.csv"
                 )
                 name_file_failed_rattrapage = (
-                    "output_datas/listes des echecs Rhone express commun rattrapage.csv"
+                    "output_datas/listes des echecs Surface rattrapage.csv"
                 )
                 if input_user == 3:
                     df_extraction = self.extraction_tout_tcl_doc()
