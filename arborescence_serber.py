@@ -299,5 +299,5 @@ def compare_list_arbo_csv_bi(
     )
 
 
-end = timer()
-print(end - start)
+# end = timer()
+# print(end - start)

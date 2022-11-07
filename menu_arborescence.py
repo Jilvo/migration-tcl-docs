@@ -428,8 +428,8 @@ class MainExtraction:
             )
             print("SECOND SCAN TERMINE")
             print("DIRNAME", DIRNAME)
-        end = timer()
-        print(end - start)
+        # end = timer()
+        # print(end - start)
         # print("Voulez-vous repriser les echecs avec la ligne complete ")
 
 

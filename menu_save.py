@@ -222,8 +222,8 @@ class MainExtraction:
         print("La listes des arrêt à traiter est ", list_a_traiter)
         print("Nombre de références dans l'extraction", df_extraction)
         print(DIRNAME)
-        end = timer()
-        print(end - start)
+        # end = timer()
+        # print(end - start)
 
 
 Extraction = MainExtraction()

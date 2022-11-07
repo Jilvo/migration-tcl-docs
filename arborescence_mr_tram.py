@@ -239,5 +239,5 @@ def comp_between_arbo_and_arborescence_mr_tram_pdu():
 create_arbo()
 # comp_between_arbo_and_arborescence_mr_tram_pdu()
 
-end = timer()
-print(end - start)
+# end = timer()
+# print(end - start)

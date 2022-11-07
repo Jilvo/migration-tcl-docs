@@ -235,5 +235,5 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
 create_file_semaly_pdf()
 # comp_between_arbo_and_arborescence_semaly_pdu()
 
-end = timer()
-print(end - start)
+# end = timer()
+# print(end - start)
