@@ -41,7 +41,9 @@ def create_arbo(DIRNAME, name_file_arbo):
                     except Exception as e:
                         print(e.args)
     df = pd.DataFrame(
-        list_arbo,
+        {
+            "Chemin du fichier": list_arbo,
+        }
     )
     # df.to_csv(
     #     "output_datas/arborescence_tcl_pret.csv",
@@ -89,7 +91,7 @@ def find_ref_fournisseur(name_file_arbo):
         sep=";",
         error_bad_lines=False,
         encoding="utf-8-sig",
-        # encoding = "cp1252"
+        # encoding="cp1252",
     )
     df_stations = pd.read_csv(
         "input_datas/listes_arrets_lignes.csv",
@@ -105,7 +107,7 @@ def find_ref_fournisseur(name_file_arbo):
     dict_arbo = {}
     for index, row in df.iterrows():
         list_split_station = []
-        list_split = split_arbo(row["0"])
+        list_split = split_arbo(row["Chemin du fichier"])
         list_split_station.append(list_split)
         # print("list_split[2]", list_split[2])
         # print("list_split[3].upper()", list_split[3].upper())
@@ -190,8 +192,7 @@ def find_ref_fournisseur(name_file_arbo):
                     continue
             list_split_station.append(list_station_for_filter)
         # print("list_split_station", list_split_station)
-        dict_arbo[row["0"]] = list_split_station
-        # dict_arbo[row["0"]] = list_split_station
+        dict_arbo[row["Chemin du fichier"]] = list_split_station
     # print("dict_arbo.values()", dict_arbo.values())
     for i in dict_arbo.values():
         index_element = i[0]

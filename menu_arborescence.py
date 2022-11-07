@@ -308,38 +308,38 @@ class MainExtraction:
     ):
         ### A DECOMMENTER DIRNAME,name_file_arbo,name_file_success,name_file_failed,input_user
         start = timer()
-
         print("********************************")
-        print(
-            f"""1 - Choisir d'extraire une ligne complete \n2 - Choisir une station\n3 - Comparer le dossier à l'extraction complète de DARFEUILLE \n4 - Ne rien extraire\n8 - Réaliser une extraction de SERBER\n9 - Réaliser une extraction des prêts """
-        )
+        if input_user == None:
+            print(
+                f"""1 - Choisir d'extraire une ligne complete \n2 - Choisir une station\n3 - Comparer le dossier à l'extraction complète de DARFEUILLE \n4 - Ne rien extraire\n8 - Réaliser une extraction de SERBER\n9 - Réaliser une extraction des prêts """
+            )
 
-        input_user = int(input("Que voulez vous extraire ? (1 ou 2 ou 8 ou 9) :  "))
-        list_a_traiter = None
+            input_user = int(input("Que voulez vous extraire ? (1 ou 2 ou 8 ou 9) :  "))
+
+        # list_a_traiter = None
         df_extraction = None
         # ---------- MODIFIER ICI ----------
-        # DIRNAME = f"""F:\Tcl\Prêt Plans"""
-
-        # DIRNAME = f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations"""
-        # DIRNAME = f"""F:\Tcl\{str(130)} à 137 - Métro B - stations"""
-        # DIRNAME = f"""F:\Tcl\{str(501)} - Tramway T3 - stations"""
         # DIRNAME = f"""F:\Tcl\{str(900)} - Lignes Fortes - C1 C2 C3 C13"""
-        # DIRNAME = f"""F:\Tcl\{str(500)} - Tramway T1 - communs"""
-        DIRNAME = f"""F:\Tcl\{str(800)} à {str(843)} - Surface"""
+        if (
+            name_file_arbo == None
+            and name_file_success == None
+            and name_file_failed == None
+            and name_file_failed_rattrapage == None
+            and DIRNAME == None
+        ):
+            name_file_arbo = "output_datas/arbo tram commun.csv"
+            name_file_success = "output_datas/listes des succes tram commun.csv"
+            name_file_failed = "output_datas/listes des echecs tram commun.csv"
+            name_file_failed_rattrapage = (
+                "output_datas/listes des echecs tram commun rattrapage.csv"
+            )
+            DIRNAME = f"""F:\Tcl\{str(500)} - Tramway - communs"""
 
-        # DIRNAME = [
-        #     f"""F:\Tcl\{str(500)} - Tramway T1 - communs""",
-        #     f"""F:\Tcl\{str(500)} - Tramway T2 - communs""",
-        #     f"""F:\Tcl\{str(500)} - Tramway T3 - communs""",
-        #     f"""F:\Tcl\{str(500)} - Tramway T4 - communs""",
-        #     f"""F:\Tcl\{str(500)} - Tramway T5 - communs""",
-        #     f"""F:\Tcl\{str(500)} - Tramway T6 - communs""",
-        # ]
         if input_user != 8:
             if input_user == 9:
-                name_file_arbo = "output_datas/arborescence_tcl_pret_total.csv"
-                name_file_success = "output_datas/listes des succes Prêt Total.csv"
-                name_file_failed = "output_datas/listes des echecs Prêt Total.csv"
+                # name_file_arbo = "output_datas/arborescence_tcl_pret_total.csv"
+                # name_file_success = "output_datas/listes des succes Prêt Total.csv"
+                # name_file_failed = "output_datas/listes des echecs Prêt Total.csv"
                 df_extraction_pret = self.extraction_pret_tcl()
                 arborescence_tcl_pret.create_arbo(DIRNAME, name_file_arbo)
                 arborescence_tcl_pret.compare_list_arbo_csv_bi_pret(
@@ -350,13 +350,6 @@ class MainExtraction:
                 )
                 print("Nombre de références dans l'extraction", df_extraction_pret)
             else:
-                name_file_arbo = (
-                    "output_datas/arborescence_surface_face_horsligneforte.csv"
-                )
-                name_file_success = "output_datas/listes des succes Surface comparé a hors ligne forte.csv"
-                name_file_failed = "output_datas/listes des echecs Surface comparé a hors ligne forte.csv"
-                name_file_success_rattrapage = "output_datas/listes des succes Surface comparé a hors ligne forte rattrapage.csv"
-                name_file_failed_rattrapage = "output_datas/listes des echecs Surface comparé a hors ligne forte rattrapage.csv"
                 if input_user == 3:
                     df_extraction = self.extraction_tout_tcl_doc()
                     # arborescence_tcl.create_arbo(DIRNAME, name_file_arbo)
@@ -399,8 +392,8 @@ class MainExtraction:
             print("DIRNAME", DIRNAME)
 
         else:
-            DIRNAME_SERBER = f"""G:\{str(1)}00000"""
-            # DIRNAME_SERBER = f"""G:"""
+            DIRNAME = f"""G:\{str(1)}00000"""
+            # DIRNAME = f"""G:"""
             name_file_arbo = "output_datas/arborescence_serber_10000_version.csv"
             # name_file_arbo = "output_datas/listes des echecs serber complet.csv"
             name_file_success = (
@@ -411,7 +404,7 @@ class MainExtraction:
                 "output_datas/listes des echecs serber 10000_version rattrapage.csv"
             )
             df_extraction = self.extraction_serber()
-            arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
+            arborescence_serber.create_arbo(DIRNAME, name_file_arbo)
             arborescence_serber.compare_list_arbo_csv_bi(
                 name_file_arbo,
                 df_extraction,
@@ -425,7 +418,7 @@ class MainExtraction:
             print("PASSAGE A LA REPRISE DES ECHECS SUR LE FICHIER FILTRÉ")
             df_extraction_rattrapage = self.extraction_serber_reprise()
             print(df_extraction_rattrapage)
-            # arborescence_serber.create_arbo(DIRNAME_SERBER, name_file_arbo)
+            # arborescence_serber.create_arbo(DIRNAME, name_file_arbo)
             arborescence_serber.compare_list_arbo_csv_bi(
                 name_file_failed,
                 df_extraction_rattrapage,
@@ -434,20 +427,20 @@ class MainExtraction:
                 nb_passage=2,
             )
             print("SECOND SCAN TERMINE")
-            print("DIRNAME", DIRNAME_SERBER)
+            print("DIRNAME", DIRNAME)
         end = timer()
         print(end - start)
         # print("Voulez-vous repriser les echecs avec la ligne complete ")
 
 
-Extraction = MainExtraction()
-Extraction.main(
-    DIRNAME=None,
-    name_file_arbo=None,
-    name_file_success=None,
-    name_file_failed=None,
-    name_file_failed_rattrapage=None,
-    input_user=None,
-    list_a_traiter=None,
-)
+# Extraction = MainExtraction()
+# Extraction.main(
+#     DIRNAME=None,
+#     name_file_arbo=None,
+#     name_file_success=None,
+#     name_file_failed=None,
+#     name_file_failed_rattrapage=None,
+#     input_user=None,
+#     list_a_traiter=None,
+# )
 # Extraction.extraction_tcl_doc_file()
