@@ -628,9 +628,8 @@ def main_lunch_function():
             )
     except Exception as e:
         print(e.args)
+    end = timer()
+    print(end - start)
 
 
 main_lunch_function()
-
-end = timer()
-print(end - start)

@@ -308,12 +308,12 @@ def compare_list_arbo_csv_bi(
     list_failed_provenance = []
     print("df", df)
     for keys, values in dict_arbo.items():
-        print(keys)
+        # print(keys)
         flag = False
         dict_jaro_distance = {}
         # print("values", values)
         for value in values[0]:
-            print("values", values)
+            # print("values", values)
             # print("values[1", values[1])
             # for ref_fourn, ref_fiche in zip(
             #     df["Référence fournisseur"], df["Référence fiche"]
