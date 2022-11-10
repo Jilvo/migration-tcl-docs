@@ -9,7 +9,7 @@ import sys
 import pandas as pd
 import re
 from timeit import default_timer as timer
-
+import time
 from difflib import SequenceMatcher
 import jellyfish
 
@@ -309,6 +309,9 @@ def compare_list_arbo_csv_bi(
     print("df", df)
     for keys, values in dict_arbo.items():
         # print(keys)
+        if "ST-100012-B.pdf" in keys:
+            print("On entre dans un doublon")
+            time.sleep(10)
         flag = False
         dict_jaro_distance = {}
         # print("values", values)
@@ -329,14 +332,14 @@ def compare_list_arbo_csv_bi(
                     list_success_path.append(keys)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
-                    list_success_provenance.append(" ")
+                    list_success_provenance.append("égalité")
                     break
                 if value.replace(" ", "") == ref_fourn.replace(" ", ""):
                     flag = True
                     list_success_path.append(keys)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
-                    list_success_provenance.append(" ")
+                    list_success_provenance.append("égalité sans espaces")
                     break
                 # try:
                 if re.sub("[^A-Za-z0-9]+", "", value) in re.sub(
@@ -346,7 +349,7 @@ def compare_list_arbo_csv_bi(
                     list_success_path.append(keys)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
-                    list_success_provenance.append(" ")
+                    list_success_provenance.append("1 ")
                     break
                 # except Exception as e:
                 #     print(e.args)
@@ -369,7 +372,7 @@ def compare_list_arbo_csv_bi(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append(" ")
+                        list_success_provenance.append("2")
                         break
                 if (
                     value[:2] == "AQ"
@@ -430,7 +433,7 @@ def compare_list_arbo_csv_bi(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append(" ")
+                            list_success_provenance.append("3")
                             break
                     if value[:2] == "AQ":
                         # if (
@@ -482,7 +485,7 @@ def compare_list_arbo_csv_bi(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_success_provenance.append(" ")
+                                list_success_provenance.append("4")
                                 break
                             value_remove_double_space = (
                                 value_last_eight[:1] + " " + value_last_eight[2:]
@@ -492,7 +495,7 @@ def compare_list_arbo_csv_bi(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_success_provenance.append(" ")
+                                list_success_provenance.append("5")
                                 break
                         else:
                             if (
@@ -516,7 +519,7 @@ def compare_list_arbo_csv_bi(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append(" ")
+                        list_success_provenance.append("6")
                         break
                     if flag == False:
                         value_no_spaces = value.replace(" ", "")
@@ -526,7 +529,7 @@ def compare_list_arbo_csv_bi(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append(" ")
+                            list_success_provenance.append("7")
                             break
                     # # list_duo = ["HF", "FA", "FB", "FC", "FD", "FE"]
                     # for duo in list_duo:
@@ -569,49 +572,49 @@ def compare_list_arbo_csv_bi(
                             dash, dash + "-0"
                         )
                         value_dash_zero = value[:2] + "-0" + value[-2:]
-                        if value_dash_zero.replace(" ", "") in ref_fourn.replace(
-                            " ", ""
-                        ):
-                            if "AQ" in ref_fourn:
-                                flag = True
-                                list_success_path.append(keys)
-                                list_success_list.append(ref_fiche)
-                                list_success_values.append(values)
-                                list_success_provenance.append(" ")
-                                break
-                            else:
-                                pass
+                        # if value_dash_zero.replace(" ", "") in ref_fourn.replace(
+                        #     " ", ""
+                        # ):
+                        #     if "AQ" in ref_fourn:
+                        #         flag = True
+                        #         list_success_path.append(keys)
+                        #         list_success_list.append(ref_fiche)
+                        #         list_success_values.append(values)
+                        #         list_success_provenance.append("8")
+                        #         break
+                        #     else:
+                        #         pass
                         if value_dash in ref_fourn:
                             flag = True
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append(" ")
+                            list_success_provenance.append("9")
                             break
                         elif value_dash_remove_space in ref_fourn:
                             flag = True
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append(" ")
+                            list_success_provenance.append("10")
                             break
                         elif value_dash_remove_space_add_zero in ref_fourn:
                             flag = True
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append(" ")
+                            list_success_provenance.append("11 ")
                             break
-                        if re.match("\w{2}.?\d{5}", value):
-                            value_remove_post = re.findall("(\w{2}.?\d{5})", value)
-                            value_remove_post = value_remove_post[0]
-                            if value_remove_post in ref_fourn:
-                                flag = True
-                                list_success_path.append(keys)
-                                list_success_list.append(ref_fiche)
-                                list_success_values.append(values)
-                                list_success_provenance.append(" ")
-                                break
+                        # if re.match("\w{2}.?\d{5}", value):
+                        #     value_remove_post = re.findall("(\w{2}.?\d{5})", value)
+                        #     value_remove_post = value_remove_post[0]
+                        #     if value_remove_post in ref_fourn:
+                        #         flag = True
+                        #         list_success_path.append(keys)
+                        #         list_success_list.append(ref_fiche)
+                        #         list_success_values.append(values)
+                        #         list_success_provenance.append("12 ")
+                        #         break
 
                         if re.match("(ST\d{6})", value):
                             value_remove_post = re.findall("(ST\d{6})", value)
@@ -622,7 +625,7 @@ def compare_list_arbo_csv_bi(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_success_provenance.append(" ")
+                                list_success_provenance.append(" 13")
                                 break
                         if not flag:
                             if value in ref_fourn:
@@ -630,7 +633,7 @@ def compare_list_arbo_csv_bi(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_success_provenance.append(" ")
+                                list_success_provenance.append("14 ")
                                 break
                         if not flag:
                             value_no_spaces = value.replace(" ", "")
@@ -639,7 +642,7 @@ def compare_list_arbo_csv_bi(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_success_provenance.append(" ")
+                                list_success_provenance.append("15 ")
                                 break
                         if dash == "SF":
                             if not flag:
@@ -649,7 +652,7 @@ def compare_list_arbo_csv_bi(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append(" ")
+                                    list_success_provenance.append("16 ")
                                     break
                         if dash == "FA":
                             if not flag:
@@ -660,7 +663,7 @@ def compare_list_arbo_csv_bi(
                                         list_success_path.append(keys)
                                         list_success_list.append(ref_fiche)
                                         list_success_values.append(values)
-                                        list_success_provenance.append(" ")
+                                        list_success_provenance.append("17 ")
                                         break
                                 except Exception as e:
                                     value_add_zero = value.replace("FA", "FA-0")
@@ -669,7 +672,7 @@ def compare_list_arbo_csv_bi(
                                         list_success_path.append(keys)
                                         list_success_list.append(ref_fiche)
                                         list_success_values.append(values)
-                                        list_success_provenance.append(" ")
+                                        list_success_provenance.append(" 18")
                                         break
                         if dash == "HF":
                             if not flag:
@@ -679,7 +682,7 @@ def compare_list_arbo_csv_bi(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append(" ")
+                                    list_success_provenance.append("19 ")
                                     break
                                 value_add_zero = value.replace("HF", "HF-0")
                                 if value_add_zero in ref_fourn:
@@ -687,7 +690,7 @@ def compare_list_arbo_csv_bi(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append(" ")
+                                    list_success_provenance.append(" 20")
                                     break
                 if value[:3] == "ETL":
                     ref_fourn_no_zero = ref_fourn.replace("0", "")
@@ -696,7 +699,7 @@ def compare_list_arbo_csv_bi(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append(" ")
+                        list_success_provenance.append(" 21")
                         break
                 ### On recherche le pattern 800E263
                 if not flag:
@@ -707,7 +710,7 @@ def compare_list_arbo_csv_bi(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append(" ")
+                            list_success_provenance.append("22 ")
                             break
                     if re.match("([A-Z]{2}.*)", value):
                         value_replace = re.findall("([A-Z]{2}.*)", value)
@@ -718,7 +721,7 @@ def compare_list_arbo_csv_bi(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append(" ")
+                            list_success_provenance.append("23 ")
                             break
 
                     if re.match("(\d{3,6}\W*\D{3,5}\W*\d{3,6})", value):
@@ -729,7 +732,7 @@ def compare_list_arbo_csv_bi(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append(" ")
+                            list_success_provenance.append("24 ")
                             break
 
                 if len(value) == 8:
@@ -740,7 +743,7 @@ def compare_list_arbo_csv_bi(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append(" ")
+                            list_success_provenance.append("25 ")
                             break
                 if re.match("([A-Z0-9]{5,})", value):
                     value_cut_point = re.findall("([A-Z0-9]{5,})", value)
@@ -752,14 +755,14 @@ def compare_list_arbo_csv_bi(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append(" ")
+                        list_success_provenance.append(" 26")
                         break
                 if value[:-1].replace(" ", "") == ref_fourn.replace(" ", ""):
                     flag = True
                     list_success_path.append(keys)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
-                    list_success_provenance.append(" ")
+                    list_success_provenance.append("27 ")
                     break
 
                 jaro_stat = jellyfish.jaro_distance(
@@ -788,7 +791,7 @@ def compare_list_arbo_csv_bi(
             if len(dict_jaro_distance) > 0:
                 stats_key = list(sorted_dict_jaro_distance)[0]
                 if (
-                    stats_key >= 0.95
+                    stats_key >= 0.90
                     and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
                 ):
                     if sorted_dict_jaro_distance[stats_key]["value"].replace(
@@ -801,13 +804,20 @@ def compare_list_arbo_csv_bi(
                         list_success_provenance.append(
                             "ajouté grâce à l'algo de Jaro-Winkler"
                         )
-                        break
+                        continue
+                    else:
+                        list_failed_path.append(keys)
+                        list_failed_list.append(values)
+                        list_failed_provenance.append("jaro bon mais pas match ")
                 else:
-                    pass
+                    list_failed_path.append(keys)
+                    list_failed_list.append(values)
+                    list_failed_provenance.append("jaro inférieur a 90% ou sup 2 ")
+
             else:
                 list_failed_path.append(keys)
                 list_failed_list.append(values)
-                list_failed_provenance.append(sorted_dict_jaro_distance)
+                list_failed_provenance.append("jaro vide")
     df_success = pd.DataFrame(
         {
             "Chemin du fichier": list_success_path,

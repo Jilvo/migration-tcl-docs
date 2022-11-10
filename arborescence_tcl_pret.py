@@ -162,9 +162,17 @@ def compare_list_arbo_csv_bi_pret(
     list_success_values = []
     list_failed_path = []
     list_failed_list = []
+    list_folder_doublon_succes = []
+    list_folder_doublon_echecs = []
+    list_test_number = []
     print("df", df)
     for keys, values in dict_arbo.items():
         print(keys)
+        try:
+            folder_for_doublon = re.findall("Bordereau [^\\\\]*\\\\(.*)", keys)
+            folder_for_doublon = folder_for_doublon[0]
+        except Exception as e:
+            folder_for_doublon = keys
         flag = False
         # print("values", values)
         for value in values:
@@ -181,6 +189,8 @@ def compare_list_arbo_csv_bi_pret(
                     list_success_path.append(keys)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
+                    list_test_number.append("1")
+                    list_folder_doublon_succes.append(folder_for_doublon)
                     break
                 # try:
                 if re.sub("[^A-Za-z0-9]+", "", value) in re.sub(
@@ -190,6 +200,8 @@ def compare_list_arbo_csv_bi_pret(
                     list_success_path.append(keys)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
+                    list_test_number.append("2")
+                    list_folder_doublon_succes.append(folder_for_doublon)
                     break
                 # except Exception as e:
                 #     print(e.args)
@@ -212,6 +224,8 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
+                        list_test_number.append("3")
+                        list_folder_doublon_succes.append(folder_for_doublon)
                         break
                 if (
                     value[:2] == "AQ"
@@ -269,6 +283,8 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
+                            list_test_number.append("4")
+                            list_folder_doublon_succes.append(folder_for_doublon)
                             break
                     if value[:2] == "AQ":
                         # if (
@@ -320,6 +336,8 @@ def compare_list_arbo_csv_bi_pret(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
+                                list_test_number.append("5")
+                                list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                             value_remove_double_space = (
                                 value_last_eight[:1] + " " + value_last_eight[2:]
@@ -329,6 +347,8 @@ def compare_list_arbo_csv_bi_pret(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
+                                list_test_number.append("6")
+                                list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                         else:
                             if (
@@ -352,6 +372,8 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
+                        list_test_number.append("7")
+                        list_folder_doublon_succes.append(folder_for_doublon)
                         break
                     if flag == False:
                         value_no_spaces = value.replace(" ", "")
@@ -361,6 +383,8 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
+                            list_test_number.append("8")
+                            list_folder_doublon_succes.append(folder_for_doublon)
                             break
                     # # list_duo = ["HF", "FA", "FB", "FC", "FD", "FE"]
                     # for duo in list_duo:
@@ -407,28 +431,36 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
+                            list_test_number.append("10")
+                            list_folder_doublon_succes.append(folder_for_doublon)
                             break
                         elif value_dash_remove_space in ref_fourn:
                             flag = True
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
+                            list_test_number.append("11")
+                            list_folder_doublon_succes.append(folder_for_doublon)
                             break
                         elif value_dash_remove_space_add_zero in ref_fourn:
                             flag = True
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
+                            list_test_number.append("12")
+                            list_folder_doublon_succes.append(folder_for_doublon)
                             break
-                        if re.match("\w{2}.?\d{5}", value):
-                            value_remove_post = re.findall("(\w{2}.?\d{5})", value)
-                            value_remove_post = value_remove_post[0]
-                            if value_remove_post in ref_fourn:
-                                flag = True
-                                list_success_path.append(keys)
-                                list_success_list.append(ref_fiche)
-                                list_success_values.append(values)
-                                break
+                        # if re.match("\w{2}.?\d{5}", value):
+                        #     value_remove_post = re.findall("(\w{2}.?\d{5})", value)
+                        #     value_remove_post = value_remove_post[0]
+                        #     if value_remove_post in ref_fourn:
+                        #         flag = True
+                        #         list_success_path.append(keys)
+                        #         list_success_list.append(ref_fiche)
+                        #         list_success_values.append(values)
+                        #         list_test_number.append("13")
+                        #         list_folder_doublon_succes.append(folder_for_doublon)
+                        #         break
 
                         if re.match("(ST\d{6})", value):
                             value_remove_post = re.findall("(ST\d{6})", value)
@@ -439,6 +471,8 @@ def compare_list_arbo_csv_bi_pret(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
+                                list_test_number.append("14")
+                                list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                         if not flag:
                             if value in ref_fourn:
@@ -446,6 +480,8 @@ def compare_list_arbo_csv_bi_pret(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
+                                list_test_number.append("15")
+                                list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                         if not flag:
                             value_no_spaces = value.replace(" ", "")
@@ -454,6 +490,8 @@ def compare_list_arbo_csv_bi_pret(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
+                                list_test_number.append("16")
+                                list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                         if dash == "SF":
                             if not flag:
@@ -463,6 +501,10 @@ def compare_list_arbo_csv_bi_pret(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
+                                    list_test_number.append("17")
+                                    list_folder_doublon_succes.append(
+                                        folder_for_doublon
+                                    )
                                     break
                         if dash == "FA":
                             if not flag:
@@ -473,6 +515,10 @@ def compare_list_arbo_csv_bi_pret(
                                         list_success_path.append(keys)
                                         list_success_list.append(ref_fiche)
                                         list_success_values.append(values)
+                                        list_test_number.append("18")
+                                        list_folder_doublon_succes.append(
+                                            folder_for_doublon
+                                        )
                                         break
                                 except Exception as e:
                                     value_add_zero = value.replace("FA", "FA-0")
@@ -481,6 +527,10 @@ def compare_list_arbo_csv_bi_pret(
                                         list_success_path.append(keys)
                                         list_success_list.append(ref_fiche)
                                         list_success_values.append(values)
+                                        list_test_number.append("19")
+                                        list_folder_doublon_succes.append(
+                                            folder_for_doublon
+                                        )
                                         break
                         if dash == "HF":
                             if not flag:
@@ -490,6 +540,10 @@ def compare_list_arbo_csv_bi_pret(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
+                                    list_test_number.append("20")
+                                    list_folder_doublon_succes.append(
+                                        folder_for_doublon
+                                    )
                                     break
                                 value_add_zero = value.replace("HF", "HF-0")
                                 if value_add_zero in ref_fourn:
@@ -497,6 +551,10 @@ def compare_list_arbo_csv_bi_pret(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
+                                    list_test_number.append("21")
+                                    list_folder_doublon_succes.append(
+                                        folder_for_doublon
+                                    )
                                     break
                 if value[:3] == "ETL":
                     ref_fourn_no_zero = ref_fourn.replace("0", "")
@@ -505,6 +563,8 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
+                        list_test_number.append("22")
+                        list_folder_doublon_succes.append(folder_for_doublon)
                         break
                 ### On recherche le pattern 800E263
                 if not flag:
@@ -515,6 +575,8 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
+                            list_test_number.append("23")
+                            list_folder_doublon_succes.append(folder_for_doublon)
                             break
                     if re.match("([A-Z]{2}.*)", value):
                         value_replace = re.findall("([A-Z]{2}.*)", value)
@@ -525,6 +587,8 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
+                            list_test_number.append("24")
+                            list_folder_doublon_succes.append(folder_for_doublon)
                             break
 
                     if re.match("(\d{3,6}\W*\D{3,5}\W*\d{3,6})", value):
@@ -535,6 +599,8 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
+                            list_test_number.append("25")
+                            list_folder_doublon_succes.append(folder_for_doublon)
                             break
 
                 if len(value) == 8:
@@ -545,6 +611,8 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
+                            list_test_number.append("26")
+                            list_folder_doublon_succes.append(folder_for_doublon)
                             break
                 if re.match("([A-Z0-9]{5,})", value):
                     value_cut_point = re.findall("([A-Z0-9]{5,})", value)
@@ -556,6 +624,8 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
+                        list_test_number.append("27")
+                        list_folder_doublon_succes.append(folder_for_doublon)
                         break
             if flag == True:
                 print("DEJA AJOUTE")
@@ -563,17 +633,32 @@ def compare_list_arbo_csv_bi_pret(
         if flag == False:
             list_failed_path.append(keys)
             list_failed_list.append(values)
+            list_folder_doublon_echecs.append(folder_for_doublon)
+    print(len(list_success_path))
+    print(len(list_success_list))
+    print(len(list_success_values))
+    print(len(list_folder_doublon_succes))
+    print(len(list_test_number))
+    print(len(list_failed_path))
+    print(len(list_failed_list))
+    print(len(list_folder_doublon_echecs))
     df_success = pd.DataFrame(
         {
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
             "lists": list_success_values,
+            "Dossier pour vérification doublons": list_folder_doublon_succes,
+            "list_test_number": list_test_number,
         },
     )
     print(df_success)
 
     df_failed = pd.DataFrame(
-        {"Chemin du fichier": list_failed_path, "Référence Fiche": list_failed_list},
+        {
+            "Chemin du fichier": list_failed_path,
+            "Référence Fiche": list_failed_list,
+            "Dossier pour vérification doublons": list_folder_doublon_echecs,
+        },
     )
     print(df_success.shape)
 

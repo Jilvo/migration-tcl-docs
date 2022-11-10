@@ -8,7 +8,7 @@ from timeit import default_timer as timer
 Lunch_Menu = menu_arborescence.MainExtraction()
 
 
-def main_lunch_function():
+def main_lunch_function(list_choices):
     start = timer()
     list_possibilities = [
         "PRÊT",
@@ -32,33 +32,42 @@ def main_lunch_function():
         "Lignes Fortes - C1 C2 C3 C13",
         "Surface",
     ]
-    list_choices = []
-    for choice in list_possibilities:
-        flag = False
-        while not flag:
-            print(f"Voulez vous traiter et extraire le dossier {choice}")
-            input_yes_no = input("O / N : ")
-            if input_yes_no.upper() == "O":
-                list_choices.append(choice)
-                flag = True
-            elif input_yes_no.upper() == "N":
-                print(f"Le dossier {choice} ne sera pas ajouté")
-                flag = True
-            else:
-                print("Je ne comprend pas votre réponse, réessayez ")
-                pass
+    if len(list_choices) == 0:
+        for choice in list_possibilities:
+            flag = False
+            while not flag:
+                print(f"Voulez vous traiter et extraire le dossier {choice}")
+                input_yes_no = input("O / N : ")
+                if input_yes_no.upper() == "O":
+                    list_choices.append(choice)
+                    flag = True
+                elif input_yes_no.upper() == "N":
+                    print(f"Le dossier {choice} ne sera pas ajouté")
+                    flag = True
+                else:
+                    print("Je ne comprend pas votre réponse, réessayez ")
+                    pass
     print(f"Vous avez donc choisit d'extraire {list_choices}")
     time.sleep(10)
-    try:
+    while len(list_choices) > 0:
         if "PRÊT" in list_choices:
             # -------- PRÊT --------
             Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\Prêt Plans""",
+                # DIRNAME=[
+                #     f"""F:\Tcl\Prêt Plans\Prêt 2016""",
+                #     f"""F:\Tcl\Prêt Plans\Prêt 2017""",
+                #     f"""F:\Tcl\Prêt Plans\Prêt 2018""",
+                #     f"""F:\Tcl\Prêt Plans\Prêt 2019""",
+                # ],
                 name_file_arbo="output_datas/arborescence_tcl_pret_complet.csv",
-                name_file_success="output_datas/listes des succes Prêt Complet.csv",
-                name_file_failed="output_datas/listes des echecs Prêt Complet.csv",
+                name_file_success="output_datas/listes des succes Prêt complet.csv",
+                name_file_failed="output_datas/listes des echecs Prêt complet.csv",
                 input_user=9,
+                list_a_traiter=None,
+                name_file_failed_rattrapage=None,
             )
+            list_choices.remove("PRÊT")
         if "SERBER" in list_choices:
             # -------- SERBER --------
             Lunch_Menu.main(
@@ -67,8 +76,10 @@ def main_lunch_function():
                 name_file_success="output_datas/listes des succes Serber Complet.csv",
                 name_file_failed="output_datas/listes des echecs Serber Complet.csv",
                 input_user=8,
+                list_a_traiter=None,
+                name_file_failed_rattrapage=None,
             )
-
+            list_choices.remove("SERBER")
         if "Métro A" in list_choices:
             # # -------- Métro A --------
 
@@ -106,6 +117,7 @@ def main_lunch_function():
                     "UTMA POUDRETTE",
                 ],
             )
+            list_choices.remove("Métro A")
 
         if "Métro B" in list_choices:
             # -------- Métro B --------
@@ -140,14 +152,15 @@ def main_lunch_function():
                     "SAXE GAMBETTA B",
                 ],
             )
+            list_choices.remove("Métro B")
         if "Métro C" in list_choices:
             # -------- Métro C --------
             Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations""",
-                name_file_arbo="output_datas/arborescence_metro_ligne_c.csv",
-                name_file_success="output_datas/listes des succes Métro C complet TEST.csv",
-                name_file_failed="output_datas/listes des echecs Métro C première passe TEST.csv",
-                name_file_failed_rattrapage="output_datas/listes des echecs Métro C après seconde passe TEST.csv",
+                name_file_arbo="output_datas/arborescence_metro_ligne_c_2.csv",
+                name_file_success="output_datas/listes des succes Métro C complet TEST 2.csv",
+                name_file_failed="output_datas/listes des echecs Métro C première passe TEST 2.csv",
+                name_file_failed_rattrapage="output_datas/listes des echecs Métro C après seconde passe TEST 2.csv",
                 input_user=1,
                 list_a_traiter=[
                     "ARCHIVES USVB",
@@ -165,12 +178,13 @@ def main_lunch_function():
                     "INTERSTATIONS  C",
                 ],
             )
+            list_choices.remove("Métro C")
         if "Métro D" in list_choices:
 
             # -------- Métro D --------
 
             Lunch_Menu.main(
-                DIRNAME=f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations""",
+                DIRNAME=f"""F:\Tcl\{str(305)} à {str(322)} - Métro D - stations""",
                 name_file_arbo="output_datas/arborescence_metro_ligne_c.csv",
                 name_file_success="output_datas/listes des succes Métro C complet.csv",
                 name_file_failed="output_datas/listes des echecs Métro C première passe.csv",
@@ -200,6 +214,7 @@ def main_lunch_function():
                     "VIEUX LYON",
                 ],
             )
+            list_choices.remove("Métro D")
         if "METRO communs" in list_choices:
             # -------- Métro Communs --------
             Lunch_Menu.main(
@@ -213,7 +228,7 @@ def main_lunch_function():
                     "COMMUNS METRO",
                 ],
             )
-
+            list_choices.remove("METRO communs")
         if "METRO ABC,AB,A,B,C,D COMMUNS" in list_choices:
             # -------- METRO ABC,AB,A,B,C,D COMMUNS --------
             Lunch_Menu.main(
@@ -239,7 +254,7 @@ def main_lunch_function():
                     "COMMUNS  D",
                 ],
             )
-
+            list_choices.remove("METRO ABC,AB,A,B,C,D COMMUNS")
         if "T1" in list_choices:
             # -------- T1 --------
             Lunch_Menu.main(
@@ -294,14 +309,15 @@ def main_lunch_function():
                     "VOUTE DE PERRACHE",
                 ],
             )
+            list_choices.remove("T1")
         if "T2" in list_choices:
             # -------- T2 --------
             Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(501)} - Tramway T2 - stations""",
-                name_file_arbo="output_datas/arborescence_tram_ligne_t2.csv",
-                name_file_success="output_datas/listes des succes Tram Ligne T2 complet.csv",
-                name_file_failed="output_datas/listes des echecs Tram Ligne T2 première passe.csv",
-                name_file_failed_rattrapage="output_datas/listes des echecs Tram Ligne T2 après seconde passe.csv",
+                name_file_arbo="output_datas/arborescence_tram_ligne_t2_test.csv",
+                name_file_success="output_datas/listes des succes Tram Ligne T2 Test complet.csv",
+                name_file_failed="output_datas/listes des echecs Tram Ligne T2 Test première passe.csv",
+                name_file_failed_rattrapage="output_datas/listes des echecs Tram Ligne T2 Test après seconde passe.csv",
                 input_user=1,
                 list_a_traiter=[
                     "ALFRED DE VIGNY",
@@ -348,6 +364,7 @@ def main_lunch_function():
                     "VINATIER",
                 ],
             )
+            list_choices.remove("T2")
 
         if "T3" in list_choices:
             # -------- T3 --------
@@ -385,6 +402,7 @@ def main_lunch_function():
                     "VILLEURBANNE LA SOIE",
                 ],
             )
+            list_choices.remove("T3")
 
         if "T4" in list_choices:
             # -------- T4 --------
@@ -429,6 +447,8 @@ def main_lunch_function():
                     "ZAC BERTHELOT",
                 ],
             )
+            list_choices.remove("T4")
+
         if "T5" in list_choices:
             # -------- T5 --------
             Lunch_Menu.main(
@@ -449,6 +469,7 @@ def main_lunch_function():
                     "PLANCHES T5",
                 ],
             )
+            list_choices.remove("T5")
 
         if "T6" in list_choices:
             # -------- T6 --------
@@ -480,6 +501,7 @@ def main_lunch_function():
                     "VINATIER T6",
                 ],
             )
+            list_choices.remove("T6")
 
         if "TRAM COMMUNS" in list_choices:
             # -------- TRAM COMMUNS --------
@@ -500,6 +522,8 @@ def main_lunch_function():
                     "COMMUNS TRAMWAY T6",
                 ],
             )
+            list_choices.remove("TRAM COMMUNS")
+
         if "TRAM T1 T2 T3 T4 T5 T6 COMMUNS" in list_choices:
             # -------- TRAM T1 T2 T3 T4 T5 T6 COMMUNS --------
             Lunch_Menu.main(
@@ -526,6 +550,7 @@ def main_lunch_function():
                     "COMMUNS TRAMWAY T6",
                 ],
             )
+            list_choices.remove("TRAM T1 T2 T3 T4 T5 T6 COMMUNS")
 
         if "RHONE EXPRESS COMMUNS" in list_choices:
             # -------- RHONE EXPRESS COMMUNS --------
@@ -538,7 +563,7 @@ def main_lunch_function():
                 input_user=1,
                 list_a_traiter=["RHONEXPRESS"],
             )
-
+            list_choices.remove("RHONE EXPRESS COMMUNS")
         if "FUNI COMMUNS + STATIONS" in list_choices:
             # -------- FUNI COMMUNS + STATIONS --------
             Lunch_Menu.main(
@@ -560,7 +585,7 @@ def main_lunch_function():
                     "VIEUX LYON",
                 ],
             )
-
+            list_choices.remove("FUNI COMMUNS + STATIONS")
         if "Lignes Fortes - C1 C2 C3 C13" in list_choices:
             # -------- Lignes Fortes - C1 C2 C3 C13 --------
             Lunch_Menu.main(
@@ -576,6 +601,7 @@ def main_lunch_function():
                     "LIGNE FORTE C3",
                 ],
             )
+            list_choices.remove("Lignes Fortes - C1 C2 C3 C13")
         if "Surface" in list_choices:
             # -------- Surface --------
             Lunch_Menu.main(
@@ -626,10 +652,11 @@ def main_lunch_function():
                     "UT VAISE",
                 ],
             )
-    except Exception as e:
-        print(e.args)
+            list_choices.remove("Surface")
+
     end = timer()
     print(end - start)
 
 
-main_lunch_function()
+main_lunch_function(list_choices=[])
+# main_lunch_function(list_choices=["T5", "Lignes Fortes - C1 C2 C3 C13"])

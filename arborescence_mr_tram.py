@@ -7,9 +7,11 @@ from timeit import default_timer as timer
 start = timer()
 
 
-DIRNAME_MRTRAM = (
-    f"""F:\BE PERSO (M)\Millot J\{str(0)} Documentation de conception T4 juin 2010"""
-)
+# DIRNAME_MRTRAM = (
+#     f"""F:\BE PERSO (M)\Millot J\{str(0)} Documentation de conception T4 juin 2010"""
+# )
+DIRNAME_MRTRAM = f"""F:\BE PERSO (M)\Millot J\T6"""
+# DIRNAME_MRTRAM = f"""F:\BE PERSO (M)\Millot J\Oct 2015 Fin de garantie"""
 
 
 def split_arbo(
@@ -30,96 +32,96 @@ def create_arbo():
     list_time = []
     for path, subdirs, files in os.walk(DIRNAME_MRTRAM):
         for name in files:
-            # try:
-            if (
-                not "Thumbs" in os.path.join(path, name)
-                and "." in os.path.join(path, name)[-5:]
-            ):
-                # print(os.path.join(path, name))
+            try:
+                if (
+                    not "Thumbs" in os.path.join(path, name)
+                    and "." in os.path.join(path, name)[-5:]
+                ):
+                    # print(os.path.join(path, name))
 
-                # Référence
-                path_modify = os.path.join(path, name).replace(
-                    "H:", "K:\INT-SVLY-NASPROD2\Doc_Terrain_tram"
-                )
-                list_split = split_arbo(path_modify)
-                list_arbo.append(path_modify)
-                ref = list_split[-1]
-                list_file_name.append(ref)
+                    # Référence
+                    path_modify = os.path.join(path, name).replace(
+                        "H:", "K:\INT-SVLY-NASPROD2\Doc_Terrain_tram"
+                    )
+                    list_split = split_arbo(path_modify)
+                    list_arbo.append(path_modify)
+                    ref = list_split[-1]
+                    list_file_name.append(ref)
 
-                # Indice
-                # print("ref debut", ref)
-                # indice = indice[0]
-                # print("indice", indice)
-                try:
-                    # print("ici")
-                    indice = re.findall("-(\D{1}\d*.?\d*)_", ref)
-                    indice = indice[0]
-                    print(indice)
-                    list_indice.append(indice)
-                    ref = ref.replace("-" + indice, "")
-                except Exception as e:
-
-                    if "_Indice_" in ref:
-                        indice = re.findall("_Indice_(.*)[.]", ref)
+                    # Indice
+                    # print("ref debut", ref)
+                    # indice = indice[0]
+                    # print("indice", indice)
+                    try:
+                        # print("ici")
+                        indice = re.findall("-(\D{1}\d*.?\d*)_", ref)
                         indice = indice[0]
+                        print(indice)
                         list_indice.append(indice)
-                        ref = ref.replace("_Indice_" + indice, "")
+                        ref = ref.replace("-" + indice, "")
+                    except Exception as e:
+
+                        if "_Indice_" in ref:
+                            indice = re.findall("_Indice_(.*)[.]", ref)
+                            indice = indice[0]
+                            list_indice.append(indice)
+                            ref = ref.replace("_Indice_" + indice, "")
+                        else:
+                            list_indice.append(" ")
+
+                    # Titre
+                    if re.match("^[^_]+(?=_)", ref):
+                        if "Nomenclature" in ref:
+                            titre = re.findall("^[^_]+(?=_)", ref)
+                            titre = titre[0]
+                            list_titre.append(titre)
+                            ref = ref.replace(titre, "")
+
+                            plan = re.findall("_(.*)[.]", ref)
+                            plan = plan[0]
+                            list_plan.append(plan)
+                            ref = ref.replace(plan, "")
+                        else:
+                            titre = re.findall("_(.*)[.]", ref)
+                            titre2 = titre[0]
+                            list_titre.append(titre2)
+                            ref = ref.replace(titre2, "")
+
+                            plan = re.findall("^[^_]+(?=_)", ref)
+                            plan = plan[0]
+                            list_plan.append(plan)
+                            ref = ref.replace(plan, "")
                     else:
-                        list_indice.append(" ")
+                        if len(ref) < 7:
+                            plan = re.findall("(.*)[.]", ref)
+                            plan = plan[0]
+                            list_plan.append(plan)
+                            list_titre.append(" ")
+                        else:
+                            titre = re.findall("(.*)[.]", ref)
+                            titre2 = titre[0]
+                            list_titre.append(titre2)
+                            list_plan.append(" ")
 
-                # Titre
-                if re.match("^[^_]+(?=_)", ref):
-                    if "Nomenclature" in ref:
-                        titre = re.findall("^[^_]+(?=_)", ref)
-                        titre = titre[0]
-                        list_titre.append(titre)
-                        ref = ref.replace(titre, "")
+                    # Plan
 
-                        plan = re.findall("_(.*)[.]", ref)
-                        plan = plan[0]
-                        list_plan.append(plan)
-                        ref = ref.replace(plan, "")
-                    else:
-                        titre = re.findall("_(.*)[.]", ref)
-                        titre2 = titre[0]
-                        list_titre.append(titre2)
-                        ref = ref.replace(titre2, "")
+                    # Format
+                    # print("ref avant format fichir", ref)
 
-                        plan = re.findall("^[^_]+(?=_)", ref)
-                        plan = plan[0]
-                        list_plan.append(plan)
-                        ref = ref.replace(plan, "")
+                    format = re.findall("[.](.*)", ref)
+                    format = format[0]
+                    list_format.append(format)
+                    ref = ref.replace(format, "")
+                    # date
+                    modTimesinceEpoc = os.path.getmtime(os.path.join(path, name))
+                    modificationTime = time.strftime(
+                        "%d-%m-%Y %H:%M", time.localtime(modTimesinceEpoc)
+                    )
+                    list_time.append(modificationTime)
                 else:
-                    if len(ref) < 7:
-                        plan = re.findall("(.*)[.]", ref)
-                        plan = plan[0]
-                        list_plan.append(plan)
-                        list_titre.append(" ")
-                    else:
-                        titre = re.findall("(.*)[.]", ref)
-                        titre2 = titre[0]
-                        list_titre.append(titre2)
-                        list_plan.append(" ")
-
-                # Plan
-
-                # Format
-                # print("ref avant format fichir", ref)
-
-                format = re.findall("[.](.*)", ref)
-                format = format[0]
-                list_format.append(format)
-                ref = ref.replace(format, "")
-                # date
-                modTimesinceEpoc = os.path.getmtime(os.path.join(path, name))
-                modificationTime = time.strftime(
-                    "%d-%m-%Y %H:%M", time.localtime(modTimesinceEpoc)
-                )
-                list_time.append(modificationTime)
-            else:
-                pass
-            # except Exception as e:
-            #     print(e.args)
+                    pass
+            except Exception as e:
+                print(e.args)
     print(len(list_arbo))
     print(len(list_file_name))
     print(len(list_plan))
@@ -140,7 +142,7 @@ def create_arbo():
     )
 
     df.to_csv(
-        "output_datas/mr_tram_t4.csv",
+        "output_datas/mr_tram_t6.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",
@@ -234,6 +236,10 @@ def comp_between_arbo_and_arborescence_mr_tram_pdu():
         encoding="utf-8-sig",
     )
     print(df_success)
+
+
+# def comp_between_arbo_and_arborescence_mr_tram_t5_t6():
+#     pass
 
 
 create_arbo()

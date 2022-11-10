@@ -380,18 +380,18 @@ def compare_list_arbo_csv_bi_rattrapage(
                             dash, dash + "-0"
                         )
                         value_dash_zero = value[:2] + "-0" + value[-2:]
-                        if value_dash_zero.replace(" ", "") in ref_fourn.replace(
-                            " ", ""
-                        ):
-                            if "AQ" in ref_fourn:
-                                flag = True
-                                list_success_path.append(keys)
-                                list_success_list.append(ref_fiche)
-                                list_success_values.append(values)
-                                list_success_provenance.append(" ")
-                                break
-                            else:
-                                pass
+                        # if value_dash_zero.replace(" ", "") in ref_fourn.replace(
+                        #     " ", ""
+                        # ):
+                        #     if "AQ" in ref_fourn:
+                        #         flag = True
+                        #         list_success_path.append(keys)
+                        #         list_success_list.append(ref_fiche)
+                        #         list_success_values.append(values)
+                        #         list_success_provenance.append(" ")
+                        #         break
+                        #     else:
+                        #         pass
                         if value_dash in ref_fourn:
                             flag = True
                             list_success_path.append(keys)
@@ -413,16 +413,16 @@ def compare_list_arbo_csv_bi_rattrapage(
                             list_success_values.append(values)
                             list_success_provenance.append(" ")
                             break
-                        if re.match("\w{2}.?\d{5}", value):
-                            value_remove_post = re.findall("(\w{2}.?\d{5})", value)
-                            value_remove_post = value_remove_post[0]
-                            if value_remove_post in ref_fourn:
-                                flag = True
-                                list_success_path.append(keys)
-                                list_success_list.append(ref_fiche)
-                                list_success_values.append(values)
-                                list_success_provenance.append(" ")
-                                break
+                        # if re.match("\w{2}.?\d{5}", value):
+                        #     value_remove_post = re.findall("(\w{2}.?\d{5})", value)
+                        #     value_remove_post = value_remove_post[0]
+                        #     if value_remove_post in ref_fourn:
+                        #         flag = True
+                        #         list_success_path.append(keys)
+                        #         list_success_list.append(ref_fiche)
+                        #         list_success_values.append(values)
+                        #         list_success_provenance.append(" ")
+                        #         break
 
                         if re.match("(ST\d{6})", value):
                             value_remove_post = re.findall("(ST\d{6})", value)
@@ -581,6 +581,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                 )
                 dict_jaro_distance[jaro_stat] = {
                     "ref": ref_fourn,
+                    "value": value,
                     "jaro_distance": jaro_distance,
                 }
             if flag == True:
@@ -598,7 +599,7 @@ def compare_list_arbo_csv_bi_rattrapage(
             if len(dict_jaro_distance) > 0:
                 stats_key = list(sorted_dict_jaro_distance)[0]
                 if (
-                    stats_key >= 0.95
+                    stats_key >= 0.90
                     and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
                 ):
                     if sorted_dict_jaro_distance[stats_key]["value"].replace(
@@ -611,9 +612,11 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_provenance.append(
                             "ajouté grâce à l'algo de Jaro-Winkler"
                         )
-                        break
+                        continue
                 else:
-                    pass
+                    list_failed_path.append(keys)
+                    list_failed_list.append(values)
+                    list_failed_provenance.append(sorted_dict_jaro_distance)
             else:
                 list_failed_path.append(keys)
                 list_failed_list.append(values)
@@ -623,7 +626,7 @@ def compare_list_arbo_csv_bi_rattrapage(
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
             "lists": list_success_values,
-            "dict": list_success_provenance,
+            # "dict": list_success_provenance,
         },
     )
     print(df_success)
@@ -632,7 +635,7 @@ def compare_list_arbo_csv_bi_rattrapage(
         {
             "Chemin du fichier": list_failed_path,
             "Référence Fiche": list_failed_list,
-            "dict": list_failed_provenance,
+            # "dict": list_failed_provenance,
         },
     )
     print(df_success.shape)

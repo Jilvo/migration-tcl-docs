@@ -114,7 +114,7 @@ class MainExtraction:
             list_station = []
             print("station actuelle : ", station)
             for index, row in df.iterrows():
-                if row["LIBSITE"] in station:
+                if row["LIBSITE"] in station and row["DEFINITIF"] == "D":
                     list_station.append(
                         [
                             row["NUMERO_REF_FOURN"],
@@ -158,7 +158,7 @@ class MainExtraction:
         list_extaction = []
 
         for index, row in df.iterrows():
-            if row["LIBSITE"] in list_a_traiter:
+            if row["LIBSITE"] in list_a_traiter and row["DEFINITIF"] == "D":
                 list_extaction.append(
                     [
                         row["NUMERO_REF_FOURN"],
@@ -307,6 +307,7 @@ class MainExtraction:
         list_a_traiter,
     ):
         ### A DECOMMENTER DIRNAME,name_file_arbo,name_file_success,name_file_failed,input_user
+        print("list_a_traiter", list_a_traiter)
         start = timer()
         print("********************************")
         if input_user == None:
@@ -360,6 +361,7 @@ class MainExtraction:
                         name_file_failed,
                     )
                 else:
+                    print("df_extraction", df_extraction)
                     if list_a_traiter == None:
                         list_a_traiter = self.create_list_station(input_user)
                         print(list_a_traiter)
