@@ -2,13 +2,13 @@ import os
 import sys
 import pandas as pd
 import re
+import time
 
 from pathlib import Path
 from timeit import default_timer as timer
 
 start = timer()
 
-DIRNAME = f"""Z:\PDF"""
 list_arbo = []
 
 # with open("input_datas/20220410 Bellecour A & D Provisoires.xls") as f:
@@ -17,6 +17,7 @@ list_arbo = []
 
 def create_arbo():
     """On crée l'arborescence"""
+    DIRNAME = f"""Z:\PDF"""
     for path, subdirs, files in os.walk(DIRNAME):
         for name in files:
             try:
@@ -29,6 +30,28 @@ def create_arbo():
     )
     df.to_csv(
         "output_datas/arborescence_semaly_pdf.csv",
+        sep=";",
+        index=False,
+        encoding="utf-8-sig",
+    )
+
+
+def create_arbo_tif():
+    """On crée l'arborescence"""
+    # DIRNAME = f"""Z:\TIF\Ligne_A\Bellecour"""
+    DIRNAME = f"""Z:\TIF"""
+    for path, subdirs, files in os.walk(DIRNAME):
+        for name in files:
+            try:
+                print(os.path.join(path, name))
+                list_arbo.append(os.path.join(path, name))
+            except Exception as e:
+                print(e.args)
+    df = pd.DataFrame(
+        list_arbo,
+    )
+    df.to_csv(
+        "output_datas/arborescence_semaly_tif2.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",
@@ -58,13 +81,13 @@ def create_file_semaly_pdf():
         encoding="cp1252",
     )
 
-    print(df_arbo)
-    print(df_with_meta)
+    # print(df_arbo)
+    # print(df_with_meta)
     df_meta_listes_url = []
     # for index_meta, row_meta in df_with_meta.iterrows():
     #     df_meta_listes_url.append(row_meta["Chemin"].upper())
     df_meta_listes_url = df_with_meta["Chemin"].tolist()
-    print(df_meta_listes_url)
+    # print(df_meta_listes_url)
     list_success_path = []
     list_failed_path = []
     list_niveau_1 = []
@@ -76,14 +99,14 @@ def create_file_semaly_pdf():
     list_libelle = []
     list_code_ouvrage = []
     # list_intitule_ouvrage = []
-    # list_ligne = []
-    # list_extension = []
+    list_ligne = []
+    list_extension = []
     for index, row in df_arbo.iterrows():
-        # print(row["Chemin modif"])
+        # print(row["Chemin"])
         # print("df_meta_listes_url", df_meta_listes_url)
-        if row["Chemin modif"].upper() in df_meta_listes_url:
+        if row["Chemin"].upper() in df_meta_listes_url:
             # print("ok")
-            index_list = df_meta_listes_url.index(row["Chemin modif"].upper())
+            index_list = df_meta_listes_url.index(row["Chemin"].upper())
 
             # print(df_with_meta.loc[index_list])
             # print("****************************************************************")
@@ -96,13 +119,15 @@ def create_file_semaly_pdf():
             list_niveau_plans.append(df_with_meta.loc[index_list]["N° PLAN"])
             list_indice.append(df_with_meta.loc[index_list]["INDICE"])
             list_libelle.append(df_with_meta.loc[index_list]["LIBELLE"])
-            list_success_path.append(row["Chemin modif"])
+            list_success_path.append(row["0"])
             list_code_ouvrage.append(df_with_meta.loc[index_list]["Plan"])
+            list_ligne.append(df_with_meta.loc[index_list]["Plan"][0])
+            list_extension.append("PDF")
             # list_intitule_ouvrage.append(df_with_meta.loc[index_list]["Intitulé Ouvrage"])
             # list_ligne.append(df_with_meta.loc[index_list]["Ligne"])
             # list_extension.append(df_with_meta.loc[index_list]["Extension"])
         else:
-            list_failed_path.append(row["Chemin modif"])
+            list_failed_path.append(row["Chemin"])
     df_success = pd.DataFrame(
         {
             "NIVEAU 1": list_niveau_1,
@@ -115,8 +140,8 @@ def create_file_semaly_pdf():
             "Chemin": list_success_path,
             "Code Ouvrage": list_code_ouvrage,
             # "Intitulé Ouvrage": list_intitule_ouvrage,
-            # "Ligne": list_ligne,
-            # "Extension": list_extension,
+            "Ligne": list_ligne,
+            "Extension": list_extension,
         }
     )
 
@@ -140,18 +165,22 @@ def create_file_semaly_pdf():
 
 
 def comp_between_arbo_and_arborescence_semaly_pdu():
+    print("lunch")
     df_tif = pd.read_csv(
-        "output_datas/arborescence_semaly_tif.csv",
+        "output_datas/arborescence_semaly_tif2.csv",
         sep=";",
         error_bad_lines=False,
         encoding="utf-8-sig",
+        # encoding="cp1252",
     )
-    df_semaly_pdu = pd.read_csv(
-        "input_datas\Semaly Pierre.csv",
+    df_with_meta = pd.read_csv(
+        "output_datas\listes des succes Semaly TIF into PDF 3.csv",
         sep=";",
         error_bad_lines=False,
-        encoding="cp1252",
+        encoding="utf-8-sig",
+        # encoding="cp1252",
     )
+    print(df_with_meta)
     list_arbo = []
     list_success_path = []
     list_failed_path = []
@@ -166,47 +195,60 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
     list_intitule_ouvrage = []
     list_ligne = []
     list_extension = []
-    print(df_tif)
-    print(df_semaly_pdu)
-    print(df_semaly_pdu["Chemin"][0])
+
+    df_meta_listes_url_1 = df_with_meta["Chemin"].values.tolist()
+    df_meta_listes_url = [x.upper() for x in df_meta_listes_url_1]
+    print(df_meta_listes_url)
     for index, row in df_tif.iterrows():
         path_origin = row[0]
         path_tif = path_origin.replace("TIF", "PDF")
         path_tif = path_tif.replace("tif", "pdf")
-        path_tif = path_tif.replace("Z:", "K:\INT-Sply-pat\Plans Numerises")
-        print(path_tif)
-        path_to_check = Path(path_tif)
-        for index_pdu, row_pdu in df_semaly_pdu.iterrows():
-            if path_tif == row_pdu["Chemin"]:
-                print("TROUVE", path_tif)
-                print("le fichier existe", path_to_check)
-                list_niveau_1.append(row_pdu["NIVEAU 1"])
-                list_niveau_2.append(row_pdu["NIVEAU 2"])
-                list_zone.append(row_pdu["Zone"])
-                list_niveau_3.append(row_pdu["NIVEAU 3"])
-                list_niveau_plans.append(row_pdu["NUM_PLAN"])
-                list_indice.append(row_pdu["INDICE"])
-                list_libelle.append(row_pdu["LIBELLE"])
-                list_success_path.append(path_to_check)
-                list_code_ouvrage.append(row_pdu["Code Ouvrage"])
-                list_intitule_ouvrage.append(row_pdu["Intitulé Ouvrage"])
-                list_ligne.append(row_pdu["Ligne"])
-                list_extension.append(row_pdu["Extension"])
-            else:
-                # list_failed_path.append(path_to_check)
-                pass
+        # path_tif = path_tif.replace("\\", "\\\\")
+        print("path_tif", path_tif.upper())
+        # print(row["0"])
+
+        if path_tif.upper() in df_meta_listes_url:
+            print("ok")
+
+            # print(df_meta_listes_url)
+            # print("df_meta_listes_url", df_meta_listes_url)
+            index_list = df_meta_listes_url.index(path_tif.upper())
+
+            # print(df_with_meta.loc[index_list])
+            # print("****************************************************************")
+            # print(df_with_meta.loc[index_list, "Plan"])
+            # print(df_with_meta.loc[index_list]["Plan"])
+            list_niveau_1.append(df_with_meta.loc[index_list]["NIVEAU 1"])
+            list_niveau_2.append(df_with_meta.loc[index_list]["NIVEAU 2"])
+            # list_zone.append(df_with_meta.loc[index_list]["Zone"])
+            list_niveau_3.append(df_with_meta.loc[index_list]["NIVEAU 3"])
+            list_niveau_plans.append(df_with_meta.loc[index_list]["NUM_PLAN"])
+            list_indice.append(df_with_meta.loc[index_list]["INDICE"])
+            list_libelle.append(df_with_meta.loc[index_list]["LIBELLE"])
+            list_success_path.append(path_origin)
+            # list_success_path.append(row["Chemin modif"])
+            list_code_ouvrage.append(df_with_meta.loc[index_list]["Code Ouvrage"])
+            # list_intitule_ouvrage.append(df_with_meta.loc[index_list]["Intitulé Ouvrage"])
+            list_ligne.append(df_with_meta.loc[index_list]["Code Ouvrage"][0])
+            list_extension.append("TIF")
+            # list_extension.append(df_with_meta.loc[index_list]["Extension"])
+            # else:
+            #     print("non")
+            #     list_failed_path.append(row["0"])
+        else:
+            print("pas ok")
         df_success = pd.DataFrame(
             {
                 "NIVEAU 1": list_niveau_1,
                 "NIVEAU 2": list_niveau_2,
-                "Zone": list_zone,
+                # "Zone": list_zone,
                 "NIVEAU 3": list_niveau_3,
                 "NUM_PLAN": list_niveau_plans,
                 "INDICE": list_indice,
                 "LIBELLE": list_libelle,
                 "Chemin": list_success_path,
                 "Code Ouvrage": list_code_ouvrage,
-                "Intitulé Ouvrage": list_intitule_ouvrage,
+                # "Intitulé Ouvrage": list_intitule_ouvrage,
                 "Ligne": list_ligne,
                 "Extension": list_extension,
             }
@@ -218,13 +260,13 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
             }
         )
         df_success.to_csv(
-            "output_datas/listes des succes Semaly TIF into PDF 3.csv",
+            "output_datas/listes des succes Semaly TIF.csv",
             sep=";",
             index=False,
             encoding="utf-8-sig",
         )
         df_failed.to_csv(
-            "output_datas/listes des echecs Semaly TIF into PDF 3.csv",
+            "output_datas/listes des echecs Semaly TIF.csv",
             sep=";",
             index=False,
             encoding="utf-8-sig",
@@ -232,8 +274,9 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
 
 
 # create_arbo()
-create_file_semaly_pdf()
-# comp_between_arbo_and_arborescence_semaly_pdu()
+# create_file_semaly_pdf()
+create_arbo_tif()
+comp_between_arbo_and_arborescence_semaly_pdu()
 
 # end = timer()
 # print(end - start)
