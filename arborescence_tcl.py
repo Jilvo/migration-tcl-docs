@@ -3,7 +3,6 @@ Ce Script crée l'arborescence d'un chemin et la retourne sous format CSV
 Input : None
 Output : output_datas/arborescence_tcl.csv
 """
-
 import os
 import sys
 import pandas as pd
@@ -13,13 +12,7 @@ import time
 from difflib import SequenceMatcher
 import jellyfish
 
-
 start = timer()
-
-DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
-# DIRNAME = f"""F:\Tcl\{str(200)} - Métro C - communs"""
-# DIRNAME = f"""H:\Tcl\Prêt Plans"""
-list_arbo = []
 
 with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
     LIST_PARSE_WORD = f.read().splitlines()
@@ -27,6 +20,7 @@ with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
 
 def create_arbo(DIRNAME, name_file_arbo):
     """On crée l'arborescence"""
+    list_arbo = []
     if type(DIRNAME) == str:
         for path, subdirs, files in os.walk(DIRNAME):
             for name in files:
@@ -49,24 +43,12 @@ def create_arbo(DIRNAME, name_file_arbo):
             "Chemin du fichier": list_arbo,
         }
     )
-    # df.to_csv(
-    #     "output_datas/arborescence_tcl_pret.csv",
-    #     sep="\t",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
     df.to_csv(
         name_file_arbo,
         sep="\t",
         index=False,
         encoding="utf-8-sig",
     )
-    # df.to_csv(
-    #     "output_datas/arborescence_tcl_bellecour.csv",
-    #     sep="\t",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
 
 
 def split_arbo(
@@ -113,12 +95,8 @@ def find_ref_fournisseur(name_file_arbo):
         list_split_station = []
         list_split = split_arbo(row["Chemin du fichier"])
         list_split_station.append(list_split)
-        # print("list_split[2]", list_split[2])
-        # print("list_split[3].upper()", list_split[3].upper())
-        # print("df_stations", df_stations)
         if "communs" in list_split[2]:
             list_station_for_filter = []
-            # print("list_split[2]", list_split[2])
             if "2 - Métro ABC - communs" in list_split[2]:
                 list_station_for_filter.append("COMMUNS  A , B & C")
             elif "3 - Métro AB" in list_split[2]:
@@ -188,44 +166,21 @@ def find_ref_fournisseur(name_file_arbo):
                 list_station_for_filter.append("SURFACE")
             list_split_station.append(list_station_for_filter)
         elif "stations" in list_split[2]:
-            # print(
-            #     f"re.sub(" ", " ", list_split[3].upper())",
-            #     re.sub("[-|_|(| ]", "", list_split[3].upper()),
-            # )
-            # print(
-            #     "re sub comprehsion list",
-            #     [re.sub("[-|_|(| ]", "", i.upper()) for i in df_stations],
-            # )
             list_station_for_filter = []
             for key, value in dict_stations.items():
                 if list_split[3] == key:
-                    # for stat in df_stations:
-                    #     if re.sub("[-|_|(| ]", "", list_split[3].upper()) in re.sub(
-                    #         "[-|_|(| ]", "", stat.upper()
-                    #     ):
-                    # if list_split[3].upper() in df_stations:
-
-                    # str_station = str_station.replace("-", " ")
-                    # print("value", value)
                     list_station_for_filter.append(value)
                     continue
             list_split_station.append(list_station_for_filter)
-        # print("list_split_station", list_split_station)
         dict_arbo[row["Chemin du fichier"]] = list_split_station
-    # print("dict_arbo.values()", dict_arbo.values())
     for i in dict_arbo.values():
         index_element = i[0]
         print("index_element", index_element)
         for item in index_element:
-            # for parse in LIST_PARSE_WORD:
-            # if parse in item or item == parse:
-            #     index_element.remove(item)
             if not re.match("(.*\d{1,}.*)", item):
-                # print("Pas de chiffre, on delete", item)
                 index_element.remove(item)
                 continue
             if re.match("(.*\d{2,}\D{11,})", item):
-                # print("2 chiffres et 8 lettres ou plus, on delete", item)
                 index_element.remove(item)
                 continue
             for parse in LIST_PARSE_WORD:
@@ -238,15 +193,10 @@ def find_ref_fournisseur(name_file_arbo):
 
         try:
             for item in index_element:
-                # for parse in LIST_PARSE_WORD:
-                # if parse in item or item == parse:
-                #     index_element.remove(item)
                 if not re.match("(.*\d{1,}.*)", item):
-                    # print("Pas de chiffre, on delete", item)
                     index_element.remove(item)
                     continue
                 if re.match("(.*\d{2,}\D{11,})", item):
-                    # print("2 chiffres et 8 lettres ou plus, on delete", item)
                     index_element.remove(item)
                     continue
                 for parse in LIST_PARSE_WORD:
@@ -269,10 +219,6 @@ def find_ref_fournisseur(name_file_arbo):
                 del index_element[0]
         except Exception as e:
             pass
-        # del index_element[0]
-        # if re.match("^(.+)\.", index_element[-1]):
-        #     last_item_to_parse = re.findall("^(.+)\.", index_element[-1])
-        # index_element[-1] = last_item_to_parse[0]
     return dict_arbo
 
 
@@ -286,19 +232,6 @@ def compare_list_arbo_csv_bi(
     Input : input_datas/*.csv"""
     dict_arbo = find_ref_fournisseur(name_file_arbo)
     df = df_extraction
-    # df = pd.read_csv(
-    #     "input_datas/20221010_ExtratTCLDoc complete.csv",
-    #     encoding="unicode_escape",
-    #     delimiter=";",
-    # )
-    # df = pd.read_csv(
-    #     "input_datas/Extraction Pret.csv",
-    #     encoding="unicode_escape",
-    #     delimiter=";",
-    # )
-    # print(df_p)
-    # print(df_p["Référence fournisseur"])
-    # print(df_p["Référence fiche"])
     list_success_path = []
     list_success_list = []
     list_success_values = []
@@ -308,19 +241,12 @@ def compare_list_arbo_csv_bi(
     list_failed_provenance = []
     print("df", df)
     for keys, values in dict_arbo.items():
-        # print(keys)
         if "ST-100012-B.pdf" in keys:
             print("On entre dans un doublon")
             time.sleep(10)
         flag = False
         dict_jaro_distance = {}
-        # print("values", values)
         for value in values[0]:
-            # print("values", values)
-            # print("values[1", values[1])
-            # for ref_fourn, ref_fiche in zip(
-            #     df["Référence fournisseur"], df["Référence fiche"]
-            # ):
             for ref_fourn, ref_fiche in zip(
                 df[values[1][0]]["Référence fournisseur"],
                 df[values[1][0]]["Référence fiche"],
@@ -351,18 +277,6 @@ def compare_list_arbo_csv_bi(
                     list_success_values.append(values)
                     list_success_provenance.append("1 ")
                     break
-                # except Exception as e:
-                #     print(e.args)
-                # ### Recherche recherche en formatant au format alphanumérique
-                # ref_fourn_alphanumeric = "".join(
-                #     e for e in ref_fourn if ref_fourn.isalnum()
-                # )
-                # value_alphanumeric = "".join(e for e in value if value.isalnum())
-                # if value_alphanumeric == ref_fourn:
-                #     flag = True
-                #     list_success_path.append(keys)
-                #     list_success_list.append(ref_fiche)
-                #     break
 
                 ### Recherche en enlevant 15 caractères si commence par AQ,AL,AY,AE,AL,BW,CC
                 if value[:5] == "GMZ00":
@@ -511,9 +425,6 @@ def compare_list_arbo_csv_bi(
                                 value_last_eight = value_last_eight.replace(
                                     value_last_eight[1], value_last_eight[1] + " "
                                 )
-                    # except Exception as e:
-                    #     print("ici")
-                    #     print(e.args)
                     if value_last_eight in ref_fourn:
                         flag = True
                         list_success_path.append(keys)
@@ -836,19 +747,6 @@ def compare_list_arbo_csv_bi(
         },
     )
     print(df_success.shape)
-
-    # df_success.to_csv(
-    #     "output_datas/listes des succes bellecour.csv",
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
-    # df_failed.to_csv(
-    #     "output_datas/listes des echecs bellecour.csv",
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
     df_success.to_csv(
         name_file_success,
         sep=";",
@@ -861,15 +759,3 @@ def compare_list_arbo_csv_bi(
         index=False,
         encoding="utf-8-sig",
     )
-
-
-# # parse_file = open("input_datas\parse_filter.txt", "r")
-# # for i in parse_file:
-# #     if "station" in i:
-# #         print("trouve")
-# #     print(i)
-# # create_arbo()
-# compare_list_arbo_csv_bi()
-
-# end = timer()
-# print(end - start)

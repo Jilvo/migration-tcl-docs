@@ -10,10 +10,6 @@ from timeit import default_timer as timer
 
 start = timer()
 
-DIRNAME = f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations\Croix-Paquet"""
-# DIRNAME = f"""F:\Tcl\{str(200)} - Métro C - communs"""
-# DIRNAME = f"""H:\Tcl\Prêt Plans"""
-list_arbo = []
 
 with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
     LIST_PARSE_WORD = f.read().splitlines()
@@ -21,6 +17,7 @@ with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
 
 def create_arbo(DIRNAME, name_file_arbo):
     """On crée l'arborescence"""
+    list_arbo = []
     if type(DIRNAME) == str:
         for path, subdirs, files in os.walk(DIRNAME):
             for name in files:
@@ -41,24 +38,12 @@ def create_arbo(DIRNAME, name_file_arbo):
     df = pd.DataFrame(
         list_arbo,
     )
-    # df.to_csv(
-    #     "output_datas/arborescence_tcl_pret.csv",
-    #     sep="\t",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
     df.to_csv(
         name_file_arbo,
         sep="\t",
         index=False,
         encoding="utf-8-sig",
     )
-    # df.to_csv(
-    #     "output_datas/arborescence_tcl_bellecour.csv",
-    #     sep="\t",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
 
 
 def split_arbo(
@@ -144,19 +129,6 @@ def compare_list_arbo_csv_bi_pret(
     Input : input_datas/*.csv"""
     dict_arbo = find_ref_fournisseur(name_file_arbo)
     df = df_extraction_pret
-    # df = pd.read_csv(
-    #     "input_datas/20221010_ExtratTCLDoc complete.csv",
-    #     encoding="unicode_escape",
-    #     delimiter=";",
-    # )
-    # df = pd.read_csv(
-    #     "input_datas/Extraction Pret.csv",
-    #     encoding="unicode_escape",
-    #     delimiter=";",
-    # )
-    # print(df_p)
-    # print(df_p["Référence fournisseur"])
-    # print(df_p["Référence fiche"])
     list_success_path = []
     list_success_list = []
     list_success_values = []
@@ -174,15 +146,10 @@ def compare_list_arbo_csv_bi_pret(
         except Exception as e:
             folder_for_doublon = keys
         flag = False
-        # print("values", values)
         for value in values:
-            # for ref_fourn, ref_fiche in zip(
-            #     df["Référence fournisseur"], df["Référence fiche"]
-            # ):
             for ref_fourn, ref_fiche in zip(
                 df["Référence fournisseur"], df["Référence fiche"]
             ):
-                # print("ref_fourn", ref_fourn)
                 ### Recherche basique
                 if value == ref_fourn:
                     flag = True
@@ -203,18 +170,6 @@ def compare_list_arbo_csv_bi_pret(
                     list_test_number.append("2")
                     list_folder_doublon_succes.append(folder_for_doublon)
                     break
-                # except Exception as e:
-                #     print(e.args)
-                # ### Recherche recherche en formatant au format alphanumérique
-                # ref_fourn_alphanumeric = "".join(
-                #     e for e in ref_fourn if ref_fourn.isalnum()
-                # )
-                # value_alphanumeric = "".join(e for e in value if value.isalnum())
-                # if value_alphanumeric == ref_fourn:
-                #     flag = True
-                #     list_success_path.append(keys)
-                #     list_success_list.append(ref_fiche)
-                #     break
 
                 ### Recherche en enlevant 15 caractères si commence par AQ,AL,AY,AE,AL,BW,CC
                 if value[:5] == "GMZ00":
@@ -287,15 +242,6 @@ def compare_list_arbo_csv_bi_pret(
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                     if value[:2] == "AQ":
-                        # if (
-                        #     value_last_eight.replace(
-                        #         value_last_eight[1], value_last_eight[1] + " "
-                        #     ).count(" ")
-                        #     == 2
-                        # ):
-                        #     value_last_eight = (
-                        #         value_last_eight[:2] + " " + value_last_eight[2:]
-                        #     )
                         if value_last_eight[:2] == "TS" or value_last_eight[:2] == "TP":
                             if (
                                 value_last_eight.replace(
@@ -386,17 +332,6 @@ def compare_list_arbo_csv_bi_pret(
                             list_test_number.append("8")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
-                    # # list_duo = ["HF", "FA", "FB", "FC", "FD", "FE"]
-                    # for duo in list_duo:
-                    #     if duo in value:
-                    #         value_no_spaces = value.replace(" ", "")
-                    #         if value_no_spaces[15:] in ref_fourn:
-                    #             flag = True
-                    #             list_success_path.append(keys)
-                    #             list_success_list.append(ref_fiche)
-                    #             list_success_values.append(values)
-
-                    #             break
                 ### Rajouter un tiret après ST,YA,SF,GL
                 list_need_dash = [
                     "BA",
@@ -450,18 +385,6 @@ def compare_list_arbo_csv_bi_pret(
                             list_test_number.append("12")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
-                        # if re.match("\w{2}.?\d{5}", value):
-                        #     value_remove_post = re.findall("(\w{2}.?\d{5})", value)
-                        #     value_remove_post = value_remove_post[0]
-                        #     if value_remove_post in ref_fourn:
-                        #         flag = True
-                        #         list_success_path.append(keys)
-                        #         list_success_list.append(ref_fiche)
-                        #         list_success_values.append(values)
-                        #         list_test_number.append("13")
-                        #         list_folder_doublon_succes.append(folder_for_doublon)
-                        #         break
-
                         if re.match("(ST\d{6})", value):
                             value_remove_post = re.findall("(ST\d{6})", value)
                             value_remove_post = value_remove_post[0]
@@ -662,18 +585,6 @@ def compare_list_arbo_csv_bi_pret(
     )
     print(df_success.shape)
 
-    # df_success.to_csv(
-    #     "output_datas/listes des succes bellecour.csv",
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
-    # df_failed.to_csv(
-    #     "output_datas/listes des echecs bellecour.csv",
-    #     sep=";",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
     df_success.to_csv(
         name_file_success,
         sep=";",

@@ -361,7 +361,7 @@ class MainExtraction:
                         name_file_failed,
                     )
                 else:
-                    print("df_extraction", df_extraction)
+                    time.sleep(2)
                     if list_a_traiter == None:
                         list_a_traiter = self.create_list_station(input_user)
                         print(list_a_traiter)
@@ -375,14 +375,9 @@ class MainExtraction:
                         name_file_success,
                         name_file_failed,
                     )
-                    print("La listes des arrêt à traiter est ", list_a_traiter)
-                    print("Nombre de références dans l'extraction", df_extraction)
-                    print("PREMIER SCAN TERMINE")
-                    print("PASSAGE A LA REPRISE DES ECHECS SUR LA LIGNE COMPLETE")
                     df_extraction_rattrapage = (
                         self.extraction_tcl_doc_rattrapage_echecs(list_a_traiter)
                     )
-                    # time.sleep(5)
                     # Comparaison echecs avec la ligne complete
                     arborescence_tcl_reprise_echecs.compare_list_arbo_csv_bi_rattrapage(
                         name_file_failed,
@@ -394,8 +389,6 @@ class MainExtraction:
             print("DIRNAME", DIRNAME)
 
         else:
-            DIRNAME = f"""G:\{str(1)}00000"""
-            # DIRNAME = f"""G:"""
             name_file_arbo = "output_datas/arborescence_serber_10000_version.csv"
             # name_file_arbo = "output_datas/listes des echecs serber complet.csv"
             name_file_success = (
