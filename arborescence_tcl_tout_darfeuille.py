@@ -586,7 +586,7 @@ def compare_list_arbo_csv_bi(
         {
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
-            "lists": list_success_values,
+            # "lists": list_success_values,
         },
     )
     print(df_success)
@@ -596,9 +596,15 @@ def compare_list_arbo_csv_bi(
     )
     print(df_success.shape)
 
+    if os.path.exists(name_file_success):
+        mode = "a"
+    else:
+        mode = "w"
+
     df_success.to_csv(
         name_file_success,
         sep=";",
+        mode=mode,
         index=False,
         encoding="utf-8-sig",
     )
