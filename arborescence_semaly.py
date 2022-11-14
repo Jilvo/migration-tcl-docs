@@ -211,11 +211,20 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
         print("path_tif", path_tif.upper())
         # print(row["0"])
         # file_without_letter = path_tif[:-6] + "" + path_tif[-4:]
-        reg = re.findall("\w{3,}(-.*)\.", path_tif)
+        reg = re.findall("\W\w{3,}(-.*)\.", path_tif)
         if len(reg) > 0:
             file_without_dash_and_number = path_tif.replace(reg[0], "")
         else:
             file_without_dash_and_number = (
+                "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            )
+        reg_letter_dash_then_number = re.findall("\W\w{3,}(\w-.*)\.", path_tif)
+        if len(reg_letter_dash_then_number) > 0:
+            file_without_letter_dash_then_number = path_tif.replace(
+                reg_letter_dash_then_number[0], ""
+            )
+        else:
+            file_without_letter_dash_then_number = (
                 "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
             )
         reg_ = re.findall("\w{3,}(_.*)\.", path_tif)
@@ -244,6 +253,43 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
                 or file_without_dash_and_number.upper() in list_url
                 or file_without_underscore_and_number.upper() in list_url
                 or file_without_letter.upper() in list_url
+                or file_without_letter_dash_then_number.upper() in list_url
+            ):
+                # if path_tif.upper() in list_url:
+                print("ok", list_url)
+                index_list = df_meta_listes_url.index(list_url)
+                list_niveau_1.append(df_with_meta.loc[index_list]["NIVEAU 1"])
+                list_niveau_2.append(df_with_meta.loc[index_list]["NIVEAU 2"])
+                # list_zone.append(df_with_meta.loc[index_list]["Zone"])
+                list_niveau_3.append(df_with_meta.loc[index_list]["NIVEAU 3"])
+                list_niveau_plans.append(df_with_meta.loc[index_list]["NUM_PLAN"])
+                list_indice.append(df_with_meta.loc[index_list]["INDICE"])
+                list_libelle.append(df_with_meta.loc[index_list]["LIBELLE"])
+                list_success_path.append(path_origin)
+                # list_success_path.append(row["Chemin modif"])
+                list_code_ouvrage.append(df_with_meta.loc[index_list]["Code Ouvrage"])
+                # list_intitule_ouvrage.append(df_with_meta.loc[index_list]["Intitulé Ouvrage"])
+                list_ligne.append(df_with_meta.loc[index_list]["Code Ouvrage"][0])
+                list_extension.append("TIF")
+                # list_extension.append(df_with_meta.loc[index_list]["Extension"])
+                # else:
+                #     print("non")
+                #     list_failed_path.append(row["0"])
+                flag = True
+                break
+            elif (
+                path_tif.upper().replace("0", "").replace(" ", "")
+                in list_url.replace("0", "").replace(" ", "")
+                or file_without_dash_and_number.upper()
+                .replace("0", "")
+                .replace(" ", "")
+                in list_url.replace("0", "").replace(" ", "")
+                or file_without_underscore_and_number.upper()
+                .replace("0", "")
+                .replace(" ", "")
+                in list_url.replace("0", "").replace(" ", "")
+                or file_without_letter.upper().replace("0", "").replace(" ", "")
+                in list_url.replace("0", "").replace(" ", "")
             ):
                 # if path_tif.upper() in list_url:
                 print("ok", list_url)
@@ -302,13 +348,13 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
             }
         )
         df_success.to_csv(
-            "output_datas/listes des succes Semaly TIF.csv",
+            "output_datas/listes des succes Semaly TIF sans 0.csv",
             sep=";",
             index=False,
             encoding="utf-8-sig",
         )
         df_failed.to_csv(
-            "output_datas/listes des echecs Semaly TIF.csv",
+            "output_datas/listes des echecs Semaly TIF sans 0.csv",
             sep=";",
             index=False,
             encoding="utf-8-sig",

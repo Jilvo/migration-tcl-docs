@@ -7,6 +7,8 @@ import sys
 import pandas as pd
 import re
 from timeit import default_timer as timer
+from difflib import SequenceMatcher
+import jellyfish
 
 start = timer()
 
@@ -134,6 +136,8 @@ def compare_list_arbo_csv_bi_pret(
     list_success_values = []
     list_failed_path = []
     list_failed_list = []
+    list_success_provenance = []
+    list_failed_provenance = []
     list_folder_doublon_succes = []
     list_folder_doublon_echecs = []
     list_test_number = []
@@ -146,6 +150,7 @@ def compare_list_arbo_csv_bi_pret(
         except Exception as e:
             folder_for_doublon = keys
         flag = False
+        dict_jaro_distance = {}
         for value in values:
             for ref_fourn, ref_fiche in zip(
                 df["Référence fournisseur"], df["Référence fiche"]
@@ -340,7 +345,9 @@ def compare_list_arbo_csv_bi_pret(
                     "BT",
                     "FA",
                     "FB",
+                    "FD",
                     "FE",
+                    "FN",
                     "GP",
                     "GL",
                     "HF",
@@ -353,8 +360,23 @@ def compare_list_arbo_csv_bi_pret(
                     "YA",
                 ]
                 for dash in list_need_dash:
+                    if re.match("\w{2}.?\d{3,}", value):
+                        value_only_tree_number = re.findall("(\w{2}.?\d{3})", value)
+                        if (
+                            value_only_tree_number[0][:2]
+                            + "000"
+                            + value_only_tree_number[0][2:]
+                            in ref_fourn
+                        ):
+                            flag = True
+                            list_success_path.append(keys)
+                            list_success_list.append(ref_fiche)
+                            list_success_values.append(value_only_tree_number)
+                            list_test_number.append("10-1")
+                            list_folder_doublon_succes.append(folder_for_doublon)
+                            break
                     if dash in value and re.match("\w{2}.?\d{5,}", value):
-                        value = re.findall("\w{2}.?\d{5,}", value)
+                        value = re.findall("(\w{2}.?\d{5,})", value)
                         value = value[0]
                         value_dash = value.replace(dash, dash + "-")
                         value_dash_remove_space = value.replace(dash + " ", dash + "-")
@@ -550,13 +572,64 @@ def compare_list_arbo_csv_bi_pret(
                         list_test_number.append("27")
                         list_folder_doublon_succes.append(folder_for_doublon)
                         break
+
+                jaro_stat = jellyfish.jaro_distance(
+                    value.replace(" ", ""), ref_fourn.replace(" ", "")
+                )
+                jaro_distance = jellyfish.damerau_levenshtein_distance(
+                    value.replace(" ", ""), ref_fourn.replace(" ", "")
+                )
+                dict_jaro_distance[jaro_stat] = {
+                    "ref": ref_fourn,
+                    "value": value,
+                    "jaro_distance": jaro_distance,
+                }
             if flag == True:
                 print("DEJA AJOUTE")
                 break
         if flag == False:
-            list_failed_path.append(keys)
-            list_failed_list.append(values)
-            list_folder_doublon_echecs.append(folder_for_doublon)
+            sorted_dict_jaro_distance = {
+                k: dict_jaro_distance[k]
+                for k in sorted(dict_jaro_distance, reverse=True)
+            }
+            print(
+                "***********sorted_dict_jaro_distance**********",
+                sorted_dict_jaro_distance,
+            )
+            if len(dict_jaro_distance) > 0:
+                stats_key = list(sorted_dict_jaro_distance)[0]
+                if (
+                    stats_key >= 0.90
+                    and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
+                ):
+                    if sorted_dict_jaro_distance[stats_key]["value"].replace(
+                        " ", ""
+                    ) in sorted_dict_jaro_distance[stats_key]["ref"].replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append(
+                            "ajouté grâce à l'algo de Jaro-Winkler"
+                        )
+                        continue
+                    else:
+                        list_failed_path.append(keys)
+                        list_failed_list.append(values)
+                        list_folder_doublon_echecs.append(folder_for_doublon)
+
+                        list_failed_provenance.append("jaro bon mais pas match ")
+                else:
+                    list_failed_path.append(keys)
+                    list_failed_list.append(values)
+                    list_folder_doublon_echecs.append(folder_for_doublon)
+                    list_failed_provenance.append("jaro inférieur a 90% ou sup 2 ")
+
+            else:
+                list_failed_path.append(keys)
+                list_failed_list.append(values)
+                list_folder_doublon_echecs.append(folder_for_doublon)
+                list_failed_provenance.append("jaro vide")
     print(len(list_success_path))
     print(len(list_success_list))
     print(len(list_success_values))

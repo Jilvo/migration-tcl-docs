@@ -2,8 +2,11 @@
 Script principal dans lequel sont lancées les lignes complètes, SERBER,PRET...
 """
 import menu_arborescence
+
 import time
+import os
 from timeit import default_timer as timer
+import pandas as pd
 
 Lunch_Menu = menu_arborescence.MainExtraction()
 
@@ -50,15 +53,33 @@ def main_lunch_function(list_choices):
                     print("Je ne comprend pas votre réponse, réessayez ")
                     pass
     print(f"Vous avez donc choisit d'extraire {list_choices}")
-    time.sleep(10)
+    flag_re = False
+    input_retraiter_tous_echecs = ""
+    while not flag_re:
+        print(
+            f"Voulez vous retraiter tous les echecs en comparant à toute l'extraction de Darfeuille ? (O / N ) "
+        )
+        input_retraiter_tous_echecs = input("O / N : ")
+        input_retraiter_tous_echecs = input_retraiter_tous_echecs.upper()
+        if input_retraiter_tous_echecs == "O":
+            print("Les erreurs seront retraitées")
+            flag_re = True
+        elif input_retraiter_tous_echecs == "N":
+            print(f"Les erreurs ne seront pas retraitées")
+            flag_re = True
+        else:
+            print("Je ne comprend pas votre réponse, réessayez ")
+            pass
+
+    time.sleep(3)
     while len(list_choices) > 0:
         if "PRÊT" in list_choices:
             # -------- PRÊT --------
-            Lunch_Menu.main(
-                DIRNAME=f"""F:\Tcl\Prêt Plans""",
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
+                # DIRNAME=f"""F:\Tcl\Prêt Plans""",
                 # DIRNAME=[
                 #     f"""F:\Tcl\Prêt Plans\Prêt 2016""",
-                #     f"""F:\Tcl\Prêt Plans\Prêt 2017""",
+                    f"""F:\Tcl\Prêt Plans\Prêt 2017""",
                 #     f"""F:\Tcl\Prêt Plans\Prêt 2018""",
                 #     f"""F:\Tcl\Prêt Plans\Prêt 2019""",
                 # ],
@@ -70,9 +91,9 @@ def main_lunch_function(list_choices):
                 name_file_failed_rattrapage=None,
             )
             list_choices.remove("PRÊT")
-        if "SERBER" in list_choices:
+        elif "SERBER" in list_choices:
             # -------- SERBER --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""G:""",
                 name_file_arbo="output_datas/arborescence_tcl_serber_complet.csv",
                 name_file_success="output_datas/listes des succes Serber Complet.csv",
@@ -83,10 +104,10 @@ def main_lunch_function(list_choices):
             )
             list_choices.remove("SERBER")
 
-        if "Métro A" in list_choices:
+        elif "Métro A" in list_choices:
             # # -------- Métro A --------
 
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations""",
                 name_file_arbo="output_datas/arborescence_metro_ligne_a.csv",
                 name_file_success="output_datas/listes des succes Métro A complet.csv",
@@ -122,10 +143,10 @@ def main_lunch_function(list_choices):
             )
             list_choices.remove("Métro A")
 
-        if "Métro B" in list_choices:
+        elif "Métro B" in list_choices:
             # -------- Métro B --------
 
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(130)} à {str(137)} - Métro B - stations""",
                 name_file_arbo="output_datas/arborescence_metro_ligne_b.csv",
                 name_file_success="output_datas/listes des succes Métro B complet.csv",
@@ -156,9 +177,9 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("Métro B")
-        if "Métro C" in list_choices:
+        elif "Métro C" in list_choices:
             # -------- Métro C --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations""",
                 name_file_arbo="output_datas/arborescence_metro_ligne_c_2.csv",
                 name_file_success="output_datas/listes des succes Métro C complet TEST 2.csv",
@@ -182,11 +203,11 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("Métro C")
-        if "Métro D" in list_choices:
+        elif "Métro D" in list_choices:
 
             # -------- Métro D --------
 
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(305)} à {str(322)} - Métro D - stations""",
                 name_file_arbo="output_datas/arborescence_metro_ligne_c.csv",
                 name_file_success="output_datas/listes des succes Métro D complet.csv",
@@ -218,9 +239,9 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("Métro D")
-        if "METRO communs" in list_choices:
+        elif "METRO communs" in list_choices:
             # -------- Métro Communs --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(0)}01 - Métro - communs""",
                 name_file_arbo="output_datas/arborescence_metro_communs.csv",
                 name_file_success="output_datas/listes des succes Métro Communs complet.csv",
@@ -232,9 +253,9 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("METRO communs")
-        if "METRO ABC,AB,A,B,C,D COMMUNS" in list_choices:
+        elif "METRO ABC,AB,A,B,C,D COMMUNS" in list_choices:
             # -------- METRO ABC,AB,A,B,C,D COMMUNS --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=[
                     f"""F:\Tcl\{str(0)}02 - Métro ABC - communs""",
                     f"""F:\Tcl\{str(0)}03 - Métro AB - communs""",
@@ -258,9 +279,9 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("METRO ABC,AB,A,B,C,D COMMUNS")
-        if "MetroABCD interstations" in list_choices:
+        elif "MetroABCD interstations" in list_choices:
             # -------- MetroABCD interstations --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=[
                     f"""F:\Tcl\{str(101)} - Métro A - interstations""",
                     f"""F:\Tcl\{str(103)} - Métro B - interstations"""
@@ -280,9 +301,9 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("MetroABCD interstations")
-        if "Liaison B/D" in list_choices:
+        elif "Liaison B/D" in list_choices:
             # -------- Liaison B/D --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=[
                     f"""F:\Tcl\{str(303)} - Liaison BD""",
                 ],
@@ -296,9 +317,9 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("Liaison B/D")
-        if "T1" in list_choices:
+        elif "T1" in list_choices:
             # -------- T1 --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(501)} - Tramway T1 - stations""",
                 name_file_arbo="output_datas/arborescence_tram_ligne_t1.csv",
                 name_file_success="output_datas/listes des succes Tram Ligne T1 complet.csv",
@@ -351,9 +372,9 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("T1")
-        if "T2" in list_choices:
+        elif "T2" in list_choices:
             # -------- T2 --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(501)} - Tramway T2 - stations""",
                 name_file_arbo="output_datas/arborescence_tram_ligne_t2_test.csv",
                 name_file_success="output_datas/listes des succes Tram Ligne T2 Test complet.csv",
@@ -407,9 +428,9 @@ def main_lunch_function(list_choices):
             )
             list_choices.remove("T2")
 
-        if "T3" in list_choices:
+        elif "T3" in list_choices:
             # -------- T3 --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(501)} - Tramway T3 - stations""",
                 name_file_arbo="output_datas/arborescence_tram_ligne_t3.csv",
                 name_file_success="output_datas/listes des succes Tram Ligne T3 complet.csv",
@@ -445,9 +466,9 @@ def main_lunch_function(list_choices):
             )
             list_choices.remove("T3")
 
-        if "T4" in list_choices:
+        elif "T4" in list_choices:
             # -------- T4 --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(501)} - Tramway T4 - stations""",
                 name_file_arbo="output_datas/arborescence_tram_ligne_t4.csv",
                 name_file_success="output_datas/listes des succes Tram Ligne T4 complet.csv",
@@ -490,9 +511,9 @@ def main_lunch_function(list_choices):
             )
             list_choices.remove("T4")
 
-        if "T5" in list_choices:
+        elif "T5" in list_choices:
             # -------- T5 --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(501)} - Tramway T5 - stations""",
                 name_file_arbo="output_datas/arborescence_tram_ligne_t5.csv",
                 name_file_success="output_datas/listes des succes Tram Ligne T5 complet.csv",
@@ -512,9 +533,9 @@ def main_lunch_function(list_choices):
             )
             list_choices.remove("T5")
 
-        if "T6" in list_choices:
+        elif "T6" in list_choices:
             # -------- T6 --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(501)} - Tramway T6 - stations""",
                 name_file_arbo="output_datas/arborescence_tram_ligne_t6.csv",
                 name_file_success="output_datas/listes des succes Tram Ligne T6 complet.csv",
@@ -544,9 +565,9 @@ def main_lunch_function(list_choices):
             )
             list_choices.remove("T6")
 
-        if "TRAM COMMUNS" in list_choices:
+        elif "TRAM COMMUNS" in list_choices:
             # -------- TRAM COMMUNS --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(500)} - Tramway - communs""",
                 name_file_arbo="output_datas/arborescence_tram_communs.csv",
                 name_file_success="output_datas/listes des succes Tram communs complet.csv",
@@ -565,9 +586,9 @@ def main_lunch_function(list_choices):
             )
             list_choices.remove("TRAM COMMUNS")
 
-        if "TRAM T1 T2 T3 T4 T5 T6 COMMUNS" in list_choices:
+        elif "TRAM T1 T2 T3 T4 T5 T6 COMMUNS" in list_choices:
             # -------- TRAM T1 T2 T3 T4 T5 T6 COMMUNS --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=[
                     f"""F:\Tcl\{str(500)} - Tramway T1 - communs""",
                     f"""F:\Tcl\{str(500)} - Tramway T2 - communs""",
@@ -593,9 +614,9 @@ def main_lunch_function(list_choices):
             )
             list_choices.remove("TRAM T1 T2 T3 T4 T5 T6 COMMUNS")
 
-        if "RHONE EXPRESS COMMUNS" in list_choices:
+        elif "RHONE EXPRESS COMMUNS" in list_choices:
             # -------- RHONE EXPRESS COMMUNS --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(500)} - Tramway Rhone Express - communs""",
                 name_file_arbo="output_datas/arborescence_rhone_express_communs.csv",
                 name_file_success="output_datas/listes des succes Rhone express communs complet.csv",
@@ -605,9 +626,9 @@ def main_lunch_function(list_choices):
                 list_a_traiter=["RHONEXPRESS"],
             )
             list_choices.remove("RHONE EXPRESS COMMUNS")
-        if "FUNI COMMUNS + STATIONS" in list_choices:
+        elif "FUNI COMMUNS + STATIONS" in list_choices:
             # -------- FUNI COMMUNS + STATIONS --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=[
                     f"""F:\Tcl\{str(302)} - Funiculaires - communs""",
                     f"""F:\Tcl\{str(330)} à {str(332)} - Funiculaires - stations""",
@@ -627,9 +648,9 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("FUNI COMMUNS + STATIONS")
-        if "Lignes Fortes - C1 C2 C3 C13" in list_choices:
+        elif "Lignes Fortes - C1 C2 C3 C13" in list_choices:
             # -------- Lignes Fortes - C1 C2 C3 C13 --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(900)} - Lignes Fortes - C1 C2 C3 C13""",
                 name_file_arbo="output_datas/arborescence_dossier_lignes_fortes.csv",
                 name_file_success="output_datas/listes des succes Lignes Fortes C1 C2 C3 C13 complet.csv",
@@ -643,9 +664,9 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("Lignes Fortes - C1 C2 C3 C13")
-        if "Surface" in list_choices:
+        elif "Surface" in list_choices:
             # -------- Surface --------
-            Lunch_Menu.main(
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(800)} à {str(843)} - Surface""",
                 name_file_arbo="output_datas/arborescence_dossier_surface.csv",
                 name_file_success="output_datas/listes des succes Dossier Surface complet.csv",
@@ -694,10 +715,57 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("Surface")
-
+        print(
+            "******************************** ON A FINI UNE LIGNE ********************************"
+        )
+        time.sleep(1)
+        df_succes_concatenation = pd.read_csv(
+            name_file_success,
+            sep=";",
+            encoding="utf-8-sig",
+        )
+        df_name_file_failed_rattrapage_concatenation = pd.read_csv(
+            name_file_failed_rattrapage,
+            sep=";",
+            encoding="utf-8-sig",
+        )
+        if os.path.exists("output_datas\concatenation des succes tcl.csv"):
+            mode = "a"
+            df_succes_concatenation = df_succes_concatenation.iloc[1:, :]
+            df_name_file_failed_rattrapage_concatenation = (
+                df_name_file_failed_rattrapage_concatenation.iloc[1:, :]
+            )
+        else:
+            mode = "w"
+        concatenation_succes_path = "output_datas\concatenation des succes tcl.csv"
+        concatenation_echecs_path = "output_datas\concatenation des echecs tcl.csv"
+        df_succes_concatenation.to_csv(
+            concatenation_succes_path,
+            mode=mode,
+            sep=";",
+            encoding="utf-8-sig",
+        )
+        df_name_file_failed_rattrapage_concatenation.to_csv(
+            concatenation_echecs_path,
+            mode=mode,
+            sep=";",
+            encoding="utf-8-sig",
+        )
+    print("input_retraiter_tous_echecs", input_retraiter_tous_echecs)
+    if input_retraiter_tous_echecs == "O":
+        name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
+            DIRNAME=None,
+            name_file_arbo=concatenation_echecs_path,
+            name_file_success=concatenation_succes_path,
+            name_file_failed="output_datas\erreurs restantes apres comparaison complete darfeuille.csv",
+            name_file_failed_rattrapage=None,
+            input_user=3,
+            list_a_traiter=None,
+        )
     end = timer()
     print(end - start)
 
 
 main_lunch_function(list_choices=[])
 # main_lunch_function(list_choices=["T5", "Lignes Fortes - C1 C2 C3 C13"])
+# main_lunch_function(list_choices=["T5", "Liaison B/D"])

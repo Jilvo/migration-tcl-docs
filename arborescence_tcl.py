@@ -461,7 +461,9 @@ def compare_list_arbo_csv_bi(
                     "BT",
                     "FA",
                     "FB",
+                    "FD",
                     "FE",
+                    "FN",
                     "GP",
                     "GL",
                     "HF",
@@ -483,6 +485,20 @@ def compare_list_arbo_csv_bi(
                             dash, dash + "-0"
                         )
                         value_dash_zero = value[:2] + "-0" + value[-2:]
+                        value_only_tree_number = re.findall("(\w{2}.?\d{3})", value)
+                        if (
+                            value_only_tree_number[:2]
+                            + "000"
+                            + value_only_tree_number[2:]
+                            in ref_fourn
+                        ):
+                            flag = True
+                            list_success_path.append(keys)
+                            list_success_list.append(ref_fiche)
+                            list_success_values.append(value_only_tree_number)
+                            list_test_number.append("10-1")
+                            list_folder_doublon_succes.append(folder_for_doublon)
+                            break
                         # if value_dash_zero.replace(" ", "") in ref_fourn.replace(
                         #     " ", ""
                         # ):
