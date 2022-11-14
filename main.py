@@ -18,6 +18,8 @@ def main_lunch_function(list_choices):
         "Métro C",
         "Métro D",
         "METRO communs",
+        "MetroABCD interstations",
+        "Liaison B/D",
         "METRO ABC,AB,A,B,C,D COMMUNS",
         "T1",
         "T2",
@@ -80,6 +82,7 @@ def main_lunch_function(list_choices):
                 name_file_failed_rattrapage=None,
             )
             list_choices.remove("SERBER")
+
         if "Métro A" in list_choices:
             # # -------- Métro A --------
 
@@ -186,9 +189,9 @@ def main_lunch_function(list_choices):
             Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(305)} à {str(322)} - Métro D - stations""",
                 name_file_arbo="output_datas/arborescence_metro_ligne_c.csv",
-                name_file_success="output_datas/listes des succes Métro C complet.csv",
-                name_file_failed="output_datas/listes des echecs Métro C première passe.csv",
-                name_file_failed_rattrapage="output_datas/listes des echecs Métro C après seconde passe.csv",
+                name_file_success="output_datas/listes des succes Métro D complet.csv",
+                name_file_failed="output_datas/listes des echecs Métro D première passe.csv",
+                name_file_failed_rattrapage="output_datas/listes des echecs Métro D après seconde passe.csv",
                 input_user=1,
                 list_a_traiter=[
                     "ARCHIVES USEQ",
@@ -255,6 +258,44 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("METRO ABC,AB,A,B,C,D COMMUNS")
+        if "MetroABCD interstations" in list_choices:
+            # -------- MetroABCD interstations --------
+            Lunch_Menu.main(
+                DIRNAME=[
+                    f"""F:\Tcl\{str(101)} - Métro A - interstations""",
+                    f"""F:\Tcl\{str(103)} - Métro B - interstations"""
+                    f"""F:\Tcl\{str(201)} - Métro C - interstations""",
+                    f"""F:\Tcl\{str(301)} - Métro D - interstations""",
+                ],
+                name_file_arbo="output_datas/arborescence_metro_abc_ab_a_b_c_d_interstations.csv",
+                name_file_success="output_datas/listes des succes MetroABCD interstations complet.csv",
+                name_file_failed="output_datas/listes des echecs MetroABCD interstations première passe.csv",
+                name_file_failed_rattrapage="output_datas/listes des echecs MetroABCD interstations après seconde passe.csv",
+                input_user=1,
+                list_a_traiter=[
+                    "INTERSTATIONS  A",
+                    "INTERSTATIONS  B",
+                    "INTERSTATIONS  C",
+                    "INTERSTATIONS  D",
+                ],
+            )
+            list_choices.remove("MetroABCD interstations")
+        if "Liaison B/D" in list_choices:
+            # -------- Liaison B/D --------
+            Lunch_Menu.main(
+                DIRNAME=[
+                    f"""F:\Tcl\{str(303)} - Liaison BD""",
+                ],
+                name_file_arbo="output_datas/arborescence_liaison_b_d.csv",
+                name_file_success="output_datas/listes des succes Liaison b_d complet.csv",
+                name_file_failed="output_datas/listes des echecs Liaison b_d première passe.csv",
+                name_file_failed_rattrapage="output_datas/listes des echecs Liaison b_d après seconde passe.csv",
+                input_user=1,
+                list_a_traiter=[
+                    "LIAISON B/D",
+                ],
+            )
+            list_choices.remove("Liaison B/D")
         if "T1" in list_choices:
             # -------- T1 --------
             Lunch_Menu.main(
@@ -658,5 +699,5 @@ def main_lunch_function(list_choices):
     print(end - start)
 
 
-# main_lunch_function(list_choices=[])
-main_lunch_function(list_choices=["T5", "Lignes Fortes - C1 C2 C3 C13"])
+main_lunch_function(list_choices=[])
+# main_lunch_function(list_choices=["T5", "Lignes Fortes - C1 C2 C3 C13"])
