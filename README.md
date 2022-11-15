@@ -52,15 +52,16 @@
 <summary>MR TRAM</summary>
 
 - Problème
-- SoluSolution proposétion
+- Solution proposé
 
 </details>
 
 <details>
-<summary>Installation</summary>
+<summary>Installation et configuration</summary>
 
 - Environnement
 - Paquets nécessaires
+- Mise en place des inputs et outputs
 
 </details>
 
@@ -196,6 +197,13 @@ Afin d'installer les paquets nécessaires, il faut lancer la commande suivante d
 ```
 pip install -r requirements.txt
 ```
+
+### Mise en place des inputs et outputs:
+dans le dossier inputs_datas:
+  - parse_filter.txt
+  - listes_arrets_lignes.csv
+  - 20221010_ExtratTCLDoc complete modifié.csv
+  - Extraction Serber juste AA et non serber.csv
 
 ## Lancement du programme :
 

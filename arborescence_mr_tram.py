@@ -10,7 +10,9 @@ start = timer()
 # DIRNAME_MRTRAM = (
 #     f"""F:\BE PERSO (M)\Millot J\{str(0)} Documentation de conception T4 juin 2010"""
 # )
-DIRNAME_MRTRAM = f"""F:\BE PERSO (M)\Millot J\T6"""
+DIRNAME_MRTRAM = (
+    f"""H:\MR tramway\{str(0)}0 Documentation de conception T1T2 02042009"""
+)
 # DIRNAME_MRTRAM = f"""F:\BE PERSO (M)\Millot J\Oct 2015 Fin de garantie"""
 
 
@@ -224,13 +226,13 @@ def comp_between_arbo_and_arborescence_mr_tram_pdu():
     )
 
     df_success.to_csv(
-        "output_datas/listes des succes MR TRAM.csv",
+        "output_datas/listes des succes MR TRAM T1T2.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",
     )
     df_failed.to_csv(
-        "output_datas/listes des echecs MR TRAM.csv",
+        "output_datas/listes des echecs MR TRAM T1T2.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",

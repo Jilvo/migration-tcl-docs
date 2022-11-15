@@ -11,9 +11,6 @@ start = timer()
 
 list_arbo = []
 
-# with open("input_datas/20220410 Bellecour A & D Provisoires.xls") as f:
-#     print(f)
-
 
 def create_arbo():
     """On crée l'arborescence"""
@@ -237,7 +234,7 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
                 "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
             )
         reg_letter = re.findall("\d(\D)\.pdf", path_tif)
-        print("reg_letter", reg_letter)
+        # print("reg_letter", reg_letter)
         if len(reg_letter) > 0:
             file_without_letter = path_tif.replace(reg_letter[0] + ".pdf", "")
             print("file_without_letter", file_without_letter)
@@ -292,7 +289,7 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
                 in list_url.replace("0", "").replace(" ", "")
             ):
                 # if path_tif.upper() in list_url:
-                print("ok", list_url)
+                # print("ok", list_url)
                 index_list = df_meta_listes_url.index(list_url)
                 list_niveau_1.append(df_with_meta.loc[index_list]["NIVEAU 1"])
                 list_niveau_2.append(df_with_meta.loc[index_list]["NIVEAU 2"])
@@ -318,11 +315,11 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
                 pass
                 # print("pas ok")
         if not flag:
-            print("Pas bon")
-            print("path_tif echecs", path_tif)
-            print(
-                f"{file_without_dash_and_number.upper()} , {file_without_underscore_and_number.upper()}, {file_without_letter.upper()} "
-            )
+            # print("Pas bon")
+            # print("path_tif echecs", path_tif)
+            # print(
+            #     f"{file_without_dash_and_number.upper()} , {file_without_underscore_and_number.upper()}, {file_without_letter.upper()} "
+            # )
 
             list_failed_path.append(path_origin)
         df_success = pd.DataFrame(

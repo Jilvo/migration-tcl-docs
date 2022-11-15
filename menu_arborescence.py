@@ -423,6 +423,7 @@ class MainExtraction:
             )
             print("SECOND SCAN TERMINE")
             print("DIRNAME", DIRNAME)
+        return (name_file_success, name_file_failed_rattrapage)
         # end = timer()
         # print(end - start)
         # print("Voulez-vous repriser les echecs avec la ligne complete ")
