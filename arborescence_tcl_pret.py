@@ -362,10 +362,11 @@ def compare_list_arbo_csv_bi_pret(
                 for dash in list_need_dash:
                     if re.match("\w{2}.?\d{3,}", value):
                         value_only_tree_number = re.findall("(\w{2}.?\d{3})", value)
+                        value_only_tree_number = value_only_tree_number[0]
                         if (
-                            value_only_tree_number[0][:2]
+                            value_only_tree_number[:2]
                             + "000"
-                            + value_only_tree_number[0][2:]
+                            + value_only_tree_number[2:]
                             in ref_fourn
                         ):
                             flag = True

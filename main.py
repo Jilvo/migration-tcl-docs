@@ -75,11 +75,11 @@ def main_lunch_function(list_choices):
     while len(list_choices) > 0:
         if "PRÊT" in list_choices:
             # -------- PRÊT --------
-            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
+            Lunch_Menu.main(
                 # DIRNAME=f"""F:\Tcl\Prêt Plans""",
                 # DIRNAME=[
                 #     f"""F:\Tcl\Prêt Plans\Prêt 2016""",
-                f"""F:\Tcl\Prêt Plans\Prêt 2017""",
+                # f"""F:\Tcl\Prêt Plans\Prêt 2017""",
                 #     f"""F:\Tcl\Prêt Plans\Prêt 2018""",
                 #     f"""F:\Tcl\Prêt Plans\Prêt 2019""",
                 # ],

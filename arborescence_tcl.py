@@ -485,7 +485,8 @@ def compare_list_arbo_csv_bi(
                             dash, dash + "-0"
                         )
                         value_dash_zero = value[:2] + "-0" + value[-2:]
-                        value_only_tree_number = re.findall("(\w{2}.?\d{3})", value)
+                        value_only_tree_number = re.findall("(\w{2}.?\d{3})", value)+
+                        value_only_tree_number = value_only_tree_number[0]
                         if (
                             value_only_tree_number[:2]
                             + "000"
