@@ -7,11 +7,11 @@ import sys
 import pandas as pd
 import re
 from timeit import default_timer as timer
-
+from fichiers_et_constantes import *
 from difflib import SequenceMatcher
 import jellyfish
 
-with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
+with open(PARSER_FILTER_FILE, encoding="utf-8") as f:
     LIST_PARSE_WORD = f.read().splitlines()
 
 
@@ -36,7 +36,7 @@ def find_ref_fournisseur(name_file_arbo):
         # encoding = "cp1252"
     )
     df_stations = pd.read_csv(
-        "input_datas/listes_arrets_lignes.csv",
+        LISTES_ARRETS_LIGNES,
         encoding="cp1252",
         sep=";",
     )
@@ -552,7 +552,7 @@ def compare_list_arbo_csv_bi_rattrapage(
         {
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
-            "lists": list_success_values,
+            # "lists": list_success_values,
             # "dict": list_success_provenance,
         },
     )

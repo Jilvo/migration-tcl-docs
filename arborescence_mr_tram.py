@@ -3,6 +3,7 @@ import sys
 import pandas as pd
 import re
 from timeit import default_timer as timer
+from fichiers_et_constantes import *
 
 start = timer()
 
@@ -10,9 +11,9 @@ start = timer()
 # DIRNAME_MRTRAM = (
 #     f"""F:\BE PERSO (M)\Millot J\{str(0)} Documentation de conception T4 juin 2010"""
 # )
-DIRNAME_MRTRAM = (
-    f"""H:\MR tramway\{str(0)}0 Documentation de conception T1T2 02042009"""
-)
+# DIRNAME_MRTRAM = (
+#     f"""H:\MR tramway\{str(0)}0 Documentation de conception T1T2 02042009"""
+# )
 # DIRNAME_MRTRAM = f"""F:\BE PERSO (M)\Millot J\Oct 2015 Fin de garantie"""
 
 
@@ -144,7 +145,7 @@ def create_arbo():
     )
 
     df.to_csv(
-        "output_datas/mr_tram_t6.csv",
+        NOM_FICHIER_SORTIE_MR_TRAM,
         sep=";",
         index=False,
         encoding="utf-8-sig",
@@ -159,7 +160,7 @@ def comp_between_arbo_and_arborescence_mr_tram_pdu():
         encoding="utf-8-sig",
     )
     df_mr_tram_meta = pd.read_csv(
-        "input_datas\metadonnes_TRAM.csv",
+        METADONNES_MR_TRAM,
         sep=";",
         error_bad_lines=False,
         encoding="cp1252",

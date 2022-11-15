@@ -1,7 +1,5 @@
 """
 Ce Script crée l'arborescence d'un chemin et la retourne sous format CSV
-Input : None
-Output : output_datas/arborescence_tcl.csv
 """
 
 import os
@@ -9,11 +7,12 @@ import sys
 import pandas as pd
 import re
 from timeit import default_timer as timer
+from fichiers_et_constantes import *
 
 start = timer()
 
 
-with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
+with open(PARSER_FILTER_FILE, encoding="utf-8") as f:
     LIST_PARSE_WORD = f.read().splitlines()
 
 
@@ -71,7 +70,7 @@ def find_ref_fournisseur(name_file_arbo):
         # encoding="cp1252",
     )
     df_stations = pd.read_csv(
-        "input_datas/listes_arrets_lignes.csv",
+        LISTES_ARRETS_LIGNES,
         encoding="cp1252",
         sep=";",
     )
@@ -86,69 +85,69 @@ def find_ref_fournisseur(name_file_arbo):
         list_split_station = []
         list_split = split_arbo(row["Chemin du fichier"])
         list_split_station.append(list_split)
-        if "communs" in list_split[2]:
-            list_station_for_filter = []
-            # print("list_split[2]", list_split[2])
-            if "2 - Métro ABC - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS  A , B & C")
-            elif "3 - Métro AB" in list_split[2]:
-                list_station_for_filter.append("COMMUNS  A & B")
-            elif "0 - Métro A" in list_split[2]:
-                list_station_for_filter.append("COMMUNS  A")
-            elif "102 - Métro B - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS  B")
-            elif "200 - Métro C - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS  C")
-            elif "300 - Métro D - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS  D")
-            elif "1 - Métro -" in list_split[2]:
-                list_station_for_filter.append("COMMUNS METRO")
-            elif "302 - Funiculaires - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS FUN")
-            elif "500 - Tramway T1 - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS TRAMWAY T1")
-            elif "500 - Tramway T2 - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS TRAMWAY T2")
-            elif "500 - Tramway T3 - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS TRAMWAY T3")
-            elif "500 - Tramway T4 - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS TRAMWAY T4")
-            elif "500 - Tramway T5 - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS TRAMWAY T5")
-            elif "500 - Tramway T6 - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS TRAMWAY T6")
-            elif "500 - Tramway - communs" in list_split[2]:
-                list_station_for_filter.append("COMMUNS TRAMWAY")
-            elif "500 - Tramway Rhone Express - communs" in list_split[2]:
-                list_station_for_filter.append("RHONEXPRESS")
+        # if "communs" in list_split[2]:
+        #     list_station_for_filter = []
+        # print("list_split[2]", list_split[2])
+        #     if "2 - Métro ABC - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS  A , B & C")
+        #     elif "3 - Métro AB" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS  A & B")
+        #     elif "0 - Métro A" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS  A")
+        #     elif "102 - Métro B - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS  B")
+        #     elif "200 - Métro C - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS  C")
+        #     elif "300 - Métro D - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS  D")
+        #     elif "1 - Métro -" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS METRO")
+        #     elif "302 - Funiculaires - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS FUN")
+        #     elif "500 - Tramway T1 - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS TRAMWAY T1")
+        #     elif "500 - Tramway T2 - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS TRAMWAY T2")
+        #     elif "500 - Tramway T3 - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS TRAMWAY T3")
+        #     elif "500 - Tramway T4 - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS TRAMWAY T4")
+        #     elif "500 - Tramway T5 - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS TRAMWAY T5")
+        #     elif "500 - Tramway T6 - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS TRAMWAY T6")
+        #     elif "500 - Tramway - communs" in list_split[2]:
+        #         list_station_for_filter.append("COMMUNS TRAMWAY")
+        #     elif "500 - Tramway Rhone Express - communs" in list_split[2]:
+        #         list_station_for_filter.append("RHONEXPRESS")
 
-            list_split_station.append(list_station_for_filter)
-        elif "interstations" in list_split[2]:
-            list_station_for_filter = []
-            if "101 - Métro A - interstations" in list_split[2]:
-                list_station_for_filter.append("INTERSTATIONS  A")
-            elif "103 - Métro B - interstations" in list_split[2]:
-                list_station_for_filter.append("INTERSTATIONS  B")
-            elif "201 - Métro C - interstations" in list_split[2]:
-                list_station_for_filter.append("INTERSTATIONS  C")
-            elif "301 - Métro D - interstations" in list_split[2]:
-                list_station_for_filter.append("INTERSTATIONS  D")
-            list_split_station.append(list_station_for_filter)
-        elif "Liaison BD" in list_split[2]:
-            list_station_for_filter = []
-            if "303 - Liaison BD" in list_split[2]:
-                list_station_for_filter.append("LIAISON B/D")
-            list_split_station.append(list_station_for_filter)
-        elif "Surface" in list_split[2]:
-            list_split_station = []
-            pass
-        elif "stations" in list_split[2]:
-            list_station_for_filter = []
-            for key, value in dict_stations.items():
-                if list_split[3] == key:
-                    list_station_for_filter.append(value)
-                    continue
-            list_split_station.append(list_station_for_filter)
+        #     list_split_station.append(list_station_for_filter)
+        # elif "interstations" in list_split[2]:
+        #     list_station_for_filter = []
+        #     if "101 - Métro A - interstations" in list_split[2]:
+        #         list_station_for_filter.append("INTERSTATIONS  A")
+        #     elif "103 - Métro B - interstations" in list_split[2]:
+        #         list_station_for_filter.append("INTERSTATIONS  B")
+        #     elif "201 - Métro C - interstations" in list_split[2]:
+        #         list_station_for_filter.append("INTERSTATIONS  C")
+        #     elif "301 - Métro D - interstations" in list_split[2]:
+        #         list_station_for_filter.append("INTERSTATIONS  D")
+        #     list_split_station.append(list_station_for_filter)
+        # elif "Liaison BD" in list_split[2]:
+        #     list_station_for_filter = []
+        #     if "303 - Liaison BD" in list_split[2]:
+        #         list_station_for_filter.append("LIAISON B/D")
+        #     list_split_station.append(list_station_for_filter)
+        # elif "Surface" in list_split[2]:
+        #     list_split_station = []
+        #     pass
+        # elif "stations" in list_split[2]:
+        #     list_station_for_filter = []
+        #     for key, value in dict_stations.items():
+        #         if list_split[3] == key:
+        #             list_station_for_filter.append(value)
+        #             continue
+        #     list_split_station.append(list_station_for_filter)
         # print("list_split_station", list_split_station)
         dict_arbo[row["Chemin du fichier"]] = list_split_station
     # print("dict_arbo.values()", dict_arbo.values())
@@ -598,6 +597,8 @@ def compare_list_arbo_csv_bi(
 
     if os.path.exists(name_file_success):
         mode = "a"
+        df_success = df_success.iloc[1:, :]
+
     else:
         mode = "w"
 

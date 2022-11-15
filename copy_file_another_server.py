@@ -7,10 +7,11 @@ import shutil
 import pandas as pd
 import distutils.dir_util
 import re
+from fichiers_et_constantes import *
 from pathlib import Path
 
 df = pd.read_csv(
-    "output_datas\listes des echecs ligne T1 Perrache Montrochet.csv",
+    FICHIER_ECHECS_A_COPIER_SUR_AUTRE_SERVEUR,
     sep=";",
     error_bad_lines=False,
     encoding="cp1252",  # encoding="utf-8-sig",

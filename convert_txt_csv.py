@@ -1,4 +1,5 @@
 import pandas as pd
+from fichiers_et_constantes import *
 
 with open("datas/error_exceptionNotFOUND.txt", "r") as txt_file:
     print(txt_file.readlines())

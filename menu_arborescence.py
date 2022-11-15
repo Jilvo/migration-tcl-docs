@@ -8,6 +8,7 @@ import arborescence_tcl
 import arborescence_tcl_tout_darfeuille
 import arborescence_tcl_pret
 import arborescence_tcl_reprise_echecs
+from fichiers_et_constantes import *
 import arborescence_serber
 from pprint import pprint
 
@@ -17,10 +18,8 @@ class MainExtraction:
         self.found_station = False
 
     def create_list_station(self, input_user):
-        # with open("input_datas/Listes des arrets en fonction de la ligne.xlsx") as f:
-        #     print(f)
         df = pd.read_csv(
-            "input_datas/listes_arrets_lignes.csv",
+            LISTES_ARRETS_LIGNES,
             encoding="cp1252",
             sep=";",
         )
@@ -101,7 +100,7 @@ class MainExtraction:
 
     def extraction_tcl_doc_file(self, list_a_traiter):
         df = pd.read_csv(
-            "input_datas/20221010_ExtratTCLDoc complete modifié.csv",
+            EXTRACTION_DARFEUILLE_MODIFIE,
             encoding="cp1252",
             sep=";",
         )
@@ -149,7 +148,7 @@ class MainExtraction:
 
     def extraction_tcl_doc_rattrapage_echecs(self, list_a_traiter):
         df = pd.read_csv(
-            "input_datas/20221010_ExtratTCLDoc complete modifié.csv",
+            EXTRACTION_DARFEUILLE_MODIFIE,
             encoding="cp1252",
             sep=";",
         )
@@ -175,7 +174,7 @@ class MainExtraction:
 
     def extraction_pret_tcl(self):
         df = pd.read_csv(
-            "input_datas/20221010_ExtratTCLDoc complete modifié.csv",
+            EXTRACTION_DARFEUILLE_MODIFIE,
             encoding="cp1252",
             sep=";",
         )
@@ -199,7 +198,7 @@ class MainExtraction:
 
     def extraction_serber(self):
         df = pd.read_csv(
-            "input_datas/20221010_ExtratTCLDoc complete modifié sans AR.csv",
+            EXTRACTION_DARFEUILLE_SANS_AR,
             encoding="cp1252",
             sep=";",
         )
@@ -237,7 +236,7 @@ class MainExtraction:
 
     def extraction_serber_reprise(self):
         df = pd.read_csv(
-            "input_datas/Extraction Serber juste AA et non serber.csv",
+            EXTRACTION_DARFEUILLE_JUSTE_AA_ET_NON_SERBER,
             encoding="cp1252",
             sep=";",
         )
@@ -274,7 +273,7 @@ class MainExtraction:
 
     def extraction_tout_tcl_doc(self):
         df = pd.read_csv(
-            "input_datas/20221010_ExtratTCLDoc complete modifié.csv",
+            EXTRACTION_DARFEUILLE_MODIFIE,
             encoding="cp1252",
             sep=";",
         )
@@ -338,9 +337,6 @@ class MainExtraction:
 
         if input_user != 8:
             if input_user == 9:
-                # name_file_arbo = "output_datas/arborescence_tcl_pret_total.csv"
-                # name_file_success = "output_datas/listes des succes Prêt Total.csv"
-                # name_file_failed = "output_datas/listes des echecs Prêt Total.csv"
                 df_extraction_pret = self.extraction_pret_tcl()
                 arborescence_tcl_pret.create_arbo(DIRNAME, name_file_arbo)
                 arborescence_tcl_pret.compare_list_arbo_csv_bi_pret(
@@ -390,7 +386,6 @@ class MainExtraction:
 
         else:
             name_file_arbo = "output_datas/arborescence_serber_10000_version.csv"
-            # name_file_arbo = "output_datas/listes des echecs serber complet.csv"
             name_file_success = (
                 "output_datas/listes des succes serber 10000_version.csv"
             )

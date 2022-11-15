@@ -1,7 +1,5 @@
 """
 Ce Script crée l'arborescence du serveur SERBER et la retourne sous format CSV
-Input : None
-Output : output_datas/arborescence_tcl.csv
 """
 
 import os
@@ -9,13 +7,14 @@ import sys
 import pandas as pd
 import re
 from timeit import default_timer as timer
+from fichiers_et_constantes import *
 
 start = timer()
 
 DIRNAME = f"""G:\{str(500000)}"""
 list_arbo = []
 
-with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
+with open(PARSER_FILTER_FILE, encoding="utf-8") as f:
     LIST_PARSE_WORD = f.read().splitlines()
 
 
@@ -36,12 +35,6 @@ def create_arbo(DIRNAME, name_file_arbo):
             "Chemin du fichier": list_arbo,
         },
     )
-    # df.to_csv(
-    #     "output_datas/arborescence_tcl_pret.csv",
-    #     sep="\t",
-    #     index=False,
-    #     encoding="utf-8-sig",
-    # )
     df.to_csv(
         name_file_arbo,
         sep="\t",

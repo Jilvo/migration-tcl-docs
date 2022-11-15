@@ -6,6 +6,7 @@ import time
 
 from pathlib import Path
 from timeit import default_timer as timer
+from fichiers_et_constantes import *
 
 start = timer()
 

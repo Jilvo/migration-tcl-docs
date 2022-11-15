@@ -2,6 +2,7 @@ import os
 import sys
 import pandas as pd
 import re
+from fichiers_et_constantes import *
 from timeit import default_timer as timer
 
 start = timer()
@@ -23,7 +24,7 @@ def get_station():
         f"F:\Tcl\{str(101)} - Métro A - interstations\00 Documentation Technique\00 Amiante et Plomb\002EP001443\Liaison Massena_Foch_002EP001443.pdf",
     ]
     df = pd.read_csv(
-        "input_datas/listes_arrets_lignes.csv",
+        LISTES_ARRETS_LIGNES,
         encoding="cp1252",
         sep=";",
     )

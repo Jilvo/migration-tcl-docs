@@ -8,12 +8,13 @@ import pandas as pd
 import re
 from timeit import default_timer as timer
 from difflib import SequenceMatcher
+from fichiers_et_constantes import *
 import jellyfish
 
 start = timer()
 
 
-with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
+with open(PARSER_FILTER_FILE, encoding="utf-8") as f:
     LIST_PARSE_WORD = f.read().splitlines()
 
 
@@ -69,7 +70,7 @@ def find_ref_fournisseur(name_file_arbo):
         # encoding = "cp1252"
     )
     df_stations = pd.read_csv(
-        "input_datas/listes_arrets_lignes.csv",
+        LISTES_ARRETS_LIGNES,
         encoding="cp1252",
         sep=";",
     )

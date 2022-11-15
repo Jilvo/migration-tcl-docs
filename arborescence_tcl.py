@@ -1,7 +1,5 @@
 """
 Ce Script crée l'arborescence d'un chemin et la retourne sous format CSV
-Input : None
-Output : output_datas/arborescence_tcl.csv
 """
 import os
 import sys
@@ -10,11 +8,12 @@ import re
 from timeit import default_timer as timer
 import time
 from difflib import SequenceMatcher
+from fichiers_et_constantes import *
 import jellyfish
 
 start = timer()
 
-with open("input_datas\parse_filter.txt", encoding="utf-8") as f:
+with open(PARSER_FILTER_FILE, encoding="utf-8") as f:
     LIST_PARSE_WORD = f.read().splitlines()
 
 
@@ -64,14 +63,6 @@ def find_ref_fournisseur(name_file_arbo):
     keys = chemin d'un fichier
     values = liste des sous dossiers,nom de fichier affiné
     """
-    # df = pd.read_csv("output_datas/arborescence_tcl.csv")
-    # df = pd.read_csv("output_datas/arborescence_tcl_bellecour.csv")
-    # df = pd.read_csv(
-    #     "output_datas/arborescence_tcl_bellecour.csv",
-    #     error_bad_lines=False,
-    #     sep=";",
-    #     encoding="utf-8-sig",
-    # )
     df = pd.read_csv(
         name_file_arbo,
         sep=";",
@@ -80,7 +71,7 @@ def find_ref_fournisseur(name_file_arbo):
         # encoding = "cp1252"
     )
     df_stations = pd.read_csv(
-        "input_datas/listes_arrets_lignes.csv",
+        LISTES_ARRETS_LIGNES,
         encoding="cp1252",
         sep=";",
     )
@@ -750,8 +741,8 @@ def compare_list_arbo_csv_bi(
         {
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
-            "lists": list_success_values,
-            "dict": list_success_provenance,
+            # "lists": list_success_values,
+            # "dict": list_success_provenance,
         },
     )
     print(df_success)
@@ -760,7 +751,7 @@ def compare_list_arbo_csv_bi(
         {
             "Chemin du fichier": list_failed_path,
             "Référence Fiche": list_failed_list,
-            "dict": list_failed_provenance,
+            # "dict": list_failed_provenance,
         },
     )
     print(df_success.shape)

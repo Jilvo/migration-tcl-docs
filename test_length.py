@@ -1,6 +1,7 @@
 import os
 import sys
 import pandas as pd
+from fichiers_et_constantes import *
 
 DIRNAME = [
     # f"""F:\Tcl\{str(0)}01 - Métro - communs""",

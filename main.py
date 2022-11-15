@@ -7,6 +7,7 @@ import time
 import os
 from timeit import default_timer as timer
 import pandas as pd
+from fichiers_et_constantes import *
 
 Lunch_Menu = menu_arborescence.MainExtraction()
 
@@ -721,11 +722,13 @@ def main_lunch_function(list_choices):
         time.sleep(1)
         df_succes_concatenation = pd.read_csv(
             name_file_success,
+            header=None,
             sep=";",
             encoding="utf-8-sig",
         )
         df_name_file_failed_rattrapage_concatenation = pd.read_csv(
             name_file_failed_rattrapage,
+            header=None,
             sep=";",
             encoding="utf-8-sig",
         )
@@ -737,21 +740,27 @@ def main_lunch_function(list_choices):
             )
         else:
             mode = "w"
-        concatenation_succes_path = (
-            "output_datas\concatenation des succes tcl metro.csv"
+        print("df_succes_concatenation", df_succes_concatenation)
+        print(
+            "df_name_file_failed_rattrapage_concatenation",
+            df_name_file_failed_rattrapage_concatenation,
         )
-        concatenation_echecs_path = (
-            "output_datas\concatenation des echecs tcl metro.csv"
-        )
+        print("*")
+        concatenation_succes_path = "output_datas\concatenation des succes tcl.csv"
+        concatenation_echecs_path = "output_datas\concatenation des echecs tcl.csv"
         df_succes_concatenation.to_csv(
             concatenation_succes_path,
             mode=mode,
+            index=None,
+            header=None,
             sep=";",
             encoding="utf-8-sig",
         )
         df_name_file_failed_rattrapage_concatenation.to_csv(
             concatenation_echecs_path,
             mode=mode,
+            index=None,
+            header=None,
             sep=";",
             encoding="utf-8-sig",
         )
@@ -770,6 +779,6 @@ def main_lunch_function(list_choices):
     print(end - start)
 
 
-main_lunch_function(list_choices=[])
+# main_lunch_function(list_choices=[])
 # main_lunch_function(list_choices=["T5", "Lignes Fortes - C1 C2 C3 C13"])
-# main_lunch_function(list_choices=["T5", "Liaison B/D"])
+main_lunch_function(list_choices=["T5", "Liaison B/D"])
