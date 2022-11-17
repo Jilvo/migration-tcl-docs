@@ -27,7 +27,7 @@ def create_arbo():
         list_arbo,
     )
     df.to_csv(
-        "output_datas/arborescence_semaly_pdf.csv",
+        ARBO_PDF,
         sep=";",
         index=False,
         encoding="utf-8-sig",
@@ -52,7 +52,7 @@ def create_arbo_tif():
         list_arbo,
     )
     df.to_csv(
-        "output_datas/arborescence_semaly_tif2.csv",
+        ARBO_TIF,
         sep=";",
         index=False,
         encoding="utf-8-sig",
@@ -68,7 +68,7 @@ def split_arbo(
 
 def create_file_semaly_pdf():
     df_arbo = pd.read_csv(
-        "output_datas/arborescence_semaly_pdf.csv",
+        ARBO_PDF,
         sep=";",
         error_bad_lines=False,
         # encoding="utf-8-sig",
@@ -76,7 +76,7 @@ def create_file_semaly_pdf():
     )
 
     df_with_meta = pd.read_csv(
-        "output_datas\LISTES URL SEMALY.csv",
+        LISTES_URL_SEMALY,
         sep=";",
         error_bad_lines=False,
         encoding="cp1252",
@@ -152,13 +152,13 @@ def create_file_semaly_pdf():
         }
     )
     df_success.to_csv(
-        "output_datas/listes des succes Semaly TIF into PDF 3.csv",
+        "output_datas/listes des succes Semaly PDF.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",
     )
     df_failed.to_csv(
-        "output_datas/listes des echecs Semaly TIF into PDF 3.csv",
+        "output_datas/listes des echecs Semaly PDF.csv",
         sep=";",
         index=False,
         encoding="utf-8-sig",
@@ -168,14 +168,14 @@ def create_file_semaly_pdf():
 def comp_between_arbo_and_arborescence_semaly_pdu():
     print("lunch")
     df_tif = pd.read_csv(
-        "output_datas/arborescence_semaly_tif2.csv",
+        ARBO_TIF,
         sep=";",
         error_bad_lines=False,
         # encoding="utf-8-sig",
         encoding="cp1252",
     )
     df_with_meta = pd.read_csv(
-        "output_datas\listes des succes Semaly TIF into PDF 3.csv",
+        "output_datas\listes des succes Semaly PDF.csv",
         sep=";",
         error_bad_lines=False,
         encoding="utf-8-sig",
