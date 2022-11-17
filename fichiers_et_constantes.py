@@ -18,3 +18,4 @@ NOM_FICHIER_SORTIE_MR_TRAM = "output_datas/mr_tram_t6.csv"
 FICHIER_ECHECS_A_COPIER_SUR_AUTRE_SERVEUR = (
     "output_datas\erreurs restantes apres comparaison complete darfeuille.csv"
 )
+DESTINATION_FICHIERS_COPIE = "output_datas/tcl_copy_files"

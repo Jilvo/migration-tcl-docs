@@ -75,6 +75,15 @@
 - Execution du script MR TRAM
 
 </details>
+
+<details>
+<summary>Copie des fichiers sur un autre serveur</summary>
+
+- Problème
+- Solution proposé
+
+</details>
+
 <details>
 <summary>STATS</summary>
 
@@ -183,39 +192,6 @@ Construire un fichier fusionnant l'arborescence SEMALY ainsi qu'un fichier de m�
   - Format
   - Date
 
-## Installation :
-
-### Environnement
-
-Avoir les droits d'administrateur le PC n'est pas nécéssaire mais permet de simplifier la mise en place.
-
-En premier lieu il faut installer le language de programmation
-[Python ici version 3.10](https://www.python.org/downloads/)
-
-Ensuite un logiciel de programmation, par exemple [Visual Studio Code](https://code.visualstudio.com/download)
-
-### Paquets nécessaires
-
-Afin d'installer les paquets nécessaires, il faut lancer la commande suivante dans un terminal:
-
-```
-pip install -r requirements.txt
-```
-
-### Mise en place des inputs et outputs:
-dans le dossier inputs_datas:
-  - parse_filter.txt
-  - listes_arrets_lignes.csv
-  - 20221010_ExtratTCLDoc complete modifié.csv
-  - Extraction Serber juste AA et non serber.csv
-
-Le nom des fichiers des inputs peut être modifié dans le fichier *fichier_et_constantes.py*
-
-Certains outputs se trouvent dans *fichier_et_constantes.py*.
-Pour modifier plus en profondeurs les outputs, ils se trouvent dans *main.py*.
-
-
-
 ## Lancement du programme :
 
 ### Execution du script TCLDOCS
@@ -261,6 +237,49 @@ Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNA
 ```
 python arborescence_mr_tram.py
 ```
+## Installation et configuration :
+
+### Environnement
+
+Avoir les droits d'administrateur le PC n'est pas nécéssaire mais permet de simplifier la mise en place.
+
+En premier lieu il faut installer le language de programmation
+[Python ici version 3.10](https://www.python.org/downloads/)
+
+Ensuite un logiciel de programmation, par exemple [Visual Studio Code](https://code.visualstudio.com/download)
+
+### Paquets nécessaires
+
+Afin d'installer les paquets nécessaires, il faut lancer la commande suivante dans un terminal:
+
+```
+pip install -r requirements.txt
+```
+
+### Mise en place des inputs et outputs:
+dans le dossier inputs_datas:
+  - parse_filter.txt
+  - listes_arrets_lignes.csv
+  - 20221010_ExtratTCLDoc complete modifié.csv
+  - Extraction Serber juste AA et non serber.csv
+
+Le nom des fichiers des inputs peut être modifié dans le fichier *fichier_et_constantes.py*
+
+Certains outputs se trouvent dans *fichier_et_constantes.py*.
+Pour modifier plus en profondeurs les outputs, ils se trouvent dans *main.py*.
+
+## Copie des fichiers sur un autre serveur
+
+### Problème
+Afin de ne pas perdre les fichiers non rapprochés on souhaite les copiers sur un serveur/un dossier.
+### Solution proposé
+
+On modifie (si besoin ) le chemin du fichier dans le script *fichier_et_constantes.py* dans la constante : 
+
+__FICHIER_ECHECS_A_COPIER_SUR_AUTRE_SERVEUR__ ainsi que le dossier de sortie des fichiers __DESTINATION_FICHIERS_COPIE__ .
+
+Puis on lance le script *copy_file_another_server.py*, les fichiers seront copiés dans le dossier choisit précédent ou par défaut "output_datas/tcl_copy_files".
+
 ## STATS
 
 VOIR STATS.XLSX

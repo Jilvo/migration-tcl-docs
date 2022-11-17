@@ -156,6 +156,9 @@ def compare_list_arbo_csv_bi_pret(
             for ref_fourn, ref_fiche in zip(
                 df["Référence fournisseur"], df["Référence fiche"]
             ):
+                ref_fourn_no_spaces = ref_fourn.replace(" ", "")
+                value_no_spaces = value.replace(" ", "")
+
                 ### Recherche basique
                 if value == ref_fourn:
                     flag = True
@@ -328,8 +331,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_folder_doublon_succes.append(folder_for_doublon)
                         break
                     if flag == False:
-                        value_no_spaces = value.replace(" ", "")
-                        ref_fourn_no_spaces = ref_fourn.replace(" ", "")
+
                         if value_no_spaces[-8:] in ref_fourn_no_spaces[-8:]:
                             flag = True
                             list_success_path.append(keys)
@@ -431,7 +433,7 @@ def compare_list_arbo_csv_bi_pret(
                                 list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                         if not flag:
-                            value_no_spaces = value.replace(" ", "")
+
                             if value_no_spaces in ref_fourn:
                                 flag = True
                                 list_success_path.append(keys)
@@ -528,7 +530,7 @@ def compare_list_arbo_csv_bi_pret(
                     if re.match("([A-Z]{2}.*)", value):
                         value_replace = re.findall("([A-Z]{2}.*)", value)
                         value_replace = value_replace[0]
-                        ref_fourn_no_spaces = ref_fourn.replace(" ", "")
+
                         if value_replace == ref_fourn_no_spaces:
                             flag = True
                             list_success_path.append(keys)
@@ -539,8 +541,7 @@ def compare_list_arbo_csv_bi_pret(
                             break
 
                     if re.match("(\d{3,6}\W*\D{3,5}\W*\d{3,6})", value):
-                        ref_fourn_no_spaces = ref_fourn.replace(" ", "")
-                        value_no_spaces = value.replace(" ", "")
+
                         if value_no_spaces == ref_fourn_no_spaces:
                             flag = True
                             list_success_path.append(keys)
@@ -564,7 +565,7 @@ def compare_list_arbo_csv_bi_pret(
                 if re.match("([A-Z0-9]{5,})", value):
                     value_cut_point = re.findall("([A-Z0-9]{5,})", value)
                     value_cut_point = value_cut_point[0]
-                    ref_fourn_no_spaces = ref_fourn.replace(" ", "")
+
                     value_cut_point = value_cut_point.replace(" ", "")
                     if value_cut_point in ref_fourn_no_spaces:
                         flag = True
@@ -574,7 +575,26 @@ def compare_list_arbo_csv_bi_pret(
                         list_test_number.append("27")
                         list_folder_doublon_succes.append(folder_for_doublon)
                         break
-
+                if len(value) > 9:
+                    value_delete_v = value_no_spaces[:-6] + "000" + value_no_spaces[-6:]
+                    value_delete_v = value_delete_v[:-3]
+                    if value_delete_v in ref_fourn_no_spaces:
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_test_number.append("28")
+                        list_folder_doublon_succes.append(folder_for_doublon)
+                        break
+                # value_add_zero = value[:-3] + "000" + value[-3:]
+                # if value_add_zero in ref_fourn_no_spaces:
+                #     flag = True
+                #     list_success_path.append(keys)
+                #     list_success_list.append(ref_fiche)
+                #     list_success_values.append(values)
+                #     list_test_number.append("29")
+                #     list_folder_doublon_succes.append(folder_for_doublon)
+                #     break
                 jaro_stat = jellyfish.jaro_distance(
                     value.replace(" ", ""), ref_fourn.replace(" ", "")
                 )

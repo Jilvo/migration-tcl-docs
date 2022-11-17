@@ -5,7 +5,8 @@ from fichiers_et_constantes import *
 
 DIRNAME = [
     # f"""F:\Tcl\{str(0)}01 - Métro - communs""",
-    f"""F:\Tcl\Prêt Plans\Prêt 2017""",
+    # f"""F:\Tcl\Prêt Plans\Prêt 2017""",
+    f"""X:""",
     # f"""F:\Tcl\Prêt Plans""",
     # f"""F:\Tcl\Prêt Plans\Prêt 2018""",
     # f"""F:\Tcl\Prêt Plans\Prêt 2019""",
@@ -51,6 +52,7 @@ length = 0
 length_dwg = 0
 length_see = 0
 length_pdf = 0
+length_topo = 0
 list_arbo = []
 error = 0
 for dir in DIRNAME:
@@ -73,10 +75,15 @@ for dir in DIRNAME:
                     length_see += 1
                     if length_see % 10 == 0:
                         print("actual length see: ", length_see)
+                if os.path.join(path, name)[-8:] == "Topo.dwg":
+                    length_topo += 1
+                    if length_topo % 10 == 0:
+                        print("actual length see: ", length_topo)
             except Exception as e:
                 error += 1
 print("Total length = ", length)
 print("Total length DWG FILES = ", length_dwg)
 print("Total length SEE FILES = ", length_see)
 print("Total length PDf FILES = ", length_pdf)
+print("Total length Topo FILES = ", length_topo)
 print("Total error = ", error)

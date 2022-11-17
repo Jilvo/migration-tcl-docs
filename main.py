@@ -73,23 +73,31 @@ def main_lunch_function(list_choices):
             pass
 
     time.sleep(3)
+    concatenation_succes_path = "output_datas\concatenation des succes tcl.csv"
+    concatenation_echecs_path = "output_datas\concatenation des echecs tcl.csv"
     while len(list_choices) > 0:
+        if len(list_choices) == 0:
+            break
         if "PRÊT" in list_choices:
             # -------- PRÊT --------
-            Lunch_Menu.main(
-                DIRNAME=f"""F:\Tcl\Prêt Plans""",
-                # DIRNAME=[
-                #     f"""F:\Tcl\Prêt Plans\Prêt 2016""",
-                # f"""F:\Tcl\Prêt Plans\Prêt 2017""",
-                #     f"""F:\Tcl\Prêt Plans\Prêt 2018""",
-                #     f"""F:\Tcl\Prêt Plans\Prêt 2019""",
-                # ],
-                name_file_arbo="output_datas/arborescence_tcl_pret_complet.csv",
-                name_file_success="output_datas/listes des succes Prêt complet.csv",
-                name_file_failed="output_datas/listes des echecs Prêt complet.csv",
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
+                # DIRNAME=f"""F:\Tcl\Prêt Plans""",
+                DIRNAME=[
+                    f"""F:\Tcl\Prêt Plans\Prêt 2017\Bordereau 17-141""",
+                    #     f"""F:\Tcl\Prêt Plans\Prêt 2016""",
+                    #     f"""F:\Tcl\Prêt Plans\Prêt 2017""",
+                    #     f"""F:\Tcl\Prêt Plans\Prêt 2018""",
+                    #     f"""F:\Tcl\Prêt Plans\Prêt 2019""",
+                ],
+                name_file_arbo="output_datas/arborescence_tcl_pret_17 141 3.csv",
+                name_file_success="output_datas/listes des succes Prêt 17 141 3.csv",
+                name_file_failed="output_datas/listes des echecs Prêt 17 141 3.csv",
                 input_user=9,
                 list_a_traiter=None,
                 name_file_failed_rattrapage=None,
+            )
+            name_file_failed_rattrapage = (
+                "output_datas/listes des echecs Prêt 17 141 3.csv"
             )
             list_choices.remove("PRÊT")
         elif "SERBER" in list_choices:
@@ -102,6 +110,9 @@ def main_lunch_function(list_choices):
                 input_user=8,
                 list_a_traiter=None,
                 name_file_failed_rattrapage=None,
+            )
+            name_file_failed_rattrapage = (
+                "output_datas/listes des echecs serber 10000_version.csv"
             )
             list_choices.remove("SERBER")
 
@@ -183,9 +194,9 @@ def main_lunch_function(list_choices):
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(210)} à {str(213)} - Métro C - stations""",
                 name_file_arbo="output_datas/arborescence_metro_ligne_c_2.csv",
-                name_file_success="output_datas/listes des succes Métro C complet TEST 2.csv",
-                name_file_failed="output_datas/listes des echecs Métro C première passe TEST 2.csv",
-                name_file_failed_rattrapage="output_datas/listes des echecs Métro C après seconde passe TEST 2.csv",
+                name_file_success="output_datas/listes des succes Métro C complet.csv",
+                name_file_failed="output_datas/listes des echecs Métro C première passe.csv",
+                name_file_failed_rattrapage="output_datas/listes des echecs Métro C après seconde passe.csv",
                 input_user=1,
                 list_a_traiter=[
                     "ARCHIVES USVB",
@@ -210,7 +221,7 @@ def main_lunch_function(list_choices):
 
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=f"""F:\Tcl\{str(305)} à {str(322)} - Métro D - stations""",
-                name_file_arbo="output_datas/arborescence_metro_ligne_c.csv",
+                name_file_arbo="output_datas/arborescence_metro_ligne_d.csv",
                 name_file_success="output_datas/listes des succes Métro D complet.csv",
                 name_file_failed="output_datas/listes des echecs Métro D première passe.csv",
                 name_file_failed_rattrapage="output_datas/listes des echecs Métro D après seconde passe.csv",
@@ -746,24 +757,24 @@ def main_lunch_function(list_choices):
             df_name_file_failed_rattrapage_concatenation,
         )
         print("*")
-        concatenation_succes_path = "output_datas\concatenation des succes tcl.csv"
-        concatenation_echecs_path = "output_datas\concatenation des echecs tcl.csv"
-        df_succes_concatenation.to_csv(
-            concatenation_succes_path,
-            mode=mode,
-            index=None,
-            header=None,
-            sep=";",
-            encoding="utf-8-sig",
-        )
-        df_name_file_failed_rattrapage_concatenation.to_csv(
-            concatenation_echecs_path,
-            mode=mode,
-            index=None,
-            header=None,
-            sep=";",
-            encoding="utf-8-sig",
-        )
+
+        # df_succes_concatenation.to_csv(
+        #     concatenation_succes_path,
+        #     mode=mode,
+        #     index=None,
+        #     header=None,
+        #     sep=";",
+        #     encoding="utf-8-sig",
+        # )
+        # df_name_file_failed_rattrapage_concatenation.to_csv(
+        #     concatenation_echecs_path,
+        #     mode=mode,
+        #     index=None,
+        #     header=None,
+        #     sep=";",
+        #     # encoding="utf-8-sig",
+        #     encoding="cp1252",
+        # )
     print("input_retraiter_tous_echecs", input_retraiter_tous_echecs)
     if input_retraiter_tous_echecs == "O":
         name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
@@ -779,6 +790,7 @@ def main_lunch_function(list_choices):
     print(end - start)
 
 
-# main_lunch_function(list_choices=[])
+#
+main_lunch_function(list_choices=[])
 # main_lunch_function(list_choices=["T5", "Lignes Fortes - C1 C2 C3 C13"])
-main_lunch_function(list_choices=["T5", "Liaison B/D"])
+# main_lunch_function(list_choices=["Liaison B/D"])

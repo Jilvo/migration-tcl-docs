@@ -26,8 +26,7 @@ for i in list_of_path:
         path_cut = path_cut.replace("F:\\", "")
         file = i.replace(path[0], "")
         file = file.replace("\\", "")
-        dest = "output_datas/copy"
-        dest_path = dest + "/" + path_cut
+        dest_path = DESTINATION_FICHIERS_COPIE + "/" + path_cut
         path_cut = "/" + path_cut
         path = Path(dest_path)
         path.mkdir(parents=True)

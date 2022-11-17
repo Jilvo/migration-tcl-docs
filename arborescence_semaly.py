@@ -346,13 +346,13 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
             }
         )
         df_success.to_csv(
-            "output_datas/listes des succes Semaly TIF sans 0.csv",
+            "output_datas/listes des succes Semaly TIF.csv",
             sep=";",
             index=False,
             encoding="utf-8-sig",
         )
         df_failed.to_csv(
-            "output_datas/listes des echecs Semaly TIF sans 0.csv",
+            "output_datas/listes des echecs Semaly TIF.csv",
             sep=";",
             index=False,
             encoding="utf-8-sig",

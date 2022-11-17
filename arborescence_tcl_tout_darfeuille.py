@@ -8,6 +8,8 @@ import pandas as pd
 import re
 from timeit import default_timer as timer
 from fichiers_et_constantes import *
+from difflib import SequenceMatcher
+import jellyfish
 
 start = timer()
 
@@ -66,8 +68,8 @@ def find_ref_fournisseur(name_file_arbo):
         name_file_arbo,
         sep=";",
         error_bad_lines=False,
-        encoding="utf-8-sig",
-        # encoding="cp1252",
+        # encoding="utf-8-sig",
+        encoding="cp1252",
     )
     df_stations = pd.read_csv(
         LISTES_ARRETS_LIGNES,
@@ -217,9 +219,12 @@ def compare_list_arbo_csv_bi(
     list_success_values = []
     list_failed_path = []
     list_failed_list = []
+    list_success_provenance = []
+    list_failed_provenance = []
     print("df", df)
     for keys, values in dict_arbo.items():
         print(keys)
+        dict_jaro_distance = {}
         flag = False
         for value in values[0]:
             print("values", values)
@@ -575,12 +580,54 @@ def compare_list_arbo_csv_bi(
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         break
+                jaro_stat = jellyfish.jaro_distance(
+                    value.replace(" ", ""), ref_fourn.replace(" ", "")
+                )
+                jaro_distance = jellyfish.damerau_levenshtein_distance(
+                    value.replace(" ", ""), ref_fourn.replace(" ", "")
+                )
+                dict_jaro_distance[jaro_stat] = {
+                    "ref": ref_fourn,
+                    "value": value,
+                    "jaro_distance": jaro_distance,
+                }
             if flag == True:
                 print("DEJA AJOUTE")
                 break
         if flag == False:
-            list_failed_path.append(keys)
-            list_failed_list.append(values)
+            sorted_dict_jaro_distance = {
+                k: dict_jaro_distance[k]
+                for k in sorted(dict_jaro_distance, reverse=True)
+            }
+            print(
+                "***********sorted_dict_jaro_distance**********",
+                sorted_dict_jaro_distance,
+            )
+            if len(dict_jaro_distance) > 0:
+                stats_key = list(sorted_dict_jaro_distance)[0]
+                if (
+                    stats_key >= 0.90
+                    and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
+                ):
+                    if sorted_dict_jaro_distance[stats_key]["value"].replace(
+                        " ", ""
+                    ) in sorted_dict_jaro_distance[stats_key]["ref"].replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append(
+                            "ajouté grâce à l'algo de Jaro-Winkler"
+                        )
+                        continue
+                else:
+                    list_failed_path.append(keys)
+                    list_failed_list.append(values)
+                    list_failed_provenance.append(sorted_dict_jaro_distance)
+            else:
+                list_failed_path.append(keys)
+                list_failed_list.append(values)
+                list_failed_provenance.append(sorted_dict_jaro_distance)
     df_success = pd.DataFrame(
         {
             "Chemin du fichier": list_success_path,
@@ -597,7 +644,7 @@ def compare_list_arbo_csv_bi(
 
     if os.path.exists(name_file_success):
         mode = "a"
-        df_success = df_success.iloc[1:, :]
+        # df_success = df_success.iloc[1:, :]
 
     else:
         mode = "w"
