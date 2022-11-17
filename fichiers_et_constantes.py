@@ -17,6 +17,7 @@ NOM_FICHIER_SORTIE_MR_TRAM = "output_datas/mr_tram_t6.csv"
 LISTES_URL_SEMALY = "input_datas\LISTES URL SEMALY.csv"
 ARBO_PDF = "output_datas/arborescence_semaly_pdf.csv"
 ARBO_TIF = "output_datas/arborescence_semaly_tif.csv"
+
 ### OUTPUTS AUTRE SERVEUR: ###
 FICHIER_ECHECS_A_COPIER_SUR_AUTRE_SERVEUR = (
     "output_datas\erreurs restantes apres comparaison complete darfeuille.csv"

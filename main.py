@@ -758,23 +758,23 @@ def main_lunch_function(list_choices):
         )
         print("*")
 
-        # df_succes_concatenation.to_csv(
-        #     concatenation_succes_path,
-        #     mode=mode,
-        #     index=None,
-        #     header=None,
-        #     sep=";",
-        #     encoding="utf-8-sig",
-        # )
-        # df_name_file_failed_rattrapage_concatenation.to_csv(
-        #     concatenation_echecs_path,
-        #     mode=mode,
-        #     index=None,
-        #     header=None,
-        #     sep=";",
-        #     # encoding="utf-8-sig",
-        #     encoding="cp1252",
-        # )
+        df_succes_concatenation.to_csv(
+            concatenation_succes_path,
+            mode=mode,
+            index=None,
+            header=None,
+            sep=";",
+            encoding="utf-8-sig",
+        )
+        df_name_file_failed_rattrapage_concatenation.to_csv(
+            concatenation_echecs_path,
+            mode=mode,
+            index=None,
+            header=None,
+            sep=";",
+            encoding="utf-8-sig",
+            # encoding="cp1252",
+        )
     print("input_retraiter_tous_echecs", input_retraiter_tous_echecs)
     if input_retraiter_tous_echecs == "O":
         name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
