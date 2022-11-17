@@ -219,8 +219,7 @@ def compare_list_arbo_csv_bi(
     name_file_success,
     name_file_failed,
 ):
-    """On itère les lists afin de trouver la référence fournisseur
-    Input : input_datas/*.csv"""
+    """On itère les lists afin de trouver la référence fournisseur"""
     dict_arbo = find_ref_fournisseur(name_file_arbo)
     df = df_extraction
     list_success_path = []
