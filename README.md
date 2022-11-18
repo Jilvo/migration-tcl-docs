@@ -206,8 +206,6 @@ python main.py
 
 Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNAME dans le fichier menu_arborescence.py
 
-Dans le menu choisir le numéro 9
-
 ```
 python main.py
 ```
@@ -215,8 +213,6 @@ python main.py
 ### Execution du script SERBER
 
 Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNAME dans le fichier arborescence_serber.py
-
-Dans le menu choisir le numéro 8
 
 ```
 python main.py

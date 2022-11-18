@@ -81,14 +81,14 @@ def main_lunch_function(list_choices):
         if "PRÊT" in list_choices:
             # -------- PRÊT --------
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
-                # DIRNAME=f"""F:\Tcl\Prêt Plans""",
-                DIRNAME=[
-                    f"""F:\Tcl\Prêt Plans\Prêt 2017\Bordereau 17-141""",
-                    #     f"""F:\Tcl\Prêt Plans\Prêt 2016""",
-                    #     f"""F:\Tcl\Prêt Plans\Prêt 2017""",
-                    #     f"""F:\Tcl\Prêt Plans\Prêt 2018""",
-                    #     f"""F:\Tcl\Prêt Plans\Prêt 2019""",
-                ],
+                DIRNAME=f"""F:\Tcl\Prêt Plans""",
+                # DIRNAME=[
+                #     f"""F:\Tcl\Prêt Plans\Prêt 2017\Bordereau 17-141""",
+                #         f"""F:\Tcl\Prêt Plans\Prêt 2016""",
+                #         f"""F:\Tcl\Prêt Plans\Prêt 2017""",
+                #         f"""F:\Tcl\Prêt Plans\Prêt 2018""",
+                #         f"""F:\Tcl\Prêt Plans\Prêt 2019""",
+                # ],
                 name_file_arbo="output_datas/arborescence_tcl_pret_17 141 3.csv",
                 name_file_success="output_datas/listes des succes Prêt 17 141 3.csv",
                 name_file_failed="output_datas/listes des echecs Prêt 17 141 3.csv",
@@ -296,7 +296,7 @@ def main_lunch_function(list_choices):
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=[
                     f"""F:\Tcl\{str(101)} - Métro A - interstations""",
-                    f"""F:\Tcl\{str(103)} - Métro B - interstations"""
+                    f"""F:\Tcl\{str(103)} - Métro B - interstations""",
                     f"""F:\Tcl\{str(201)} - Métro C - interstations""",
                     f"""F:\Tcl\{str(301)} - Métro D - interstations""",
                 ],
@@ -793,4 +793,4 @@ def main_lunch_function(list_choices):
 #
 main_lunch_function(list_choices=[])
 # main_lunch_function(list_choices=["T5", "Lignes Fortes - C1 C2 C3 C13"])
-# main_lunch_function(list_choices=["Liaison B/D"])
+# main_lunch_function(list_choices=["T5", "Liaison B/D"])

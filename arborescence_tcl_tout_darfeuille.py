@@ -68,8 +68,8 @@ def find_ref_fournisseur(name_file_arbo):
         name_file_arbo,
         sep=";",
         error_bad_lines=False,
-        # encoding="utf-8-sig",
-        encoding="cp1252",
+        encoding="utf-8-sig",
+        # encoding="cp1252",
     )
     df_stations = pd.read_csv(
         LISTES_ARRETS_LIGNES,
@@ -643,7 +643,7 @@ def compare_list_arbo_csv_bi(
 
     if os.path.exists(name_file_success):
         mode = "a"
-        # df_success = df_success.iloc[1:, :]
+        df_success = df_success.iloc[1:, :]
 
     else:
         mode = "w"
