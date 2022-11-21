@@ -306,20 +306,26 @@ def compare_list_arbo_csv_bi_rattrapage(
                     "BT",
                     "FA",
                     "FB",
+                    "FC",
                     "FD",
                     "FE",
+                    "FF",
                     "FN",
                     "FV",
                     "GP",
                     "GL",
                     "HF",
                     "HL",
+                    "KG",
                     "MA",
+                    "MB",
                     "SE",
                     "SF",
                     "SM",
+                    "SR",
                     "ST",
                     "YA",
+                    "YU",
                 ]
                 for dash in list_need_dash:
                     if dash in value and re.match("\w{2}.?\d{5,}", value):
@@ -429,6 +435,15 @@ def compare_list_arbo_csv_bi_rattrapage(
                                     list_success_values.append(values)
                                     list_success_provenance.append(" ")
                                     break
+                    if len(value) == 6 and value[:2] == "KG":
+                        value_kg = "KG-00" + value[-4:]
+                        if value_kg in ref_fourn:
+                            flag = True
+                            list_success_path.append(keys)
+                            list_success_list.append(ref_fiche)
+                            list_success_values.append(values)
+                            list_success_provenance.append(" ")
+                            break
                 if value[:3] == "ETL":
                     ref_fourn_no_zero = ref_fourn.replace("0", "")
                     if value == ref_fourn_no_zero:
