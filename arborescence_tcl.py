@@ -454,6 +454,7 @@ def compare_list_arbo_csv_bi(
                     "FD",
                     "FE",
                     "FN",
+                    "FV",
                     "GP",
                     "GL",
                     "HF",
