@@ -97,13 +97,13 @@ Dans le cadre d'une migration de GED technique, le client souhaite changer la GE
 
 - Extraction de la BDD existante (120 000 références) pour environ (500 000 fichiers).
 - Création de fichiers CSV afin de lier des fichiers avec des métadonnées.
-- Préprocessing de la données
+- Préprocessing des données
 
 ## Solutions choisies :
 
 ### Extraction
 
-- Extraction des références réalises par RS2I sous format CSV
+- Extraction des références réalisées par RS2I sous format CSV
 
 ### Transformation
 
@@ -114,11 +114,11 @@ Dans le cadre d'une migration de GED technique, le client souhaite changer la GE
 
 ### Problème
 
-Trouver la références dans le chemin
+Trouver les références dans le chemin
 
 ### Solution proposé
 
-- On crée différents dataframes pour chaque station sélectionnée
+- On crée différents Dataframes pour chaque station sélectionnée
 - Création d'un script cherchant qui découpe chaque étage du chemin dans une liste, filtre ensuite avec un algo de tri via des REGEX afin de ne garder que les éléments potentiellement intéressants.
 - Dans un premier temps on compare chaque station avec la station correspondante (on peut trouver la station dans le chemin du fichier)
 - Pour les échecs restants on compare les fichiers échoués avec les références de la ligne entière.
@@ -134,7 +134,7 @@ Associer les références prêtées avec les fichiers dans le dossier Prêt
 
 ### Solution proposé
 
-- Créer un dataframe avec toutes les références prêtées (colonne Défenitif (P pour prêtés ou D pour définitif))
+- Créer un dataframe avec toutes les références prêtées (colonne Définitif (P pour prêtés ou D pour définitif))
 - Script REGEX voir TCLDOCS
 - Output:
   - chemin d'un fichier
@@ -144,13 +144,13 @@ Associer les références prêtées avec les fichiers dans le dossier Prêt
 
 ### Problème
 
-Associer les fichiers SERBER avec des références dans l'extractions TCLDOC
+Associer les fichiers SERBER avec des références dans l’extraction TCLDOC
 
 ### Solution proposé
 
-- Créer un dataframe filtrant les références contenant l'armoire SERBER.
-- Créer un deuxième dataframe filtrant toutes les références qui sont en AA et qui ne sont pas SERBER.
-- On compare ensuite l'arborescence avec le premier dataframe et on retraite ensuite les échecs avec le deuxième dataframe.
+- Créer un Dataframe filtrant les références contenant l'armoire SERBER.
+- Créer un deuxième Dataframe filtrant toutes les références qui sont en AA et qui ne sont pas SERBER.
+- On compare ensuite l'arborescence avec le premier Dataframe et on retraite ensuite les échecs avec le deuxième Dataframe.
 - Output:
   - chemin d'un fichier
   - Référence TCL
@@ -159,7 +159,7 @@ Associer les fichiers SERBER avec des références dans l'extractions TCLDOC
 
 ### Problème
 
-Construire un fichier fusionnant l'arborescence SEMALY ainsi qu'un fichier de métadonnées pré-exsistant
+Construire un fichier fusionnant l'arborescence SEMALY ainsi qu'un fichier de métadonnées préexistant
 
 ### Solution proposé
 
@@ -179,7 +179,7 @@ Construire un fichier fusionnant l'arborescence SEMALY ainsi qu'un fichier de m�
 
 ### Problème
 
-Construire un fichier fusionnant l'arborescence SEMALY ainsi qu'un fichier de métadonnées pré-exsistant
+Construire un fichier fusionnant l'arborescence SEMALY ainsi qu'un fichier de métadonnées préexistant
 
 ### Solution proposé
 
@@ -194,7 +194,7 @@ Construire un fichier fusionnant l'arborescence SEMALY ainsi qu'un fichier de m�
 
 ## Lancement du programme :
 
-### Execution du script TCLDOCS
+### Exécution du script TCLDOCS
 
 Lancer le script, ajouter les stations ou ligne voulu et laisser le script tourner
 
@@ -202,7 +202,7 @@ Lancer le script, ajouter les stations ou ligne voulu et laisser le script tourn
 python main.py
 ```
 
-### Execution du script Prêt
+### Exécution du script Prêt
 
 Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNAME dans le fichier menu_arborescence.py
 
@@ -210,7 +210,7 @@ Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNA
 python main.py
 ```
 
-### Execution du script SERBER
+### Exécution du script SERBER
 
 Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNAME dans le fichier arborescence_serber.py
 
@@ -218,7 +218,7 @@ Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNA
 python main.py
 ```
 
-### Execution du script SEMALY
+### Exécution du script SEMALY
 
 Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNAME
 
@@ -226,7 +226,7 @@ Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNA
 python arborescence_semaly.py
 ```
 
-### Execution du script MR TRAM
+### Exécution du script MR TRAM
 
 Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNAME_MRTRAM
 
@@ -237,9 +237,9 @@ python arborescence_mr_tram.py
 
 ### Environnement
 
-Avoir les droits d'administrateur le PC n'est pas nécéssaire mais permet de simplifier la mise en place.
+Avoir les droits d'administrateur le PC n'est pas nécessaire mais permet de simplifier la mise en place.
 
-En premier lieu il faut installer le language de programmation
+En premier lieu il faut installer le langage de programmation
 [Python ici version 3.10](https://www.python.org/downloads/)
 
 Ensuite un logiciel de programmation, par exemple [Visual Studio Code](https://code.visualstudio.com/download)
@@ -255,7 +255,7 @@ pip install -r requirements.txt
 Il faut ensuite créer le dossier *output_datas*
 
 ### Mise en place des inputs et outputs:
-dans le dossier inputs_datas:
+Dans le dossier inputs_datas:
   - parse_filter.txt
   - listes_arrets_lignes.csv
   - 20221010_ExtratTCLDoc complete modifié.csv
@@ -269,10 +269,10 @@ Pour modifier plus en profondeurs les outputs, ils se trouvent dans *main.py*.
 ## Copie des fichiers sur un autre serveur
 
 ### Problème
-Afin de ne pas perdre les fichiers non rapprochés on souhaite les copiers sur un serveur/un dossier.
+Afin de ne pas perdre les fichiers non rapprochés on souhaite les copier sur un serveur/un dossier.
 ### Solution proposé
 
-On modifie (si besoin ) le chemin du fichier dans le script *fichier_et_constantes.py* dans la constante : 
+On modifie (si besoin) le chemin du fichier dans le script *fichier_et_constantes.py* dans la constante : 
 
 __FICHIER_ECHECS_A_COPIER_SUR_AUTRE_SERVEUR__ ainsi que le dossier de sortie des fichiers __DESTINATION_FICHIERS_COPIE__ .
 
@@ -281,3 +281,4 @@ Puis on lance le script *copy_file_another_server.py*, les fichiers seront copi�
 ## STATS
 
 VOIR STATS.XLSX
+
