@@ -256,13 +256,22 @@ Il faut ensuite créer le dossier *output_datas*
 
 ### Mise en place des inputs et outputs:
 Dans le dossier inputs_datas:
-  - parse_filter.txt
-  - listes_arrets_lignes.csv
+  - 20221010_ExtratTCLDoc complete modifié sans AR.csv
   - 20221010_ExtratTCLDoc complete modifié.csv
   - Extraction Serber juste AA et non serber.csv
+  - LISTES URL SEMALY.csv
+  - listes_arrets_lignes.csv
+  - metadonnes_TRAM.csv
+  - parse_filter.txt
+
+Fichiers d'Extraction:
+- Dans un premier temps, vérifier les colonnes du fichier (il faut au minimum les colonnes : __REFFIC__,__DEFINITIF__,__LIBSITE__,__ARMOIRE__,__SUPPORT_DOC__,__NUMERO_REF_FOURN__)
+- Ensuite il faut créer un fichier sans les références commencant par AR
+- Afin de faire la seconde passe sur les fichiers SERBER en gardant juste les AA qui ne sont pas SERBER.
 
 Le nom des fichiers des inputs peut être modifié dans le fichier *fichier_et_constantes.py*
 
+Avant de lancer un script, il faut créer le dossier *output_datas*
 Certains outputs se trouvent dans *fichier_et_constantes.py*.
 Pour modifier plus en profondeurs les outputs, ils se trouvent dans *main.py*.
 
