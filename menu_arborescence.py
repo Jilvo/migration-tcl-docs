@@ -196,6 +196,30 @@ class MainExtraction:
         )
         return df_extraction_pret
 
+    def extraction_pret_tcl_reprise_comparaison_definitif(self):
+        df = pd.read_csv(
+            EXTRACTION_DARFEUILLE_MODIFIE,
+            encoding="cp1252",
+            sep=";",
+        )
+        list_extaction = []
+
+        for index, row in df.iterrows():
+            if row["DEFINITIF"] == "D":
+                list_extaction.append(
+                    [
+                        row["NUMERO_REF_FOURN"],
+                        row["REFFIC"],
+                        row["LIBSITE"],
+                    ],
+                )
+        # print(list_extaction)
+        df_extraction_pret = pd.DataFrame(
+            list_extaction,
+            columns=["Référence fournisseur", "Référence fiche", "Station"],
+        )
+        return df_extraction_pret
+
     def extraction_serber(self):
         df = pd.read_csv(
             EXTRACTION_DARFEUILLE_SANS_AR,

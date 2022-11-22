@@ -141,7 +141,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_provenance.append("2")
                         break
                 value_l_number = re.findall("L\d{4}", value)
-                if len(value_l_number[0]) > 0:
+                if len(value_l_number) > 0:
                     value_l_number = value_l_number[0]
                     if value_l_number in ref_fourn:
                         flag = True
@@ -151,7 +151,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_provenance.append("2")
                         break
                 value_vl_number = re.findall("VL\d{3}", value)
-                if len(value_vl_number[0]) > 0:
+                if len(value_vl_number) > 0:
                     value_vl_number = value_vl_number[0]
                     if value_vl_number in ref_fourn:
                         flag = True
@@ -161,7 +161,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_provenance.append("2")
                         break
                 value_parenthese = re.findall("\) (.*)", value)
-                if len(value_parenthese[0]) > 0:
+                if len(value_parenthese) > 0:
                     value_parenthese = value_parenthese[0]
                     if value_parenthese in ref_fourn:
                         flag = True
@@ -384,45 +384,46 @@ def compare_list_arbo_csv_bi_rattrapage(
                         value_dash_remove_space_dash = re.findall(
                             "(.{2})[-, ]{1}(\d{2,5})", value
                         )
-                        if len(value_dash_remove_space_dash[0][1]) == 5:
-                            value_u = (
-                                value_dash_remove_space_dash[0][0]
-                                + "-0"
-                                + value_dash_remove_space_dash[0][1]
-                            )
-                            if value_u in ref_fourn:
-                                flag = True
-                                list_success_path.append(keys)
-                                list_success_list.append(ref_fiche)
-                                list_success_values.append(values)
-                                list_success_provenance.append("9")
-                                break
-                        elif len(value_dash_remove_space_dash[0][1]) == 4:
-                            value_u = (
-                                value_dash_remove_space_dash[0][0]
-                                + "-00"
-                                + value_dash_remove_space_dash[0][1]
-                            )
-                            if value_u in ref_fourn:
-                                flag = True
-                                list_success_path.append(keys)
-                                list_success_list.append(ref_fiche)
-                                list_success_values.append(values)
-                                list_success_provenance.append("9")
-                                break
-                        elif len(value_dash_remove_space_dash[0][1]) == 3:
-                            value_u = (
-                                value_dash_remove_space_dash[0][0]
-                                + "-000"
-                                + value_dash_remove_space_dash[0][1]
-                            )
-                            if value_u in ref_fourn:
-                                flag = True
-                                list_success_path.append(keys)
-                                list_success_list.append(ref_fiche)
-                                list_success_values.append(values)
-                                list_success_provenance.append("9")
-                                break
+                        if len(value_dash_remove_space_dash) > 1:
+                            if len(value_dash_remove_space_dash[0][1]) == 5:
+                                value_u = (
+                                    value_dash_remove_space_dash[0][0]
+                                    + "-0"
+                                    + value_dash_remove_space_dash[0][1]
+                                )
+                                if value_u in ref_fourn:
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    list_success_provenance.append("9")
+                                    break
+                            elif len(value_dash_remove_space_dash[0][1]) == 4:
+                                value_u = (
+                                    value_dash_remove_space_dash[0][0]
+                                    + "-00"
+                                    + value_dash_remove_space_dash[0][1]
+                                )
+                                if value_u in ref_fourn:
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    list_success_provenance.append("9")
+                                    break
+                            elif len(value_dash_remove_space_dash[0][1]) == 3:
+                                value_u = (
+                                    value_dash_remove_space_dash[0][0]
+                                    + "-000"
+                                    + value_dash_remove_space_dash[0][1]
+                                )
+                                if value_u in ref_fourn:
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    list_success_provenance.append("9")
+                                    break
                         value_dash_zero = value[:2] + "-0" + value[-2:]
                         if value_dash in ref_fourn:
                             flag = True
