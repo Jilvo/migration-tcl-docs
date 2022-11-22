@@ -178,6 +178,46 @@ def compare_list_arbo_csv_bi_pret(
                     list_test_number.append("2")
                     list_folder_doublon_succes.append(folder_for_doublon)
                     break
+                if re.match(".*\D{2}\d{3}$", value.replace(" ", "")):
+                    value_u = value.replace(" ", "")
+                    values_u = value_u[:-3] + "000" + value_u[-3:]
+                    if value_zero_minus in ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("2")
+                        break
+                value_l_number = re.findall("L\d{4}", value)
+                if len(value_l_number[0]) > 0:
+                    value_l_number = value_l_number[0]
+                    if value_l_number in ref_fourn:
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("2")
+                        break
+                value_vl_number = re.findall("VL\d{3}", value)
+                if len(value_vl_number[0]) > 0:
+                    value_vl_number = value_vl_number[0]
+                    if value_vl_number in ref_fourn:
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("2")
+                        break
+                value_parenthese = re.findall("\) (.*)", value)
+                if len(value_parenthese[0]) > 0:
+                    value_parenthese = value_parenthese[0]
+                    if value_parenthese in ref_fourn:
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("2")
+                        break
 
                 ### Recherche en enlevant 15 caractères si commence par AQ,AL,AY,AE,AL,BW,CC
                 if value[:5] == "GMZ00":
@@ -345,21 +385,32 @@ def compare_list_arbo_csv_bi_pret(
                     "BD",
                     "BL",
                     "BT",
+                    "EE",
+                    "EQ",
                     "FA",
                     "FB",
+                    "FC",
                     "FD",
                     "FE",
+                    "FF",
                     "FN",
+                    "FV",
                     "GP",
                     "GL",
                     "HF",
                     "HL",
+                    "KG",
                     "MA",
+                    "MB",
+                    "NT",
                     "SE",
                     "SF",
+                    "SG",
                     "SM",
+                    "SR",
                     "ST",
                     "YA",
+                    "YU",
                 ]
                 for dash in list_need_dash:
                     if re.match("\w{2}.?\d{3,}", value):
@@ -403,6 +454,17 @@ def compare_list_arbo_csv_bi_pret(
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                         elif value_dash_remove_space_add_zero in ref_fourn:
+                            flag = True
+                            list_success_path.append(keys)
+                            list_success_list.append(ref_fiche)
+                            list_success_values.append(values)
+                            list_test_number.append("12")
+                            list_folder_doublon_succes.append(folder_for_doublon)
+                            break
+                        elif (
+                            value_dash_remove_space_add_zero.replace(" ", "")
+                            in ref_fourn
+                        ):
                             flag = True
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
