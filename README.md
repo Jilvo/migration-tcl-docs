@@ -299,6 +299,15 @@ Puis on lance le script *copy_file_another_server.py*, les fichiers seront copi�
   encoding="cp1252"  = fichier modifié par l'humain
 - Bien vérifier que les fichiers csv portant les noms des fichiers de sortie ne sont pas ouverts lors du lancement du script
 - Ne pas mettre un nom de fichier CSV trop long 
+
+## Lancer les scripts avec Powershell :
+1.	Taper powershell dans la barre de recherche
+2.	La fenêtre s’ouvre
+3.	Se déplacer dans le bon répertoire par exemple si le code se trouve dans Documents/migration-tcl-docs 1 comme sur le pc de G.PEREZ il faut faire « cd Documents/migration-tcl-docs 1 »
+Tuto ici : https://www.journaldunet.fr/web-tech/developpement/1441153-comment-changer-le-repertoire-directory-de-powershell/
+4.	Une fois que vous êtes au bon endroit faites « ls » afin de vérifier, vous pouvez aussi le faire avant pour voir ou vous êtes
+5.	Si vous êtes au bon endroit, lancez le script python de votre choix comme marqué plus haut dans le doc (exemple : « python main.py »
+
 ## STATS
 
 VOIR STATS.XLSX
