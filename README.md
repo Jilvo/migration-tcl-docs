@@ -85,6 +85,11 @@
 </details>
 
 <details>
+<summary>BUG Connus</summary>
+
+</details>
+
+<details>
 <summary>STATS</summary>
 
 </details>
@@ -286,7 +291,14 @@ On modifie (si besoin) le chemin du fichier dans le script *fichier_et_constante
 __FICHIER_ECHECS_A_COPIER_SUR_AUTRE_SERVEUR__ ainsi que le dossier de sortie des fichiers __DESTINATION_FICHIERS_COPIE__ .
 
 Puis on lance le script *copy_file_another_server.py*, les fichiers seront copiés dans le dossier choisit précédent ou par défaut "output_datas/tcl_copy_files".
+## BUG Connus
+- Différence d'encodage entre un fichier csv python et celui d'un utilisateur, il faut donc modifier l'encodage
+  
+  encoding="utf-8-sig"  = fichier crée par python
 
+  encoding="cp1252"  = fichier modifié par l'humain
+- Bien vérifier que les fichiers csv portant les noms des fichiers de sortie ne sont pas ouverts lors du lancement du script
+- Ne pas mettre un nom de fichier CSV trop long 
 ## STATS
 
 VOIR STATS.XLSX
