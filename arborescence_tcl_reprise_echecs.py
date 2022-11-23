@@ -130,10 +130,36 @@ def compare_list_arbo_csv_bi_rattrapage(
                     list_success_values.append(values)
                     list_success_provenance.append(" ")
                     break
+                if value.replace("O", "0") == ref_fourn:
+                    flag = True
+                    list_success_path.append(keys)
+                    list_success_list.append(ref_fiche)
+                    list_success_values.append(values)
+                    list_success_provenance.append("remplacement 0")
+                    break
+                if re.match("(\D{3}\d{5})", value.replace(" ", "")):
+                    value_m = value.replace(" ", "")
+                    value_m = value_u[:3] + "00" + value_u[-5:]
+                    if value_m == ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("égalité sans espaces")
+                if len(value) > 10:
+                    value_m = value.replace(" ", "")
+                    value_m = value_m[:-3] + "000" + value_m[-3:]
+                    if value_m == ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("égalité sans espaces")
+
                 if re.match(".*\D{2}\d{3}$", value.replace(" ", "")):
                     value_u = value.replace(" ", "")
                     values_u = value_u[:-3] + "000" + value_u[-3:]
-                    if value_zero_minus in ref_fourn.replace(" ", ""):
+                    if values_u in ref_fourn.replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
@@ -641,7 +667,7 @@ def compare_list_arbo_csv_bi_rattrapage(
             if len(dict_jaro_distance) > 0:
                 stats_key = list(sorted_dict_jaro_distance)[0]
                 if (
-                    stats_key >= 0.90
+                    stats_key >= 0.85
                     and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
                 ):
                     if sorted_dict_jaro_distance[stats_key]["value"].replace(

@@ -172,6 +172,39 @@ def compare_list_arbo_csv_bi_pret(
                     list_test_number.append("1")
                     list_folder_doublon_succes.append(folder_for_doublon)
                     break
+                if value.replace(" ", "") == ref_fourn.replace(" ", ""):
+                    flag = True
+                    list_success_path.append(keys)
+                    list_success_list.append(ref_fiche)
+                    list_success_values.append(values)
+                    list_success_provenance.append("égalité sans espaces")
+                    break
+                if value.replace("O", "0") == ref_fourn:
+                    flag = True
+                    list_success_path.append(keys)
+                    list_success_list.append(ref_fiche)
+                    list_success_values.append(values)
+                    list_success_provenance.append("remplacement 0")
+                    break
+                if re.match("(\D{3}\d{5})", value.replace(" ", "")):
+                    value_m = value.replace(" ", "")
+                    value_m = value_u[:3] + "00" + value_u[-5:]
+                    if value_m == ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("égalité sans espaces")
+                if len(value) > 10:
+                    value_m = value.replace(" ", "")
+                    value_m = value_m[:-3] + "000" + value_m[-3:]
+                    if value_m == ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("égalité sans espaces")
+
                 # try:
                 if re.sub("[^A-Za-z0-9]+", "", value) in re.sub(
                     "[^A-Za-z0-9]+", "", ref_fourn
@@ -186,7 +219,7 @@ def compare_list_arbo_csv_bi_pret(
                 if re.match(".*\D{2}\d{3}$", value.replace(" ", "")):
                     value_u = value.replace(" ", "")
                     values_u = value_u[:-3] + "000" + value_u[-3:]
-                    if value_zero_minus in ref_fourn.replace(" ", ""):
+                    if values_u in ref_fourn.replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
