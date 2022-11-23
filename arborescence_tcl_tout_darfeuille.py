@@ -260,6 +260,15 @@ def compare_list_arbo_csv_bi(
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         list_success_provenance.append("égalité sans espaces")
+                if re.match("(\D{3}\d{4})", value.replace(" ", "")):
+                    value_m = value.replace(" ", "")
+                    value_m = value_u[:3] + "-00" + value_u[-4:]
+                    if value_m in ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("value_m")
                 if len(value) > 10:
                     value_m = value.replace(" ", "")
                     value_m = value_m[:-3] + "000" + value_m[-3:]
