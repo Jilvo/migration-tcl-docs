@@ -5,6 +5,10 @@ import os
 def fusion():
     print(" Ce script va vous permettre de fusionner des fichiers CSV ")
     print("Bien faire attention au chemin du fichier, car sinon il faudra recommencer")
+    print(
+        "Y a t-il une modification humaine sur le fichier ? Si vous ne savez pas, ouvrez les fichiers CSV, sauvegardez les en format csv avec séparateur en ';' ."
+    )
+    modif_encode = input("Il a été modifié ? : (O/N) ")
     list_files = []
     flag = False
     while not flag:
@@ -31,12 +35,16 @@ def fusion():
         ignore_index=True,
     )
     print(df)
-
+    encoding = ""
+    if modif_encode.upper() == "O":
+        encoding = "cp1252"
+    else:
+        encoding = "utf-8-sig"
     df.to_csv(
-        "output_datas/fusion.csv",
+        "fusion_finale/fusion.csv",
         sep=";",
         index=False,
-        encoding="cp1252",
+        encoding=encoding,
     )
 
 
