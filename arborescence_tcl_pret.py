@@ -69,8 +69,8 @@ def find_ref_fournisseur(name_file_arbo):
         name_file_arbo,
         sep=";",
         error_bad_lines=False,
-        # encoding="utf-8-sig",
-        encoding="cp1252",
+        encoding="utf-8-sig",
+        # encoding="cp1252",
     )
     df_stations = pd.read_csv(
         LISTES_ARRETS_LIGNES,
@@ -815,9 +815,9 @@ def compare_list_arbo_csv_bi_pret(
         {
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
-            "lists": list_success_values,
-            "Dossier pour vérification doublons": list_folder_doublon_succes,
-            "list_test_number": list_test_number,
+            # "lists": list_success_values,
+            # "Dossier pour vérification doublons": list_folder_doublon_succes,
+            # "list_test_number": list_test_number,
         },
     )
     print(df_success)
@@ -826,7 +826,7 @@ def compare_list_arbo_csv_bi_pret(
         {
             "Chemin du fichier": list_failed_path,
             "Référence Fiche": list_failed_list,
-            "Dossier pour vérification doublons": list_folder_doublon_echecs,
+            # "Dossier pour vérification doublons": list_folder_doublon_echecs,
         },
     )
     print(df_success.shape)

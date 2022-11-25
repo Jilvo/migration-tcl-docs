@@ -409,14 +409,16 @@ class MainExtraction:
             print("DIRNAME", DIRNAME)
 
         else:
-            name_file_arbo = "output_datas/arborescence_serber_10000_version.csv"
-            name_file_success = (
-                "output_datas/listes des succes serber 10000_version.csv"
-            )
-            name_file_failed = "output_datas/listes des echecs serber 10000_version.csv"
-            name_file_failed_rattrapage = (
-                "output_datas/listes des echecs serber 10000_version rattrapage.csv"
-            )
+            # name_file_arbo = "output_datas/arborescence_serber_complet_version.csv"
+            # name_file_success = (
+            #     "output_datas/listes des succes serber complet_version.csv"
+            # )
+            # name_file_failed = (
+            #     "output_datas/listes des echecs serber complet_version.csv"
+            # )
+            # name_file_failed_rattrapage = (
+            #     "output_datas/listes des echecs serber complet_version rattrapage.csv"
+            # )
             df_extraction = self.extraction_serber()
             arborescence_serber.create_arbo(DIRNAME, name_file_arbo)
             arborescence_serber.compare_list_arbo_csv_bi(
