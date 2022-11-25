@@ -791,5 +791,5 @@ def main_lunch_function(list_choices):
     print(end - start)
 
 
-main_lunch_function(list_choices=[])
-# main_lunch_function(list_choices=["T5", "Liaison B/D"])
+# main_lunch_function(list_choices=[])
+main_lunch_function(list_choices=["Liaison B/D"])
