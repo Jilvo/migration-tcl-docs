@@ -253,7 +253,7 @@ def compare_list_arbo_csv_bi(
                     break
                 if re.match("(\D{3}\d{5})", value.replace(" ", "")):
                     value_m = value.replace(" ", "")
-                    value_m = value_u[:3] + "00" + value_u[-5:]
+                    value_m = value_m[:3] + "00" + value_m[-5:]
                     if value_m == ref_fourn.replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
@@ -262,7 +262,7 @@ def compare_list_arbo_csv_bi(
                         list_success_provenance.append("égalité sans espaces")
                 if re.match("(\D{3}\d{4})", value.replace(" ", "")):
                     value_m = value.replace(" ", "")
-                    value_m = value_u[:3] + "-00" + value_u[-4:]
+                    value_m = value_m[:3] + "-00" + value_m[-4:]
                     if value_m in ref_fourn.replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
@@ -784,6 +784,10 @@ def compare_list_arbo_csv_bi(
                 list_failed_path.append(keys)
                 list_failed_list.append(values)
                 list_failed_provenance.append(sorted_dict_jaro_distance)
+
+    df_failed = pd.DataFrame(
+        {"Chemin du fichier": list_failed_path, "Référence Fiche": list_failed_list},
+    )
     df_success = pd.DataFrame(
         {
             "Chemin du fichier": list_success_path,
@@ -792,10 +796,6 @@ def compare_list_arbo_csv_bi(
         },
     )
     print(df_success)
-
-    df_failed = pd.DataFrame(
-        {"Chemin du fichier": list_failed_path, "Référence Fiche": list_failed_list},
-    )
     print(df_success.shape)
 
     if os.path.exists(name_file_success):
@@ -810,11 +810,13 @@ def compare_list_arbo_csv_bi(
         sep=";",
         mode=mode,
         index=False,
+        header=None,
         encoding="utf-8-sig",
     )
     df_failed.to_csv(
         name_file_failed,
         sep=";",
         index=False,
+        header=None,
         encoding="utf-8-sig",
     )

@@ -18,7 +18,8 @@ df = pd.read_csv(
 )
 list_of_path = df["Chemin du fichier"].tolist()
 
-
+list_why_errors = []
+list_echecs = []
 for i in list_of_path:
     try:
         path = re.findall("(.*)\\\\", i)
@@ -29,8 +30,27 @@ for i in list_of_path:
         dest_path = DESTINATION_FICHIERS_COPIE + "/" + path_cut
         path_cut = "/" + path_cut
         path = Path(dest_path)
-        path.mkdir(parents=True)
+        path.mkdir(parents=True, exist_ok=True)
         destination_file = dest_path + "/" + file
         shutil.copy(i, destination_file)
+
     except Exception as e:
-        print(e.args)
+        print(destination_file)
+        list_echecs.append(destination_file)
+        list_why_errors.append(e.args)
+
+    df = pd.DataFrame(
+        {
+            "Chemin du fichier": list_echecs,
+            "Raisons Erreurs": list_why_errors,
+        }
+    )
+
+    df.to_csv(
+        "output_datas/erreurs_copies_fichiers_echecs.csv",
+        sep=";",
+        index=False,
+        encoding="utf-8-sig",
+    )
+    # except Exception as e:
+    #     print(e.args)
