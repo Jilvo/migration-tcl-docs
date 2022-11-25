@@ -215,6 +215,16 @@ Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNA
 python main.py
 ```
 
+### Exécution du script PATRIMOINE
+
+Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNAME dans le fichier arborescence_serber.py
+
+```
+python arborescence_patrimoine.py
+```
+
+
+
 ### Exécution du script SERBER
 
 Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNAME dans le fichier arborescence_serber.py
@@ -222,6 +232,7 @@ Il faut modifier le chemin (si besoin) du fichier en modifiant la variable DIRNA
 ```
 python main.py
 ```
+
 
 ### Exécution du script SEMALY
 
@@ -281,34 +292,59 @@ Certains outputs se trouvent dans *fichier_et_constantes.py*.
 Pour modifier plus en profondeurs les outputs, ils se trouvent dans *main.py*.
 
 ## Copie des fichiers sur un autre serveur
+Le script de copie attend un fichier qui se nomme/ se trouve dans "output_datas\Echecs.csv".
+```
+python copy_file_another_server.py
+```
+DESTINATION_FICHIERS_COPIE = "output_datas/tcl_copy_files"
+
+Les échecs des fichiers non copiés seront dans le fichier csv "output_datas/erreurs_copies_fichiers_echecs.csv"
 
 ### Problème
 Afin de ne pas perdre les fichiers non rapprochés on souhaite les copier sur un serveur/un dossier.
+
 ### Solution proposé
 
 On modifie (si besoin) le chemin du fichier dans le script *fichier_et_constantes.py* dans la constante : 
 
 __FICHIER_ECHECS_A_COPIER_SUR_AUTRE_SERVEUR__ ainsi que le dossier de sortie des fichiers __DESTINATION_FICHIERS_COPIE__ .
 
-Puis on lance le script *copy_file_another_server.py*, les fichiers seront copiés dans le dossier choisi précédent ou par défaut "output_datas/tcl_copy_files".
+Puis on lance le script *copy_file_another_server.py*, les fichiers seront copiés dans le dossier choisit précédent ou par défaut "output_datas/tcl_copy_files".
+
 ## BUG Connus
 - Différence d'encodage entre un fichier csv python et celui d'un utilisateur, il faut donc modifier l'encodage
   
   encoding="utf-8-sig"  = fichier crée par python
-
   encoding="cp1252"  = fichier modifié par l'humain
+
 - Bien vérifier que les fichiers csv portant les noms des fichiers de sortie ne sont pas ouverts lors du lancement du script
 - Ne pas mettre un nom de fichier CSV trop long 
 
 ## Lancer les scripts avec Powershell :
-1.	Taper powershell dans la barre de recherche
-2.	La fenêtre s’ouvre
-3.	Se déplacer dans le bon répertoire par exemple si le code se trouve dans Documents/migration-tcl-docs 1 comme sur le pc de G.PEREZ il faut faire « cd Documents/migration-tcl-docs 1 »
-Tuto ici : https://www.journaldunet.fr/web-tech/developpement/1441153-comment-changer-le-repertoire-directory-de-powershell/
-4.	Une fois que vous êtes au bon endroit faites « ls » afin de vérifier, vous pouvez aussi le faire avant pour voir ou vous êtes
-5.	Si vous êtes au bon endroit, lancez le script python de votre choix comme marqué plus haut dans le doc (exemple : « python main.py »
+Taper powershell dans la barre de recherche
+
+La fenêtre s’ouvre
+
+Si on part du principe que les scripts se trouve dans Documents\Migration TCLdocs\migration-tcl-docs-main 1
+
+La première commande va permettre de se déplacer dans le bon dossier
+
+La seconde pour vérifier que nous sommes au bon endroit
+
+La troisième pour lancer le script
+
+La troisième peut être remplacée par une autre commande si l'on souhaite lancer semaly, patrimoine, mr_tram.
+```
+cd 'Documents\Migration TCLdocs\migration-tcl-docs-main 1'
+ls
+python main.py
+```
+## Fusionner plusieurs CSV
+
+Le nom de la fusion des échecs doit avoir le nom suivant : fusion_finale\fusion_des_echecs.csv
 
 ## STATS
 
 VOIR STATS.XLSX
+
 
