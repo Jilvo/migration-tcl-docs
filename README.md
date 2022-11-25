@@ -290,7 +290,7 @@ On modifie (si besoin) le chemin du fichier dans le script *fichier_et_constante
 
 __FICHIER_ECHECS_A_COPIER_SUR_AUTRE_SERVEUR__ ainsi que le dossier de sortie des fichiers __DESTINATION_FICHIERS_COPIE__ .
 
-Puis on lance le script *copy_file_another_server.py*, les fichiers seront copiés dans le dossier choisit précédent ou par défaut "output_datas/tcl_copy_files".
+Puis on lance le script *copy_file_another_server.py*, les fichiers seront copiés dans le dossier choisi précédent ou par défaut "output_datas/tcl_copy_files".
 ## BUG Connus
 - Différence d'encodage entre un fichier csv python et celui d'un utilisateur, il faut donc modifier l'encodage
   

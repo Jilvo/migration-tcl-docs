@@ -53,7 +53,7 @@ def main_lunch_function(list_choices):
                 else:
                     print("Je ne comprend pas votre réponse, réessayez ")
                     pass
-    print(f"Vous avez donc choisit d'extraire {list_choices}")
+    print(f"Vous avez donc choisi d'extraire {list_choices}")
     flag_re = False
     input_retraiter_tous_echecs = ""
     while not flag_re:
