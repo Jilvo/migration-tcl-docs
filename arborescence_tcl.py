@@ -147,21 +147,74 @@ def find_ref_fournisseur(name_file_arbo):
             elif "C13" in list_split[3]:
                 list_station_for_filter.append("LIGNE FORTE C13")
             list_split_station.append(list_station_for_filter)
-        elif "Surface" in list_split[2]:
+        elif "750 - Agences" in list_split[2]:
             list_station_for_filter = []
-            if "00 Ligne Aérienne Trolleybus" in list_split[3]:
-                list_station_for_filter.append("SURFACE L.A.")
-            elif "Surface - communs" in list_split[3]:
-                list_station_for_filter.append("COMMUNS SURFACE")
+            if "Bellecour" in list_split[3]:
+                list_station_for_filter.append("BELLECOUR AGENCE")
+            elif "Part-Dieu" in list_split[3]:
+                list_station_for_filter.append("PART DIEU  AGENCE")
             else:
                 list_station_for_filter.append("SURFACE")
             list_split_station.append(list_station_for_filter)
-        elif "stations" in list_split[2]:
+        elif "800 à 843 - Surface" in list_split[2]:
             list_station_for_filter = []
+            if "831 - Feeders" in list_split[3]:
+                list_station_for_filter.append("SURFACE")
+            elif "820 - Siège Social B12" in list_split[3]:
+                list_station_for_filter.append("SIEGE SOCIAL")
+            elif "800 - Ligne Aérienne Trolleybus" in list_split[3]:
+                list_station_for_filter.append("SURFACE L.A.")
+            elif "Unités de Maintenance" in list_split[3]:
+                list_station_for_filter.append("ALSACE UTN 1 ET UMS")
+            else:
+                list_station_for_filter.append("SURFACE")
+            list_split_station.append(list_station_for_filter)
+        elif "808 à 819 - Unités de Transport" in list_split[2]:
+            list_station_for_filter = []
+            if "Alsace UTN1" in list_split[3]:
+                list_station_for_filter.append("ALSACE UTN 1 ET UMS")
+            elif "Alsace UTN2" in list_split[3]:
+                list_station_for_filter.append("ALSACE UTN 2")
+            elif "Audibert" in list_split[3]:
+                list_station_for_filter.append("UT AUDIBERT")
+            elif "Caluire" in list_split[3]:
+                list_station_for_filter.append("UT CALUIRE")
+            elif "Givors" in list_split[3]:
+                list_station_for_filter.append("UT GIVORS")
+            elif "La Soie" in list_split[3]:
+                list_station_for_filter.append("UT LA SOIE")
+            elif "Les Pins" in list_split[3]:
+                list_station_for_filter.append("UT LES PINS")
+            elif "Oullins" in list_split[3]:
+                list_station_for_filter.append("UT OULLINS")
+            elif "Perrache" in list_split[3]:
+                list_station_for_filter.append("UT PERRACHE")
+            elif "Perrache Confluence" in list_split[3]:
+                list_station_for_filter.append("UT PERRACHE CONFLUENCE")
+            elif "Vaise - Saint Simon" in list_split[3]:
+                list_station_for_filter.append("UT VAISE")
+            else:
+                list_station_for_filter.append("SURFACE")
+            list_split_station.append(list_station_for_filter)
+        elif "826 - Duchère" in list_split[2]:
+            list_station_for_filter = []
+            if "Duchère Parc relais" in list_split[3]:
+                list_station_for_filter.append("DUCHERE PARC RELAIS")
+            elif "Duchère Site propre" in list_split[3]:
+                list_station_for_filter.append("DUCHERE SITE PROPRE")
+            else:
+                list_station_for_filter.append("SURFACE")
+            list_split_station.append(list_station_for_filter)
+        elif "stations" or "830 - 832 à 857 - Sous Stations" in list_split[2]:
+            list_station_for_filter = []
+            flag_ind = False
             for key, value in dict_stations.items():
                 if list_split[3] == key:
                     list_station_for_filter.append(value)
+                    flag_ind = True
                     continue
+            if not flag_ind:
+                list_station_for_filter.append("SURFACE")
             list_split_station.append(list_station_for_filter)
         dict_arbo[row["Chemin du fichier"]] = list_split_station
     for i in dict_arbo.values():
@@ -182,6 +235,23 @@ def find_ref_fournisseur(name_file_arbo):
                 except Exception as e:
                     pass
 
+        try:
+            for item in index_element:
+                if not re.match("(.*\d{1,}.*)", item):
+                    index_element.remove(item)
+                    continue
+                if re.match("(.*\d{2,}\D{11,})", item):
+                    index_element.remove(item)
+                    continue
+                for parse in LIST_PARSE_WORD:
+                    try:
+                        if parse in item:
+                            index_element.remove(item)
+                            break
+                    except Exception as e:
+                        pass
+        except Exception as e:
+            pass
         try:
             for item in index_element:
                 if not re.match("(.*\d{1,}.*)", item):
@@ -234,6 +304,8 @@ def compare_list_arbo_csv_bi(
         if "ST-100012-B.pdf" in keys:
             print("On entre dans un doublon")
             time.sleep(10)
+        print("chemin", keys)
+        print("list valeurs", values)
         flag = False
         dict_jaro_distance = {}
         for value in values[0]:
@@ -241,8 +313,26 @@ def compare_list_arbo_csv_bi(
                 df[values[1][0]]["Référence fournisseur"],
                 df[values[1][0]]["Référence fiche"],
             ):
+                value = value.upper()
                 # print("ref_fourn", ref_fourn)
                 ### Recherche basique
+                if "820 - Siège Social B12" in keys:
+                    value_b12 = ""
+                    # print("value avant", value)
+                    if "B12" in value:
+                        value_b12 = value.replace("B12", "")
+                        value_b12 = value_b12.replace(" ", "")
+                        # print("value_b12[0]", value_b12[0])
+                        if value_b12[0] == "0":
+                            value_b12 = value_b12.replace("0", "")
+                    # print("value_b12", value_b12)
+                    if value_b12 == ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("égalité")
+                        break
                 if value == ref_fourn:
                     flag = True
                     list_success_path.append(keys)
@@ -838,6 +928,7 @@ def compare_list_arbo_csv_bi(
                 )
                 dict_jaro_distance[jaro_stat] = {
                     "ref": ref_fourn,
+                    "ref_fiche": ref_fiche,
                     "value": value,
                     "jaro_distance": jaro_distance,
                 }
@@ -849,14 +940,15 @@ def compare_list_arbo_csv_bi(
                 k: dict_jaro_distance[k]
                 for k in sorted(dict_jaro_distance, reverse=True)
             }
-            print(
-                "***********sorted_dict_jaro_distance**********",
-                sorted_dict_jaro_distance,
-            )
+            # print(
+            #     "***********sorted_dict_jaro_distance**********",
+            #     sorted_dict_jaro_distance,
+            # )
             if len(dict_jaro_distance) > 0:
                 stats_key = list(sorted_dict_jaro_distance)[0]
+                print("stats_key", stats_key)
                 if (
-                    stats_key >= 0.85
+                    stats_key >= 0.90
                     and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
                 ):
                     if sorted_dict_jaro_distance[stats_key]["value"].replace(
@@ -864,7 +956,29 @@ def compare_list_arbo_csv_bi(
                     ) in sorted_dict_jaro_distance[stats_key]["ref"].replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
+                        list_success_list.append(
+                            sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+                        )
+                        list_success_values.append(values)
+                        list_success_provenance.append(
+                            "ajouté grâce à l'algo de Jaro-Winkler"
+                        )
+                        continue
+                    elif (
+                        stats_key >= 0.95
+                        and sorted_dict_jaro_distance[stats_key]["jaro_distance"] == 1
+                    ):
+                        print("sup 95")
+                        print("stats_key", stats_key)
+                        print(
+                            "sorted_dict_jaro_distance[stats_key]",
+                            sorted_dict_jaro_distance[stats_key],
+                        )
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(
+                            sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+                        )
                         list_success_values.append(values)
                         list_success_provenance.append(
                             "ajouté grâce à l'algo de Jaro-Winkler"
@@ -873,15 +987,19 @@ def compare_list_arbo_csv_bi(
                     else:
                         list_failed_path.append(keys)
                         list_failed_list.append(values)
+                        list_folder_doublon_echecs.append(folder_for_doublon)
+
                         list_failed_provenance.append("jaro bon mais pas match ")
                 else:
                     list_failed_path.append(keys)
                     list_failed_list.append(values)
+                    list_folder_doublon_echecs.append(folder_for_doublon)
                     list_failed_provenance.append("jaro inférieur a 90% ou sup 2 ")
 
             else:
                 list_failed_path.append(keys)
                 list_failed_list.append(values)
+                list_folder_doublon_echecs.append(folder_for_doublon)
                 list_failed_provenance.append("jaro vide")
     df_success = pd.DataFrame(
         {

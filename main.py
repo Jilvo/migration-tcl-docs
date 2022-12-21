@@ -81,7 +81,8 @@ def main_lunch_function(list_choices):
         if "PRÊT" in list_choices:
             # -------- PRÊT --------
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
-                DIRNAME=f"""F:\Tcl\Prêt Plans""",
+                DIRNAME=f"""F:\Tcl\Prêt Plans\Prêt 2022\Bordereau 22-150""",
+                # DIRNAME=f"""F:\Tcl\Prêt Plans""",
                 # DIRNAME=[
                 #     f"""F:\Tcl\Prêt Plans\Prêt 2017\Bordereau 17-141""",
                 # f"""F:\Tcl\Prêt Plans\Prêt 2016""",
@@ -89,15 +90,15 @@ def main_lunch_function(list_choices):
                 #         f"""F:\Tcl\Prêt Plans\Prêt 2018""",
                 #         f"""F:\Tcl\Prêt Plans\Prêt 2019""",
                 # ],
-                name_file_arbo="output_datas/arborescence_tcl_pret_complet.csv",
-                name_file_success="output_datas/listes des succes Prêt complet.csv",
-                name_file_failed="output_datas/listes des echecs Prêt complet.csv",
+                name_file_arbo="output_datas/arborescence_tcl_pret_complet_22150.csv",
+                name_file_success="output_datas/listes des succes Prêt complet 22150.csv",
+                name_file_failed="output_datas/listes des echecs Prêt complet 22150.csv",
                 input_user=9,
                 list_a_traiter=None,
                 name_file_failed_rattrapage=None,
             )
             name_file_failed_rattrapage = (
-                "output_datas/listes des echecs Prêt complet.csv"
+                "output_datas/listes des echecs Prêt complet 22150.csv"
             )
             list_choices.remove("PRÊT")
         elif "SERBER" in list_choices:
@@ -680,52 +681,74 @@ def main_lunch_function(list_choices):
         elif "Surface" in list_choices:
             # -------- Surface --------
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
-                DIRNAME=f"""F:\Tcl\{str(800)} à {str(843)} - Surface""",
-                name_file_arbo="output_datas/arborescence_dossier_surface.csv",
-                name_file_success="output_datas/listes des succes Dossier Surface complet.csv",
-                name_file_failed="output_datas/listes des echecs Dossier Surface première passe.csv",
-                name_file_failed_rattrapage="output_datas/listes des echecs Dossier Surface après seconde passe.csv",
+                # DIRNAME=[
+                #     f"""F:\Tcl\{str(750)} - Agences""",
+                #     f"""F:\Tcl\{str(800)} à {str(843)} - Surface""",
+                #     f"""F:\Tcl\{str(808)} à {str(819)} - Unités de Transport""",
+                #     f"""F:\Tcl\{str(826)} - Duchère""",
+                #     f"""F:\Tcl\{str(830)} - {str(832)} à {str(857)} - Sous Stations""",
+                # ],
+                # DIRNAME=f"""F:\Tcl\{str(800)} à {str(843)} - Surface""",
+                # DIRNAME=f"""F:\Tcl\{str(800)} à {str(843)} - Surface\{str(820)} - Siège Social B12\{str(0)}0 Bâtiment\B12 001""",
+                DIRNAME=f"""F:\Tcl\{str(800)} à {str(843)} - Surface\{str(820)} - Siège Social B12""",
+                name_file_arbo="output_datas/arborescence_dossier_surface_b12.csv",
+                name_file_success="output_datas/listes des succes Dossier Surface B12 2 complet.csv",
+                name_file_failed="output_datas/listes des echecs Dossier Surface B12 2 première passe.csv",
+                name_file_failed_rattrapage="output_datas/listes des echecs Dossier Surface B12 2 après seconde passe.csv",
                 input_user=1,
                 list_a_traiter=[
-                    "ALSACE UTN 1 ET UMS",
-                    "ALSACE UTN 2",
-                    "ARCHIVES S/STATIONS",
-                    "CENTRE S/STATION",
-                    "COMMUNS BUS",
-                    "COMMUNS S/STATION",
-                    "COMMUNS SURFACE",
-                    "CROIX ROUSSE S/STATION",
-                    "DAUPHINE S/STATION",
-                    "DIVERS SURFACE",
-                    "DUCHERE PARC RELAIS",
-                    "DUCHERE S/STATION",
-                    "DUCHERE SITE PROPRE",
-                    "GRANDCLEMENT S/STATION",
-                    "SST ACHILLE LIGNON",
-                    "SST BAUMER GRAPPINIERE",
-                    "SST CALUIRE",
-                    "SST DREVET",
-                    "SST FOCH",
-                    "SST MICHELET",
-                    "SST MOBILE",
-                    "SST TERME",
-                    "SST THOREZ",
-                    "SST TONKIN",
-                    "SST VAISE",
-                    "SST VENDOME",
+                    "SIEGE SOCIAL",
                     "SURFACE",
-                    "SURFACE L.A.",
-                    "UT AUDIBERT",
-                    "UT CALUIRE",
-                    "UT GIVORS",
-                    "UT LA SOIE",
-                    "UT LES PINS",
-                    "UT OULLINS",
-                    "UT PARMENTIER",
-                    "UT PERRACHE",
-                    "UT PERRACHE CONFLUENCE",
-                    "UT VAISE",
                 ],
+                # list_a_traiter=[
+                #     "ALSACE UTN 1 ET UMS",
+                #     "ALSACE UTN 2",
+                #     "ARCHIVES S/STATIONS",
+                #     "BELLECOUR AGENCE",
+                #     "CENTRE S/STATION",
+                #     "COMMUNS BUS",
+                #     "COMMUN TCL",
+                #     "COMMUNS RESEAU",
+                #     "COMMUNS S/STATION",
+                #     "COMMUNS SURFACE",
+                #     "CROIX ROUSSE S/STATION",
+                #     "DAUPHINE S/STATION",
+                #     "DIR SERVICES TECHNIQUES",
+                #     "DIVERS SURFACE",
+                #     "DUCHERE PARC RELAIS",
+                #     "DUCHERE S/STATION",
+                #     "DUCHERE SITE PROPRE",
+                #     "FOCH",
+                #     "GRANDCLEMENT S/STATION",
+                #     "PART DIEU",
+                #     "PART DIEU  AGENCE",
+                #     "SIEGE SOCIAL",
+                #     "SST ACHILLE LIGNON",
+                #     "SST BAUMER GRAPPINIERE",
+                #     "SST CALUIRE",
+                #     "SST DREVET",
+                #     "SST FOCH",
+                #     "SST MICHELET",
+                #     "SST MOBILE",
+                #     "SST TERME",
+                #     "SST THOREZ",
+                #     "SST TONKIN",
+                #     "SST VAISE",
+                #     "SST VENDOME",
+                #     "SURFACE",
+                #     "SURFACE L.A.",
+                #     "USEL ARCHIVES",
+                #     "UT AUDIBERT",
+                #     "UT CALUIRE",
+                #     "UT GIVORS",
+                #     "UT LA SOIE",
+                #     "UT LES PINS",
+                #     "UT OULLINS",
+                #     "UT PARMENTIER",
+                #     "UT PERRACHE",
+                #     "UT PERRACHE CONFLUENCE",
+                #     "UT VAISE",
+                # ],
             )
             list_choices.remove("Surface")
         print(
@@ -792,4 +815,6 @@ def main_lunch_function(list_choices):
 
 
 # main_lunch_function(list_choices=[])
-main_lunch_function(list_choices=["Liaison B/D"])
+# main_lunch_function(list_choices=["Liaison B/D"])
+# main_lunch_function(list_choices=["Surface"])
+main_lunch_function(list_choices=["PRÊT"])

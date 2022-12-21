@@ -230,6 +230,7 @@ def compare_list_arbo_csv_bi(
             for ref_fourn, ref_fiche in zip(
                 df["Référence fournisseur"], df["Référence fiche"]
             ):
+                value = value.upper()
                 ### Recherche basique
                 if value == ref_fourn:
                     flag = True
@@ -744,6 +745,7 @@ def compare_list_arbo_csv_bi(
                 )
                 dict_jaro_distance[jaro_stat] = {
                     "ref": ref_fourn,
+                    "ref_fiche": ref_fiche,
                     "value": value,
                     "jaro_distance": jaro_distance,
                 }
@@ -755,14 +757,15 @@ def compare_list_arbo_csv_bi(
                 k: dict_jaro_distance[k]
                 for k in sorted(dict_jaro_distance, reverse=True)
             }
-            print(
-                "***********sorted_dict_jaro_distance**********",
-                sorted_dict_jaro_distance,
-            )
+            # print(
+            #     "***********sorted_dict_jaro_distance**********",
+            #     sorted_dict_jaro_distance,
+            # )
             if len(dict_jaro_distance) > 0:
                 stats_key = list(sorted_dict_jaro_distance)[0]
+                print("stats_key", stats_key)
                 if (
-                    stats_key >= 0.85
+                    stats_key >= 0.90
                     and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
                 ):
                     if sorted_dict_jaro_distance[stats_key]["value"].replace(
@@ -770,21 +773,51 @@ def compare_list_arbo_csv_bi(
                     ) in sorted_dict_jaro_distance[stats_key]["ref"].replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
+                        list_success_list.append(
+                            sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+                        )
                         list_success_values.append(values)
                         list_success_provenance.append(
                             "ajouté grâce à l'algo de Jaro-Winkler"
                         )
                         continue
+                    elif (
+                        stats_key >= 0.95
+                        and sorted_dict_jaro_distance[stats_key]["jaro_distance"] == 1
+                    ):
+                        print("sup 95")
+                        print("stats_key", stats_key)
+                        print(
+                            "sorted_dict_jaro_distance[stats_key]",
+                            sorted_dict_jaro_distance[stats_key],
+                        )
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(
+                            sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+                        )
+                        list_success_values.append(values)
+                        list_success_provenance.append(
+                            "ajouté grâce à l'algo de Jaro-Winkler"
+                        )
+                        continue
+                    else:
+                        list_failed_path.append(keys)
+                        list_failed_list.append(values)
+                        list_folder_doublon_echecs.append(folder_for_doublon)
+
+                        list_failed_provenance.append("jaro bon mais pas match ")
                 else:
                     list_failed_path.append(keys)
                     list_failed_list.append(values)
-                    list_failed_provenance.append(sorted_dict_jaro_distance)
+                    list_folder_doublon_echecs.append(folder_for_doublon)
+                    list_failed_provenance.append("jaro inférieur a 90% ou sup 2 ")
+
             else:
                 list_failed_path.append(keys)
                 list_failed_list.append(values)
-                list_failed_provenance.append(sorted_dict_jaro_distance)
-
+                list_folder_doublon_echecs.append(folder_for_doublon)
+                list_failed_provenance.append("jaro vide")
     df_failed = pd.DataFrame(
         {"Chemin du fichier": list_failed_path, "Référence Fiche": list_failed_list},
     )

@@ -122,6 +122,7 @@ def compare_list_arbo_csv_bi(
 
                 value = value.upper()
                 value = re.sub("(\W?[V|-].*)", "", value)
+                value = value.upper()
                 # print(ref_fourn)
                 ### Recherche basique
                 if value == ref_fourn:

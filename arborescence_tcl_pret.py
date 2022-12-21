@@ -162,6 +162,7 @@ def compare_list_arbo_csv_bi_pret(
             ):
                 ref_fourn_no_spaces = ref_fourn.replace(" ", "")
                 value_no_spaces = value.replace(" ", "")
+                value = value.upper()
 
                 ### Recherche basique
                 if value == ref_fourn:
@@ -754,9 +755,12 @@ def compare_list_arbo_csv_bi_pret(
                 )
                 dict_jaro_distance[jaro_stat] = {
                     "ref": ref_fourn,
+                    "ref_fiche": ref_fiche,
                     "value": value,
                     "jaro_distance": jaro_distance,
                 }
+                # print("jaro_stat", jaro_stat)
+                # print("jaro_distance", jaro_distance)
             if flag == True:
                 print("DEJA AJOUTE")
                 break
@@ -765,12 +769,13 @@ def compare_list_arbo_csv_bi_pret(
                 k: dict_jaro_distance[k]
                 for k in sorted(dict_jaro_distance, reverse=True)
             }
-            print(
-                "***********sorted_dict_jaro_distance**********",
-                sorted_dict_jaro_distance,
-            )
+            # print(
+            #     "***********sorted_dict_jaro_distance**********",
+            #     sorted_dict_jaro_distance,
+            # )
             if len(dict_jaro_distance) > 0:
                 stats_key = list(sorted_dict_jaro_distance)[0]
+                print("stats_key", stats_key)
                 if (
                     stats_key >= 0.90
                     and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
@@ -780,7 +785,29 @@ def compare_list_arbo_csv_bi_pret(
                     ) in sorted_dict_jaro_distance[stats_key]["ref"].replace(" ", ""):
                         flag = True
                         list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
+                        list_success_list.append(
+                            sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+                        )
+                        list_success_values.append(values)
+                        list_success_provenance.append(
+                            "ajouté grâce à l'algo de Jaro-Winkler"
+                        )
+                        continue
+                    elif (
+                        stats_key >= 0.95
+                        and sorted_dict_jaro_distance[stats_key]["jaro_distance"] == 1
+                    ):
+                        print("sup 95")
+                        print("stats_key", stats_key)
+                        print(
+                            "sorted_dict_jaro_distance[stats_key]",
+                            sorted_dict_jaro_distance[stats_key],
+                        )
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(
+                            sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+                        )
                         list_success_values.append(values)
                         list_success_provenance.append(
                             "ajouté grâce à l'algo de Jaro-Winkler"
@@ -836,10 +863,12 @@ def compare_list_arbo_csv_bi_pret(
         sep=";",
         index=False,
         encoding="utf-8-sig",
+        # encoding="cp1252",
     )
     df_failed.to_csv(
         name_file_failed,
         sep=";",
         index=False,
         encoding="utf-8-sig",
+        # encoding="cp1252",
     )

@@ -10,9 +10,9 @@ import menu_arborescence
 import arborescence_tcl_pret
 
 ### Mettre nom du fichiers d'échecs
-nom_fichier_echecs = "output_datas\listes des echecs Prêt complet.csv"
-name_file_success = "output_datas\fichier_trouve_suite_comp_fich_definitif.csv"
-name_file_failed = "output_datas\fichier_echecs_suite_comp_fich_definitif.csv"
+nom_fichier_echecs = "output_datas/listes des echecs Prêt complet.csv"
+name_file_success = "output_datas/fichier_trouve_suite_comp_fich_definitif.csv"
+name_file_failed = "output_datas/fichier_echecs_suite_comp_fich_definitif.csv"
 
 
 Lunch_Menu = menu_arborescence.MainExtraction()
