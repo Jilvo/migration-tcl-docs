@@ -170,7 +170,7 @@ def compare_list_arbo_csv_bi_pret(
                     list_success_path.append(keys)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
-                    list_test_number.append("1")
+                    list_success_provenance.append("égalité")
                     list_folder_doublon_succes.append(folder_for_doublon)
                     break
                 if value.replace(" ", "") == ref_fourn.replace(" ", ""):
@@ -185,7 +185,7 @@ def compare_list_arbo_csv_bi_pret(
                     list_success_path.append(keys)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
-                    list_success_provenance.append("remplacement 0")
+                    list_success_provenance.append("égalité remplacement 0 et O")
                     break
                 if re.match("(\D{3}\d{5})", value.replace(" ", "")):
                     value_m = value.replace(" ", "")
@@ -195,7 +195,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("égalité sans espaces")
+                        list_success_provenance.append("égalité avec ajout 0")
                 if re.match("(\D{3}\d{4})", value.replace(" ", "")):
                     value_m = value.replace(" ", "")
                     value_m = value_m[:3] + "-00" + value_m[-4:]
@@ -204,7 +204,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("value_m")
+                        list_success_provenance.append("approximation")
                 if len(value) > 10:
                     value_m = value.replace(" ", "")
                     value_m = value_m[:-3] + "000" + value_m[-3:]
@@ -213,7 +213,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("égalité sans espaces")
+                        list_success_provenance.append("approximation")
 
                 # try:
                 if re.sub("[^A-Za-z0-9]+", "", value) in re.sub(
@@ -223,7 +223,7 @@ def compare_list_arbo_csv_bi_pret(
                     list_success_path.append(keys)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
-                    list_test_number.append("2")
+                    list_success_provenance.append("approximation")
                     list_folder_doublon_succes.append(folder_for_doublon)
                     break
                 if re.match(".*\D{2}\d{3}$", value.replace(" ", "")):
@@ -234,7 +234,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("2")
+                        list_success_provenance.append("approximation")
                         break
                 value_l_number = re.findall("L\d{4}", value)
                 if len(value_l_number) > 0:
@@ -244,7 +244,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("2")
+                        list_success_provenance.append("approximation")
                         break
                 value_vl_number = re.findall("VL\d{3}", value)
                 if len(value_vl_number) > 0:
@@ -254,7 +254,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("2")
+                        list_success_provenance.append("approximation")
                         break
                 value_parenthese = re.findall("\) (.*)", value)
                 if len(value_parenthese) > 0:
@@ -264,7 +264,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("2")
+                        list_success_provenance.append("approximation")
                         break
 
                 ### Recherche en enlevant 15 caractères si commence par AQ,AL,AY,AE,AL,BW,CC
@@ -275,7 +275,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_test_number.append("3")
+                        list_success_provenance.append("approximation")
                         list_folder_doublon_succes.append(folder_for_doublon)
                         break
                 if (
@@ -334,7 +334,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_test_number.append("4")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                     if value[:2] == "AQ":
@@ -378,7 +378,7 @@ def compare_list_arbo_csv_bi_pret(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_test_number.append("5")
+                                list_success_provenance.append("approximation")
                                 list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                             value_remove_double_space = (
@@ -389,7 +389,7 @@ def compare_list_arbo_csv_bi_pret(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_test_number.append("6")
+                                list_success_provenance.append("approximation")
                                 list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                         else:
@@ -414,7 +414,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_test_number.append("7")
+                        list_success_provenance.append("approximation")
                         list_folder_doublon_succes.append(folder_for_doublon)
                         break
                     if flag == False:
@@ -424,7 +424,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_test_number.append("8")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                 ### Rajouter un tiret après ST,YA,SF,GL
@@ -474,7 +474,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(value_only_tree_number)
-                            list_test_number.append("10-1")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                     if dash in value and re.match("\w{2}.?\d{5,}", value):
@@ -497,7 +497,7 @@ def compare_list_arbo_csv_bi_pret(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append("9")
+                                    list_success_provenance.append("approximation")
                                     break
                             elif len(value_dash_remove_space_dash[0][1]) == 4:
                                 value_u = (
@@ -510,7 +510,7 @@ def compare_list_arbo_csv_bi_pret(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append("9")
+                                    list_success_provenance.append("approximation")
                                     break
                             elif len(value_dash_remove_space_dash[0][1]) == 3:
                                 value_u = (
@@ -523,7 +523,7 @@ def compare_list_arbo_csv_bi_pret(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append("9")
+                                    list_success_provenance.append("approximation")
                                     break
                         value_dash_remove_space_add_zero = value.replace(
                             dash, dash + "-0"
@@ -533,7 +533,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_test_number.append("10")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                         elif value_dash_remove_space in ref_fourn:
@@ -541,7 +541,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_test_number.append("11")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                         elif value_dash_remove_space_add_zero in ref_fourn:
@@ -549,7 +549,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_test_number.append("12")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                         elif (
@@ -560,7 +560,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_test_number.append("12")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                         if re.match("(ST\d{6})", value):
@@ -572,7 +572,7 @@ def compare_list_arbo_csv_bi_pret(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_test_number.append("14")
+                                list_success_provenance.append("approximation")
                                 list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                         if not flag:
@@ -581,7 +581,7 @@ def compare_list_arbo_csv_bi_pret(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_test_number.append("15")
+                                list_success_provenance.append("approximation")
                                 list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                         if not flag:
@@ -591,7 +591,7 @@ def compare_list_arbo_csv_bi_pret(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_test_number.append("16")
+                                list_success_provenance.append("approximation")
                                 list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                         if dash == "SF":
@@ -602,7 +602,7 @@ def compare_list_arbo_csv_bi_pret(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_test_number.append("17")
+                                    list_success_provenance.append("approximation")
                                     list_folder_doublon_succes.append(
                                         folder_for_doublon
                                     )
@@ -616,7 +616,7 @@ def compare_list_arbo_csv_bi_pret(
                                         list_success_path.append(keys)
                                         list_success_list.append(ref_fiche)
                                         list_success_values.append(values)
-                                        list_test_number.append("18")
+                                        list_success_provenance.append("approximation")
                                         list_folder_doublon_succes.append(
                                             folder_for_doublon
                                         )
@@ -628,7 +628,7 @@ def compare_list_arbo_csv_bi_pret(
                                         list_success_path.append(keys)
                                         list_success_list.append(ref_fiche)
                                         list_success_values.append(values)
-                                        list_test_number.append("19")
+                                        list_success_provenance.append("approximation")
                                         list_folder_doublon_succes.append(
                                             folder_for_doublon
                                         )
@@ -641,7 +641,7 @@ def compare_list_arbo_csv_bi_pret(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_test_number.append("20")
+                                    list_success_provenance.append("approximation")
                                     list_folder_doublon_succes.append(
                                         folder_for_doublon
                                     )
@@ -652,7 +652,7 @@ def compare_list_arbo_csv_bi_pret(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_test_number.append("21")
+                                    list_success_provenance.append("approximation")
                                     list_folder_doublon_succes.append(
                                         folder_for_doublon
                                     )
@@ -664,7 +664,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_test_number.append("22")
+                        list_success_provenance.append("approximation")
                         list_folder_doublon_succes.append(folder_for_doublon)
                         break
                 ### On recherche le pattern 800E263
@@ -676,7 +676,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_test_number.append("23")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                     if re.match("([A-Z]{2}.*)", value):
@@ -688,7 +688,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_test_number.append("24")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
 
@@ -699,7 +699,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_test_number.append("25")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
 
@@ -711,7 +711,7 @@ def compare_list_arbo_csv_bi_pret(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_test_number.append("26")
+                            list_success_provenance.append("approximation")
                             list_folder_doublon_succes.append(folder_for_doublon)
                             break
                 if re.match("([A-Z0-9]{5,})", value):
@@ -724,7 +724,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_test_number.append("27")
+                        list_success_provenance.append("approximation")
                         list_folder_doublon_succes.append(folder_for_doublon)
                         break
                 if len(value) > 9:
@@ -735,7 +735,7 @@ def compare_list_arbo_csv_bi_pret(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_test_number.append("28")
+                        list_success_provenance.append("approximation")
                         list_folder_doublon_succes.append(folder_for_doublon)
                         break
                 # value_add_zero = value[:-3] + "000" + value[-3:]
@@ -744,7 +744,7 @@ def compare_list_arbo_csv_bi_pret(
                 #     list_success_path.append(keys)
                 #     list_success_list.append(ref_fiche)
                 #     list_success_values.append(values)
-                #     list_test_number.append("29")
+                #     list_success_provenance.append("approximation")
                 #     list_folder_doublon_succes.append(folder_for_doublon)
                 #     break
                 jaro_stat = jellyfish.jaro_distance(
@@ -790,7 +790,7 @@ def compare_list_arbo_csv_bi_pret(
                         )
                         list_success_values.append(values)
                         list_success_provenance.append(
-                            "ajouté grâce à l'algo de Jaro-Winkler"
+                            "Algo supérieur à 90% et 2 de distance et inclu dans ref_fourn"
                         )
                         continue
                     elif (
@@ -810,7 +810,7 @@ def compare_list_arbo_csv_bi_pret(
                         )
                         list_success_values.append(values)
                         list_success_provenance.append(
-                            "ajouté grâce à l'algo de Jaro-Winkler"
+                            "Algo supérieur à 95% et 1 de distance"
                         )
                         continue
                     else:
@@ -829,20 +829,23 @@ def compare_list_arbo_csv_bi_pret(
                 list_failed_path.append(keys)
                 list_failed_list.append(values)
                 list_folder_doublon_echecs.append(folder_for_doublon)
-                list_failed_provenance.append("jaro vide")
+                list_failed_provenance.append("Algo vide et aucun match")
     print(len(list_success_path))
     print(len(list_success_list))
     print(len(list_success_values))
+    print(len(list_success_provenance))
     print(len(list_folder_doublon_succes))
     print(len(list_test_number))
     print(len(list_failed_path))
     print(len(list_failed_list))
+    print(len(list_failed_provenance))
     print(len(list_folder_doublon_echecs))
     df_success = pd.DataFrame(
         {
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
             # "lists": list_success_values,
+            "Commentaires": list_success_provenance,
             # "Dossier pour vérification doublons": list_folder_doublon_succes,
             # "list_test_number": list_test_number,
         },
@@ -853,6 +856,7 @@ def compare_list_arbo_csv_bi_pret(
         {
             "Chemin du fichier": list_failed_path,
             "Référence Fiche": list_failed_list,
+            "Commentaires": list_failed_provenance,
             # "Dossier pour vérification doublons": list_folder_doublon_echecs,
         },
     )
