@@ -122,6 +122,8 @@ df.to_csv(
     index=False,
     encoding="utf-8-sig",
 )
+
+
 # print("Total length = ", length)
 # print("Total length DWG FILES = ", length_dwg)
 # print("Total length SEE FILES = ", length_see)

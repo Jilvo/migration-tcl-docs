@@ -797,7 +797,7 @@ def compare_list_arbo_csv_bi_pret(
                         continue
                     elif (
                         stats_key >= 0.95
-                        and sorted_dict_jaro_distance[stats_key]["jaro_distance"] == 1
+                        and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
                     ):
                         print("sup 95")
                         print("stats_key", stats_key)
@@ -812,7 +812,7 @@ def compare_list_arbo_csv_bi_pret(
                         )
                         list_success_values.append(values)
                         list_success_provenance.append(
-                            "Algo supérieur à 95% et 1 de distance"
+                            "Algo supérieur à 95% et 2 de distance"
                         )
                         continue
                     else:
