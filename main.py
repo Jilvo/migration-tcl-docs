@@ -81,8 +81,8 @@ def main_lunch_function(list_choices):
         if "PRÊT" in list_choices:
             # -------- PRÊT --------
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
-                DIRNAME=f"""F:\Tcl\Prêt Plans\Prêt 2016""",
-                # DIRNAME=f"""F:\Tcl\Prêt Plans""",
+                # DIRNAME=f"""F:\Tcl\Prêt Plans\Prêt 2016\Bordereau 16-134""",
+                DIRNAME=f"""F:\Tcl\Prêt Plans""",
                 # DIRNAME=[
                 #     f"""F:\Tcl\Prêt Plans\Prêt 2017\Bordereau 17-141""",
                 # f"""F:\Tcl\Prêt Plans\Prêt 2016""",
@@ -90,15 +90,15 @@ def main_lunch_function(list_choices):
                 #         f"""F:\Tcl\Prêt Plans\Prêt 2018""",
                 #         f"""F:\Tcl\Prêt Plans\Prêt 2019""",
                 # ],
-                name_file_arbo="output_datas/arborescence_tcl_pret_complet_2016.csv",
-                name_file_success="output_datas/listes des succes Prêt complet 2016.csv",
-                name_file_failed="output_datas/listes des echecs Prêt complet 2016.csv",
+                name_file_arbo="output_datas/arborescence_tcl_pret_complet.csv",
+                name_file_success="output_datas/listes des succes Prêt complet.csv",
+                name_file_failed="output_datas/listes des echecs Prêt complet.csv",
                 input_user=9,
                 list_a_traiter=None,
                 name_file_failed_rattrapage=None,
             )
             name_file_failed_rattrapage = (
-                "output_datas/listes des echecs Prêt complet 2016.csv"
+                "output_datas/listes des echecs Prêt complet.csv"
             )
             list_choices.remove("PRÊT")
         elif "SERBER" in list_choices:
@@ -814,7 +814,7 @@ def main_lunch_function(list_choices):
     print(end - start)
 
 
-# main_lunch_function(list_choices=[])
-main_lunch_function(list_choices=["Liaison B/D"])
+main_lunch_function(list_choices=[])
+# main_lunch_function(list_choices=["Liaison B/D"])
 # main_lunch_function(list_choices=["Surface"])
 # main_lunch_function(list_choices=["PRÊT"])

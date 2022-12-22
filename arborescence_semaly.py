@@ -359,8 +359,8 @@ def comp_between_arbo_and_arborescence_semaly_pdu():
         )
 
 
-create_arbo()
-create_file_semaly_pdf()
+# create_arbo()
+# create_file_semaly_pdf()
 create_arbo_tif()
 comp_between_arbo_and_arborescence_semaly_pdu()
 
