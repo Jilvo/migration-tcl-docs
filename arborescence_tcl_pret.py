@@ -768,7 +768,7 @@ def compare_list_arbo_csv_bi_pret(
                 # print("jaro_stat", jaro_stat)
                 # print("jaro_distance", jaro_distance)
             if flag == True:
-                print("DEJA AJOUTE")
+                print("On vient de trouver la référence")
                 break
         if flag == False:
             sorted_dict_jaro_distance = {

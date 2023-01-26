@@ -219,7 +219,7 @@ def compare_list_arbo_csv_bi(
                         list_success_values.append(values)
                         break
             if flag == True:
-                print("DEJA AJOUTE")
+                print("On vient de trouver la référence")
                 break
         if flag == True:
             path = keys
