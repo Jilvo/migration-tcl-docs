@@ -25,7 +25,7 @@ def create_arbo(DIRNAME, name_file_arbo):
             try:
                 if "Arch_mac" in os.path.join(path, name):
                     continue
-                elif os.path.join(path, name)[-3:] != ".db":
+                elif "Thumbs.db" in os.path.join(path, name):
                     continue
                 else:
                     print(os.path.join(path, name))

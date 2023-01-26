@@ -6,6 +6,9 @@ EXTRACTION_DARFEUILLE_MODIFIE = "input_datas/ExtratTCLDoc.csv"
 EXTRACTION_DARFEUILLE_JUSTE_AA_ET_NON_SERBER = (
     "input_datas/Extraction Serber juste AA et non serber.csv"
 )
+EXTRACTION_DARFEUILLE_JUSTE_AR_3_EME_PASSE = (
+    "input_datas/Extraction Serber juste AR_3eme_passe.csv"
+)
 EXTRACTION_DARFEUILLE_SANS_AR = "input_datas/ExtratTCLDoc complete modifié sans AR.csv"
 ### OUTPUTS MRTRAM ###
 DIRNAME_MRTRAM = f"""F:\BE PERSO (M)\Millot J\Oct 2015 Fin de garantie"""

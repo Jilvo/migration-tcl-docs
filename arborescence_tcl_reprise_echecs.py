@@ -155,7 +155,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("approximation")
+                        list_success_provenance.append("approximation1")
                 if len(value) > 10:
                     value_m = value.replace(" ", "")
                     value_m = value_m[:-3] + "000" + value_m[-3:]
@@ -164,7 +164,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("approximation")
+                        list_success_provenance.append("approximation2")
 
                 if re.match(".*\D{2}\d{3}$", value.replace(" ", "")):
                     value_u = value.replace(" ", "")
@@ -174,7 +174,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("approximation")
+                        list_success_provenance.append("approximation3")
                         break
                 value_l_number = re.findall("L\d{4}", value)
                 if len(value_l_number) > 0:
@@ -184,7 +184,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("approximation")
+                        list_success_provenance.append("approximation4")
                         break
                 value_vl_number = re.findall("VL\d{3}", value)
                 if len(value_vl_number) > 0:
@@ -194,7 +194,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("approximation")
+                        list_success_provenance.append("approximation5")
                         break
                 value_parenthese = re.findall("\) (.*)", value)
                 if len(value_parenthese) > 0:
@@ -204,7 +204,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("approximation")
+                        list_success_provenance.append("approximation6")
                         break
 
                 # try:
@@ -215,7 +215,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                     list_success_path.append(keys)
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
-                    list_success_provenance.append("approximation")
+                    list_success_provenance.append("approximation7")
                     break
 
                 ### Recherche en enlevant 15 caractères si commence par AQ,AL,AY,AE,AL,BW,CC
@@ -226,7 +226,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("approximation")
+                        list_success_provenance.append("approximation8")
                         break
                 if (
                     value[:2] == "AQ"
@@ -286,7 +286,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation9")
                             break
                     if value[:2] == "AQ":
                         if value_last_eight[:2] == "TS" or value_last_eight[:2] == "TP":
@@ -329,7 +329,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_success_provenance.append("approximation")
+                                list_success_provenance.append("approximation10")
                                 break
                             value_remove_double_space = (
                                 value_last_eight[:1] + " " + value_last_eight[2:]
@@ -339,7 +339,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_success_provenance.append("approximation")
+                                list_success_provenance.append("approximation11")
                                 break
                         else:
                             if (
@@ -363,7 +363,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("approximation")
+                        list_success_provenance.append("approximation12")
                         break
                     if flag == False:
                         value_no_spaces = value.replace(" ", "")
@@ -373,7 +373,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation13")
                             break
                 ### Rajouter un tiret après ST,YA,SF,GL
                 list_need_dash = [
@@ -432,7 +432,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append("approximation")
+                                    list_success_provenance.append("approximation14")
                                     break
                             elif len(value_dash_remove_space_dash[0][1]) == 4:
                                 value_u = (
@@ -445,7 +445,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append("approximation")
+                                    list_success_provenance.append("approximation15")
                                     break
                             elif len(value_dash_remove_space_dash[0][1]) == 3:
                                 value_u = (
@@ -458,7 +458,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append("approximation")
+                                    list_success_provenance.append("approximation16")
                                     break
                         value_dash_zero = value[:2] + "-0" + value[-2:]
                         if value_dash in ref_fourn:
@@ -466,21 +466,21 @@ def compare_list_arbo_csv_bi_rattrapage(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation17")
                             break
                         elif value_dash_remove_space in ref_fourn:
                             flag = True
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation18")
                             break
                         elif value_dash_remove_space_add_zero in ref_fourn:
                             flag = True
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation19")
                             break
                         elif (
                             value_dash_remove_space_add_zero.replace(" ", "")
@@ -490,7 +490,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation20")
                             break
 
                         if re.match("(ST\d{6})", value):
@@ -502,7 +502,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_success_provenance.append("approximation")
+                                list_success_provenance.append("approximation21")
                                 break
                         if not flag:
                             if value in ref_fourn:
@@ -510,7 +510,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_success_provenance.append("approximation")
+                                list_success_provenance.append("approximation22")
                                 break
                         if not flag:
                             value_no_spaces = value.replace(" ", "")
@@ -519,7 +519,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                 list_success_path.append(keys)
                                 list_success_list.append(ref_fiche)
                                 list_success_values.append(values)
-                                list_success_provenance.append("approximation")
+                                list_success_provenance.append("approximation23")
                                 break
                         if dash == "SF":
                             if not flag:
@@ -529,7 +529,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append("approximation")
+                                    list_success_provenance.append("approximation24")
                                     break
                         if dash == "FA":
                             if not flag:
@@ -540,7 +540,9 @@ def compare_list_arbo_csv_bi_rattrapage(
                                         list_success_path.append(keys)
                                         list_success_list.append(ref_fiche)
                                         list_success_values.append(values)
-                                        list_success_provenance.append("approximation")
+                                        list_success_provenance.append(
+                                            "approximation25"
+                                        )
                                         break
                                 except Exception as e:
                                     value_add_zero = value.replace("FA", "FA-0")
@@ -549,7 +551,9 @@ def compare_list_arbo_csv_bi_rattrapage(
                                         list_success_path.append(keys)
                                         list_success_list.append(ref_fiche)
                                         list_success_values.append(values)
-                                        list_success_provenance.append("approximation")
+                                        list_success_provenance.append(
+                                            "approximation26"
+                                        )
                                         break
                         if dash == "HF":
                             if not flag:
@@ -559,7 +563,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append("approximation")
+                                    list_success_provenance.append("approximation27")
                                     break
                                 value_add_zero = value.replace("HF", "HF-0")
                                 if value_add_zero in ref_fourn:
@@ -567,7 +571,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                                     list_success_path.append(keys)
                                     list_success_list.append(ref_fiche)
                                     list_success_values.append(values)
-                                    list_success_provenance.append("approximation")
+                                    list_success_provenance.append("approximation28")
                                     break
                     if len(value) == 6 and value[:2] == "KG":
                         value_kg = "KG-00" + value[-4:]
@@ -576,7 +580,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation29")
                             break
                 if value[:3] == "ETL":
                     ref_fourn_no_zero = ref_fourn.replace("0", "")
@@ -585,7 +589,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_path.append(keys)
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
-                        list_success_provenance.append("approximation")
+                        list_success_provenance.append("approximation30")
                         break
                 ### On recherche le pattern 800E263
                 if not flag:
@@ -596,7 +600,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation31")
                             break
                     if re.match("([A-Z]{2}.*)", value):
                         value_replace = re.findall("([A-Z]{2}.*)", value)
@@ -607,7 +611,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation32")
                             break
 
                     if re.match("(\d{3,6}\W*\D{3,5}\W*\d{3,6})", value):
@@ -618,7 +622,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation33")
                             break
 
                 if len(value) == 8:
@@ -629,27 +633,27 @@ def compare_list_arbo_csv_bi_rattrapage(
                             list_success_path.append(keys)
                             list_success_list.append(ref_fiche)
                             list_success_values.append(values)
-                            list_success_provenance.append("approximation")
+                            list_success_provenance.append("approximation34")
                             break
-                if re.match("([A-Z0-9]{5,})", value):
-                    value_cut_point = re.findall("([A-Z0-9]{5,})", value)
-                    value_cut_point = value_cut_point[0]
-                    ref_fourn_no_spaces = ref_fourn.replace(" ", "")
-                    value_cut_point = value_cut_point.replace(" ", "")
-                    if value_cut_point in ref_fourn_no_spaces:
-                        flag = True
-                        list_success_path.append(keys)
-                        list_success_list.append(ref_fiche)
-                        list_success_values.append(values)
-                        list_success_provenance.append("approximation")
-                        break
-                if value[:-1].replace(" ", "") == ref_fourn.replace(" ", ""):
-                    flag = True
-                    list_success_path.append(keys)
-                    list_success_list.append(ref_fiche)
-                    list_success_values.append(values)
-                    list_success_provenance.append("approximation")
-                    break
+                # if re.match("([A-Z0-9]{5,})", value):
+                #     value_cut_point = re.findall("([A-Z0-9]{5,})", value)
+                #     value_cut_point = value_cut_point[0]
+                #     ref_fourn_no_spaces = ref_fourn.replace(" ", "")
+                #     value_cut_point = value_cut_point.replace(" ", "")
+                #     if value_cut_point in ref_fourn_no_spaces:
+                #         flag = True
+                #         list_success_path.append(keys)
+                #         list_success_list.append(ref_fiche)
+                #         list_success_values.append(values)
+                #         list_success_provenance.append("approximation35")
+                #         break
+                # if value[:-1].replace(" ", "") == ref_fourn.replace(" ", ""):
+                #     flag = True
+                #     list_success_path.append(keys)
+                #     list_success_list.append(ref_fiche)
+                #     list_success_values.append(values)
+                #     list_success_provenance.append("approximation36")
+                #     break
 
                 jaro_stat = jellyfish.jaro_distance(
                     value.replace(" ", ""), ref_fourn.replace(" ", "")

@@ -295,6 +295,43 @@ class MainExtraction:
         print("df_extraction dans la fonction", df_extraction)
         return df_extraction
 
+    def extraction_serber_juste_ar_3_eme_passe(self):
+        df = pd.read_csv(
+            EXTRACTION_DARFEUILLE_JUSTE_AR_3_EME_PASSE,
+            encoding="cp1252",
+            sep=";",
+        )
+        list_extaction = []
+
+        for index, row in df.iterrows():
+            try:
+                list_extaction.append(
+                    [
+                        row["NUMERO_REF_FOURN"],
+                        row["REFFIC"],
+                        row["ARMOIRE"],
+                    ],
+                )
+            except Exception as e:
+                pass
+            # try:
+            #     list_extaction.append(
+            #         [
+            #             row["NUMERO_REF_FOURN"],
+            #             row["REFFIC"],
+            #             row["ARMOIRE"],
+            #         ],
+            #     )
+            # except Exception as e:
+            #     pass
+        # print(list_extaction)
+        df_extraction = pd.DataFrame(
+            list_extaction,
+            columns=["Référence fournisseur", "Référence fiche", "Armoire"],
+        )
+        print("df_extraction dans la fonction", df_extraction)
+        return df_extraction
+
     def extraction_tout_tcl_doc(self):
         df = pd.read_csv(
             EXTRACTION_DARFEUILLE_MODIFIE,
@@ -409,6 +446,8 @@ class MainExtraction:
             print("DIRNAME", DIRNAME)
 
         else:
+            ### SERBER ###
+
             # name_file_arbo = "output_datas/arborescence_serber_complet_version.csv"
             # name_file_success = (
             #     "output_datas/listes des succes serber complet_version.csv"
@@ -443,6 +482,16 @@ class MainExtraction:
                 nb_passage=2,
             )
             print("SECOND SCAN TERMINE")
+            ### 3 EME PASSE AVEC JUSTE AR ###
+            df_extraction_analyse_ar = self.extraction_serber_juste_ar_3_eme_passe()
+            arborescence_serber.compare_list_arbo_csv_bi(
+                "output_datas/listes des echecs Serber Complet.csv",
+                df_extraction_analyse_ar,
+                "output_datas\succes_ref_juste_ar_3_eme_passe.csv",
+                "output_datas\echecs_ref_juste_ar_3_eme_passe.csv",
+                nb_passage=1,
+            )
+            print("TROISIEME SCAN TERMINE")
             print("DIRNAME", DIRNAME)
         return (name_file_success, name_file_failed_rattrapage)
         # end = timer()
