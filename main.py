@@ -810,15 +810,15 @@ def main_lunch_function(list_choices):
     print(end - start)
 
 
-# main_lunch_function(list_choices=[])
+main_lunch_function(list_choices=[])
 # main_lunch_function(list_choices=["Liaison B/D"])
 # main_lunch_function(list_choices=["Surface"])
-main_lunch_function(
-    list_choices=[
-        "T1",
-        "T2",
-        "T3",
-        # "Lignes Fortes - C1 C2 C3 C13",
-    ]
-)
+# main_lunch_function(
+# list_choices=[
+# "T1",
+# "T2",
+# "T3",
+# "Lignes Fortes - C1 C2 C3 C13",
+#     ]
+# )
 # main_lunch_function(list_choices=["PRÊT"])
