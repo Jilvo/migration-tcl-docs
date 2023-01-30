@@ -81,14 +81,14 @@ def main_lunch_function(list_choices):
         if "PRÊT" in list_choices:
             # -------- PRÊT --------
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
-                DIRNAME=f"""F:\Tcl\Prêt Plans""",
-                # DIRNAME=[
-                #     f"""F:\Tcl\Prêt Plans\Prêt 2017\Bordereau 17-141""",
-                # f"""F:\Tcl\Prêt Plans\Prêt 2016""",
-                #         f"""F:\Tcl\Prêt Plans\Prêt 2017""",
-                #         f"""F:\Tcl\Prêt Plans\Prêt 2018""",
-                #         f"""F:\Tcl\Prêt Plans\Prêt 2019""",
-                # ],
+                # DIRNAME=f"""F:\Tcl\Prêt Plans""",
+                DIRNAME=[
+                    #     f"""F:\Tcl\Prêt Plans\Prêt 2017\Bordereau 17-141""",
+                    # f"""F:\Tcl\Prêt Plans\Prêt 2016""",
+                    #         f"""F:\Tcl\Prêt Plans\Prêt 2017""",
+                    f"""F:\Tcl\Prêt Plans\Prêt 2018""",
+                    #         f"""F:\Tcl\Prêt Plans\Prêt 2019""",
+                ],
                 name_file_arbo="output_datas/arborescence_tcl_pret_complet.csv",
                 name_file_success="output_datas/listes des succes Prêt complet.csv",
                 name_file_failed="output_datas/listes des echecs Prêt complet.csv",
@@ -810,7 +810,7 @@ def main_lunch_function(list_choices):
     print(end - start)
 
 
-main_lunch_function(list_choices=[])
+# main_lunch_function(list_choices=[])
 # main_lunch_function(list_choices=["Liaison B/D"])
 # main_lunch_function(list_choices=["Surface"])
 # main_lunch_function(
@@ -821,4 +821,4 @@ main_lunch_function(list_choices=[])
 # "Lignes Fortes - C1 C2 C3 C13",
 #     ]
 # )
-# main_lunch_function(list_choices=["PRÊT"])
+main_lunch_function(list_choices=["PRÊT"])

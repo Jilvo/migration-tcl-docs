@@ -8,6 +8,7 @@ import pandas as pd
 import re
 from timeit import default_timer as timer
 from fichiers_et_constantes import *
+import jellyfish
 
 start = timer()
 
@@ -112,10 +113,12 @@ def compare_list_arbo_csv_bi(
     list_quel_values = []
     list_failed_path = []
     list_failed_list = []
+    list_failed_provenance = []
 
     for keys, values in dict_arbo.items():
         print(keys)
         flag = False
+        dict_jaro_distance = {}
         for value in values:
             value_basic = value
             for ref_fourn, ref_fiche in zip(
@@ -218,9 +221,100 @@ def compare_list_arbo_csv_bi(
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         break
+            jaro_stat = jellyfish.jaro_distance(
+                value.replace(" ", ""), ref_fourn.replace(" ", "")
+            )
+            jaro_distance = jellyfish.damerau_levenshtein_distance(
+                value.replace(" ", ""), ref_fourn.replace(" ", "")
+            )
+            dict_jaro_distance[jaro_stat] = {
+                "ref": ref_fourn,
+                "ref_fiche": ref_fiche,
+                "value": value,
+                "jaro_distance": jaro_distance,
+            }
             if flag == True:
                 print("On vient de trouver la référence")
                 break
+            # if flag == True:
+            #     print("On vient de trouver la référence")
+            #     break
+        if flag == False:
+            sorted_dict_jaro_distance = {
+                k: dict_jaro_distance[k]
+                for k in sorted(dict_jaro_distance, reverse=True)
+            }
+            # print(
+            #     "***********sorted_dict_jaro_distance**********",
+            #     sorted_dict_jaro_distance,
+            # )
+            if len(dict_jaro_distance) > 0:
+                stats_key = list(sorted_dict_jaro_distance)[0]
+                print("stats_key", stats_key)
+                if (
+                    stats_key >= 0.95
+                    and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 1
+                ):
+                    if (
+                        sorted_dict_jaro_distance[stats_key]["value"].replace(" ", "")[
+                            -1
+                        ]
+                        != sorted_dict_jaro_distance[stats_key]["ref"].replace(" ", "")[
+                            -1
+                        ]
+                    ):
+                        flag = True
+                        # list_success_path.append(keys)
+                        # list_success_list.append(
+                        #     sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+                        # )
+                        # list_success_values.append(values)
+                        list_failed_path.append(keys)
+                        list_failed_list.append(values)
+                        list_failed_provenance.append(
+                            "Algo supérieur à 95%,1 carac de diff, en 1ere passe,dernier caract différent"
+                        )
+                        continue
+                    else:
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(
+                            sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+                        )
+                        list_success_values.append(values)
+                        list_success_provenance.append(
+                            "Algo supérieur à 95%,1 carac de diff, en 1ere passe,pas le dernier caract différent"
+                        )
+                        continue
+
+                elif (
+                    stats_key >= 0.95
+                    and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
+                ):
+                    print("sup 95")
+                    print("stats_key", stats_key)
+                    print(
+                        "sorted_dict_jaro_distance[stats_key]",
+                        sorted_dict_jaro_distance[stats_key],
+                    )
+                    flag = True
+                    list_success_path.append(keys)
+                    list_success_list.append(
+                        sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+                    )
+                    list_success_values.append(values)
+                    list_success_provenance.append(
+                        "Algo supérieur à 95% et 2 de distance"
+                    )
+                    continue
+                else:
+                    list_failed_path.append(keys)
+                    list_failed_list.append(values)
+                    list_failed_provenance.append("jaro inférieur a 90% ou sup 2 ")
+            else:
+                list_failed_path.append(keys)
+                list_failed_list.append(values)
+                list_failed_provenance.append("Algo vide et aucun match")
         if flag == True:
             path = keys
             # path = "".join(values)
@@ -252,9 +346,12 @@ def compare_list_arbo_csv_bi(
                     list_version.append(" ")
             else:
                 list_version.append(" ")
-        elif flag == False:
-            list_failed_path.append(keys)
-            list_failed_list.append(values)
+                dict_jaro_distance[jaro_stat] = {
+                    "ref": ref_fourn,
+                    "ref_fiche": ref_fiche,
+                    "value": value,
+                    "jaro_distance": jaro_distance,
+                }
     df_success = pd.DataFrame(
         {
             "Chemin du fichier": list_success_path,
