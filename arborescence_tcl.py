@@ -23,7 +23,9 @@ def create_arbo(DIRNAME, name_file_arbo):
     if type(DIRNAME) == str:
         for path, subdirs, files in os.walk(DIRNAME):
             for name in files:
-                if os.path.join(path, name)[-3:] != ".db":
+                if "Thumbs.db" in os.path.join(path, name):
+                    continue
+                else:
                     try:
                         print(os.path.join(path, name))
                         list_arbo.append(os.path.join(path, name))
@@ -70,7 +72,7 @@ def find_ref_fournisseur(name_file_arbo):
         sep=";",
         error_bad_lines=False,
         encoding="utf-8-sig",
-        # encoding = "cp1252"
+        # encoding="cp1252",
     )
     df_stations = pd.read_csv(
         LISTES_ARRETS_LIGNES,
@@ -946,87 +948,87 @@ def compare_list_arbo_csv_bi(
                 print("On vient de trouver la référence")
                 break
         if flag == False:
-            sorted_dict_jaro_distance = {
-                k: dict_jaro_distance[k]
-                for k in sorted(dict_jaro_distance, reverse=True)
-            }
-            # print(
-            #     "***********sorted_dict_jaro_distance**********",
-            #     sorted_dict_jaro_distance,
-            # )
-            if len(dict_jaro_distance) > 0:
-                stats_key = list(sorted_dict_jaro_distance)[0]
-                print("stats_key", stats_key)
-                if (
-                    stats_key >= 0.95
-                    and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 1
-                ):
-                    if (
-                        sorted_dict_jaro_distance[stats_key]["value"].replace(" ", "")[
-                            -1
-                        ]
-                        != sorted_dict_jaro_distance[stats_key]["ref"].replace(" ", "")[
-                            -1
-                        ]
-                    ):
-                        flag = True
-                        # list_success_path.append(keys)
-                        # list_success_list.append(
-                        #     sorted_dict_jaro_distance[stats_key]["ref_fiche"]
-                        # )
-                        # list_success_values.append(values)
-                        list_failed_path.append(keys)
-                        list_failed_list.append(values)
-                        list_failed_provenance.append(
-                            "Algo supérieur à 95%,1 carac de diff, en 1ere passe,dernier caract différent"
-                        )
-                        continue
-                    else:
-                        flag = True
-                        list_success_path.append(keys)
-                        list_success_list.append(
-                            sorted_dict_jaro_distance[stats_key]["ref_fiche"]
-                        )
-                        list_success_values.append(values)
-                        list_success_provenance.append(
-                            "Algo supérieur à 95%,1 carac de diff, en 1ere passe,pas le dernier caract différent"
-                        )
-                        continue
+            # sorted_dict_jaro_distance = {
+            #     k: dict_jaro_distance[k]
+            #     for k in sorted(dict_jaro_distance, reverse=True)
+            # }
+            # # print(
+            # #     "***********sorted_dict_jaro_distance**********",
+            # #     sorted_dict_jaro_distance,
+            # # )
+            # if len(dict_jaro_distance) > 0:
+            #     stats_key = list(sorted_dict_jaro_distance)[0]
+            #     print("stats_key", stats_key)
+            #     if (
+            #         stats_key >= 0.95
+            #         and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 1
+            #     ):
+            #         if (
+            #             sorted_dict_jaro_distance[stats_key]["value"].replace(" ", "")[
+            #                 -1
+            #             ]
+            #             != sorted_dict_jaro_distance[stats_key]["ref"].replace(" ", "")[
+            #                 -1
+            #             ]
+            #         ):
+            #             flag = True
+            #             # list_success_path.append(keys)
+            #             # list_success_list.append(
+            #             #     sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+            #             # )
+            #             # list_success_values.append(values)
+            #             list_failed_path.append(keys)
+            #             list_failed_list.append(values)
+            #             list_failed_provenance.append(
+            #                 "Algo supérieur à 95% - 1 carac de diff - en 1ere passe - dernier caract différent"
+            #             )
+            #             continue
+            #         else:
+            #             flag = True
+            #             list_success_path.append(keys)
+            #             list_success_list.append(
+            #                 sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+            #             )
+            #             list_success_values.append(values)
+            #             list_success_provenance.append(
+            #                 "Algo supérieur à 95% - 1 carac de diff - en 1ere passe - pas le dernier caract différent"
+            #             )
+            #             continue
 
-                elif (
-                    stats_key >= 0.95
-                    and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
-                ):
-                    print("sup 95")
-                    print("stats_key", stats_key)
-                    print(
-                        "sorted_dict_jaro_distance[stats_key]",
-                        sorted_dict_jaro_distance[stats_key],
-                    )
-                    flag = True
-                    list_success_path.append(keys)
-                    list_success_list.append(
-                        sorted_dict_jaro_distance[stats_key]["ref_fiche"]
-                    )
-                    list_success_values.append(values)
-                    list_success_provenance.append(
-                        "Algo supérieur à 95% et 2 de distance"
-                    )
-                    continue
-                else:
-                    list_failed_path.append(keys)
-                    list_failed_list.append(values)
-                    list_failed_provenance.append("jaro inférieur a 90% ou sup 2 ")
-            else:
-                list_failed_path.append(keys)
-                list_failed_list.append(values)
-                list_failed_provenance.append("Algo vide et aucun match")
+            #     elif (
+            #         stats_key >= 0.95
+            #         and sorted_dict_jaro_distance[stats_key]["jaro_distance"] <= 2
+            #     ):
+            #         print("sup 95")
+            #         print("stats_key", stats_key)
+            #         print(
+            #             "sorted_dict_jaro_distance[stats_key]",
+            #             sorted_dict_jaro_distance[stats_key],
+            #         )
+            #         flag = True
+            #         list_success_path.append(keys)
+            #         list_success_list.append(
+            #             sorted_dict_jaro_distance[stats_key]["ref_fiche"]
+            #         )
+            #         list_success_values.append(values)
+            #         list_success_provenance.append(
+            #             "Algo supérieur à 95% et 2 de distance"
+            #         )
+            #         continue
+            #     else:
+            # list_failed_path.append(keys)
+            # list_failed_list.append(values)
+            # list_failed_provenance.append("jaro inférieur a 90% ou sup 2 ")
+            # else:
+            list_failed_path.append(keys)
+            list_failed_list.append(values)
+            list_failed_provenance.append("Algo vide et aucun match")
     df_success = pd.DataFrame(
         {
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
             "Commentaires": list_success_provenance,
-            "lists": list_success_values,
+            # "lists": list_success_values,
             # "dict": list_success_provenance,
         },
     )
@@ -1035,7 +1037,7 @@ def compare_list_arbo_csv_bi(
     df_failed = pd.DataFrame(
         {
             "Chemin du fichier": list_failed_path,
-            "Référence Fiche": list_failed_list,
+            # "Référence Fiche": list_failed_list,
             "Commentaires": list_failed_provenance,
             # "dict": list_failed_provenance,
         },
