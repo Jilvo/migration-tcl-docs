@@ -20,5 +20,5 @@ ARBO_PDF = "output_datas/arborescence_semaly_pdf.csv"
 ARBO_TIF = "output_datas/arborescence_semaly_tif.csv"
 
 ### OUTPUTS AUTRE SERVEUR: ###
-FICHIER_ECHECS_A_COPIER_SUR_AUTRE_SERVEUR = "fusion_finale\fusion_des_echecs.csv"
+FICHIER_ECHECS_A_COPIER_SUR_AUTRE_SERVEUR = "fusion_finale\conc_finale_des_echecs.csv"
 DESTINATION_FICHIERS_COPIE = "output_datas/tcl_copy_files"

@@ -41,7 +41,7 @@ def fusion():
     else:
         encoding = "utf-8-sig"
     df.to_csv(
-        "fusion_finale/fusion.csv",
+        "fusion_finale/conc_finale_des_echecs.csv",
         sep=";",
         index=False,
         encoding=encoding,
