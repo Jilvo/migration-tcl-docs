@@ -112,7 +112,8 @@ def compare_list_arbo_csv_bi(
     list_quel_values = []
     list_failed_path = []
     list_failed_list = []
-
+    list_success_provenance = []
+    list_failed_provenance = []
     for keys, values in dict_arbo.items():
         print(keys)
         flag = False
@@ -132,6 +133,7 @@ def compare_list_arbo_csv_bi(
                     list_success_path.append(keys)
                     list_quel_values.append(value)
                     list_success_list.append(ref_fiche)
+                    list_success_provenance.append("égalité")
                     list_success_values.append(values)
                     break
                 ## CONCATENER 2 item de la list
@@ -154,6 +156,7 @@ def compare_list_arbo_csv_bi(
                         list_success_path.append(keys)
                         list_quel_values.append(conc_values)
                         list_success_list.append(ref_fiche)
+                        list_success_provenance.append("approximation1")
                         list_success_values.append(values)
                         break
                     conc_values_exact = values[1] + values[2]
@@ -162,6 +165,7 @@ def compare_list_arbo_csv_bi(
                         list_success_path.append(keys)
                         list_quel_values.append(conc_values_exact)
                         list_success_list.append(ref_fiche)
+                        list_success_provenance.append("approximation2")
                         list_success_values.append(values)
                         break
                     if re.match("[|V|A|-|.|_|]", values[2]) and len(values[2]) > 5:
@@ -183,6 +187,7 @@ def compare_list_arbo_csv_bi(
                                     list_success_path.append(keys)
                                     list_quel_values.append(conc_values)
                                     list_success_list.append(ref_fiche)
+                                    list_success_provenance.append("approximation3")
                                     list_success_values.append(values)
                                     break
                             else:
@@ -194,6 +199,7 @@ def compare_list_arbo_csv_bi(
                                     list_success_path.append(keys)
                                     list_quel_values.append(conc_values)
                                     list_success_list.append(ref_fiche)
+                                    list_success_provenance.append("approximation4")
                                     list_success_values.append(values)
                                     break
                         else:
@@ -206,6 +212,7 @@ def compare_list_arbo_csv_bi(
                         list_success_path.append(keys)
                         list_quel_values.append(value_cut_number)
                         list_success_list.append(ref_fiche)
+                        list_success_provenance.append("approximation5")
                         list_success_values.append(values)
                         break
                     value_cut_number = (
@@ -216,6 +223,7 @@ def compare_list_arbo_csv_bi(
                         list_success_path.append(keys)
                         list_quel_values.append(value_cut_number)
                         list_success_list.append(ref_fiche)
+                        list_success_provenance.append("approximation6")
                         list_success_values.append(values)
                         break
             if flag == True:
@@ -255,11 +263,13 @@ def compare_list_arbo_csv_bi(
         elif flag == False:
             list_failed_path.append(keys)
             list_failed_list.append(values)
+            list_failed_provenance.append("Algo vide et aucun match")
     df_success = pd.DataFrame(
         {
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
             "Version": list_version,
+            "Commentaires": list_success_provenance,
             # "Valeur": list_quel_values,
             # "lists": list_success_values,
         },
@@ -267,7 +277,11 @@ def compare_list_arbo_csv_bi(
     print(df_success)
 
     df_failed = pd.DataFrame(
-        {"Chemin du fichier": list_failed_path, "lists": list_failed_list},
+        {
+            "Chemin du fichier": list_failed_path,
+            "lists": list_failed_list,
+            "Commentaires": list_failed_provenance,
+        },
     )
     print(df_success.shape)
     if nb_passage == 1:

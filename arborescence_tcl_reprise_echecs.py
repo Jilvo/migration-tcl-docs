@@ -703,7 +703,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_failed_path.append(keys)
                         list_failed_list.append(values)
                         list_failed_provenance.append(
-                            "Algo supérieur à 95%,1 carac de diff, en 2nd passe,dernier caract différent"
+                            "Algo supérieur à 95% - 1 carac de diff - en 2nd passe - dernier caract différent"
                         )
                         continue
                     else:
@@ -714,7 +714,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         )
                         list_success_values.append(values)
                         list_success_provenance.append(
-                            "Algo supérieur à 95%,1 carac de diff, en 2nd passe,pas le dernier caract différent"
+                            "Algo supérieur à 95% - 1 carac de diff - en 2nd passe - pas le dernier caract différent"
                         )
                         continue
 
@@ -741,7 +741,9 @@ def compare_list_arbo_csv_bi_rattrapage(
                 else:
                     list_failed_path.append(keys)
                     list_failed_list.append(values)
-                    list_failed_provenance.append("jaro inférieur a 90% ou sup 2 ")
+                    list_failed_provenance.append(
+                        f"""jaro inférieur à 90% ou sup 2 {sorted_dict_jaro_distance[stats_key]["ref"]} """
+                    )
 
             else:
                 list_failed_path.append(keys)
@@ -752,7 +754,7 @@ def compare_list_arbo_csv_bi_rattrapage(
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
             "Commentaires": list_success_provenance,
-            "lists": list_success_values,
+            # "lists": list_success_values,
         },
     )
     print(df_success)
@@ -760,7 +762,7 @@ def compare_list_arbo_csv_bi_rattrapage(
     df_failed = pd.DataFrame(
         {
             "Chemin du fichier": list_failed_path,
-            "Référence Fiche": list_failed_list,
+            # "Référence Fiche": list_failed_list,
             "Commentaires": list_failed_provenance,
         },
     )

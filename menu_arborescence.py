@@ -7,6 +7,7 @@ import time
 import arborescence_tcl
 import arborescence_tcl_tout_darfeuille
 import arborescence_tcl_pret
+import arborescence_tcl_pret_seconde_passe
 import arborescence_tcl_reprise_echecs
 from fichiers_et_constantes import *
 import arborescence_serber
@@ -405,6 +406,13 @@ class MainExtraction:
                     df_extraction_pret,
                     name_file_success,
                     name_file_failed,
+                )
+                print("PREMIER SCAN TERMINE")
+                arborescence_tcl_pret_seconde_passe.compare_list_arbo_csv_bi_pret_seconde_passe(
+                    name_file_failed,
+                    df_extraction_pret,
+                    name_file_success,
+                    "output_datas\echecs_pret_2_eme_passe.csv",
                 )
                 print("Nombre de références dans l'extraction", df_extraction_pret)
             else:

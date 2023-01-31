@@ -814,7 +814,7 @@ def compare_list_arbo_csv_bi(
                         list_failed_path.append(keys)
                         list_failed_list.append(values)
                         list_failed_provenance.append(
-                            "Algo supérieur à 95%,1 carac de diff, en tout darfeuille passe,dernier caract différent"
+                            "Algo supérieur à 95% - 1 carac de diff - en tout darfeuille passe - dernier caract différent"
                         )
                         continue
                     else:
@@ -825,7 +825,7 @@ def compare_list_arbo_csv_bi(
                         )
                         list_success_values.append(values)
                         list_success_provenance.append(
-                            "Algo supérieur à 95%,1 carac de diff, en tout darfeuille passe,pas le dernier caract différent"
+                            "Algo supérieur à 95% - 1 carac de diff - en tout darfeuille passe - pas le dernier caract différent"
                         )
                         continue
 
@@ -863,14 +863,14 @@ def compare_list_arbo_csv_bi(
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
             "Commentaires": list_success_provenance,
-            "lists": list_success_values,
+            # "lists": list_success_values,
         },
     )
 
     df_failed = pd.DataFrame(
         {
             "Chemin du fichier": list_failed_path,
-            "Référence Fiche": list_failed_list,
+            # "Référence Fiche": list_failed_list,
             "Commentaires": list_failed_provenance,
         },
     )
