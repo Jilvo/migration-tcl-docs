@@ -114,7 +114,11 @@ class MainExtraction:
             list_station = []
             print("station actuelle : ", station)
             for index, row in df.iterrows():
-                if row["LIBSITE"] in station and row["DEFINITIF"] == "D":
+                if (
+                    row["LIBSITE"] in station
+                    and row["DEFINITIF"] == "D"
+                    and not "AR00AR" in row["NUMERO_REF_FOURN"]
+                ):
                     list_station.append(
                         [
                             row["NUMERO_REF_FOURN"],

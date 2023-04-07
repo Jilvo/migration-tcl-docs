@@ -104,6 +104,7 @@ def compare_list_arbo_csv_bi_rattrapage(
     list_failed_list = []
     list_success_provenance = []
     list_failed_provenance = []
+    list_ref_fourn = []
 
     print("df", df)
     for keys, values in dict_arbo.items():
@@ -116,6 +117,17 @@ def compare_list_arbo_csv_bi_rattrapage(
                 df["Référence fournisseur"], df["Référence fiche"]
             ):
                 value = value.upper()
+                if "|" in ref_fourn:
+                    ref_fourn_list = ref_fourn.split("|")
+                    ref_fourn_list_sorted_by_length = sorted(
+                        ref_fourn_list, key=len, reverse=True
+                    )
+                    if len(ref_fourn_list_sorted_by_length[0]) == len(
+                        ref_fourn_list_sorted_by_length[1]
+                    ):
+                        ref_fourn = ref_fourn_list[0]
+                    else:
+                        ref_fourn = ref_fourn_list_sorted_by_length[0]
                 ### Recherche basique
                 if value == ref_fourn:
                     flag = True
@@ -123,6 +135,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
                     list_success_provenance.append("égalité")
+                    list_ref_fourn.append(ref_fourn)
                     break
                 if value.replace(" ", "") == ref_fourn.replace(" ", ""):
                     flag = True
@@ -130,6 +143,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
                     list_success_provenance.append("égalité sans espaces")
+                    list_ref_fourn.append(ref_fourn)
                     break
                 if value.replace("O", "0") == ref_fourn:
                     flag = True
@@ -137,6 +151,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
                     list_success_provenance.append("égalité remplacement 0 et O")
+                    list_ref_fourn.append(ref_fourn)
                     break
                 if re.match("(\D{3}\d{5})", value.replace(" ", "")):
                     value_m = value.replace(" ", "")
@@ -147,6 +162,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         list_success_provenance.append("égalité avec ajout 0")
+                        list_ref_fourn.append(ref_fourn)
                 # if re.match("(\D{3}\d{4})", value.replace(" ", "")):
                 #     value_m = value.replace(" ", "")
                 #     value_m = value_m[:3] + "-00" + value_m[-4:]
@@ -716,6 +732,9 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_provenance.append(
                             "Algo supérieur à 95% - 1 carac de diff - en 2nd passe - pas le dernier caract différent"
                         )
+                        list_ref_fourn.append(
+                            sorted_dict_jaro_distance[stats_key]["ref"]
+                        )
                         continue
 
                 elif (
@@ -737,6 +756,7 @@ def compare_list_arbo_csv_bi_rattrapage(
                     list_success_provenance.append(
                         "Algo supérieur à 95% et 2 de distance"
                     )
+                    list_ref_fourn.append(sorted_dict_jaro_distance[stats_key]["ref"])
                     continue
                 else:
                     list_failed_path.append(keys)
@@ -754,7 +774,8 @@ def compare_list_arbo_csv_bi_rattrapage(
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
             "Commentaires": list_success_provenance,
-            # "lists": list_success_values,
+            "ref fourn": list_ref_fourn,
+            "lists": list_success_values,
         },
     )
     print(df_success)
@@ -762,8 +783,8 @@ def compare_list_arbo_csv_bi_rattrapage(
     df_failed = pd.DataFrame(
         {
             "Chemin du fichier": list_failed_path,
-            # "Référence Fiche": list_failed_list,
             "Commentaires": list_failed_provenance,
+            "Référence Fiche": list_failed_list,
         },
     )
     print(df_success.shape)

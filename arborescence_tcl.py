@@ -223,7 +223,6 @@ def find_ref_fournisseur(name_file_arbo):
         dict_arbo[row["Chemin du fichier"]] = list_split_station
     for i in dict_arbo.values():
         index_element = i[0]
-        print("index_element", index_element)
         for item in index_element:
             if not re.match("(.*\d{1,}.*)", item):
                 index_element.remove(item)
@@ -306,7 +305,7 @@ def compare_list_arbo_csv_bi(
     list_failed_list = []
     list_success_provenance = []
     list_failed_provenance = []
-    print("df", df)
+    list_ref_fourn = []
     for keys, values in dict_arbo.items():
         if "ST-100012-B.pdf" in keys:
             print("On entre dans un doublon")
@@ -321,6 +320,17 @@ def compare_list_arbo_csv_bi(
                 df[values[1][0]]["Référence fiche"],
             ):
                 value = value.upper()
+                if "|" in ref_fourn:
+                    ref_fourn_list = ref_fourn.split("|")
+                    ref_fourn_list_sorted_by_length = sorted(
+                        ref_fourn_list, key=len, reverse=True
+                    )
+                    if len(ref_fourn_list_sorted_by_length[0]) == len(
+                        ref_fourn_list_sorted_by_length[1]
+                    ):
+                        ref_fourn = ref_fourn_list[0]
+                    else:
+                        ref_fourn = ref_fourn_list_sorted_by_length[0]
                 # print("ref_fourn", ref_fourn)
                 ### Recherche basique
                 if "820 - Siège Social B12" in keys:
@@ -339,6 +349,7 @@ def compare_list_arbo_csv_bi(
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         list_success_provenance.append("égalité")
+                        list_ref_fourn.append(ref_fourn)
                         break
                 if value == ref_fourn:
                     flag = True
@@ -346,6 +357,8 @@ def compare_list_arbo_csv_bi(
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
                     list_success_provenance.append("égalité")
+                    list_ref_fourn.append(ref_fourn)
+
                     break
                 if value.replace(" ", "") == ref_fourn.replace(" ", ""):
                     flag = True
@@ -353,6 +366,7 @@ def compare_list_arbo_csv_bi(
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
                     list_success_provenance.append("égalité sans espaces")
+                    list_ref_fourn.append(ref_fourn)
                     break
                 if value.replace("O", "0") == ref_fourn:
                     flag = True
@@ -360,6 +374,7 @@ def compare_list_arbo_csv_bi(
                     list_success_list.append(ref_fiche)
                     list_success_values.append(values)
                     list_success_provenance.append("égalité remplacement 0 et O")
+                    list_ref_fourn.append(ref_fourn)
                     break
                 if re.match("(\D{3}\d{5})", value.replace(" ", "")):
                     value_m = value.replace(" ", "")
@@ -370,6 +385,7 @@ def compare_list_arbo_csv_bi(
                         list_success_list.append(ref_fiche)
                         list_success_values.append(values)
                         list_success_provenance.append("égalité avec ajout 0")
+                        list_ref_fourn.append(ref_fourn)
                 # if re.match("(\D{3}\d{4})", value.replace(" ", "")):
                 #     value_m = value.replace(" ", "")
                 #     value_m = value_m[:3] + "-00" + value_m[-4:]
@@ -615,250 +631,269 @@ def compare_list_arbo_csv_bi(
 
                 #     #             break
                 # ### Rajouter un tiret après ST,YA,SF,GL
-                # list_need_dash = [
-                #     "BA",
-                #     "BD",
-                #     "BL",
-                #     "BT",
-                #     "EE",
-                #     "EQ",
-                #     "FA",
-                #     "FB",
-                #     "FC",
-                #     "FD",
-                #     "FE",
-                #     "FF",
-                #     "FN",
-                #     "FV",
-                #     "GP",
-                #     "GL",
-                #     "HF",
-                #     "HL",
-                #     "KG",
-                #     "MA",
-                #     "MB",
-                #     "NT",
-                #     "SE",
-                #     "SF",
-                #     "SG",
-                #     "SM",
-                #     "SR",
-                #     "ST",
-                #     "YA",
-                #     "YU",
-                # ]
-                # for dash in list_need_dash:
-                #     if dash in value and re.match("\w{2}.?\d{5,}", value):
-                #         value = re.findall("\w{2}.?\d{5,}", value)
-                #         value = value[0]
-                #         value_dash = value.replace(dash, dash + "-")
-                #         value_dash_remove_space = value.replace(dash + " ", dash + "-")
-                #         value_dash_remove_space_dash = re.findall(
-                #             "(.{2})[-, ]{1}(\d{2,5})", value
-                #         )
-                #         if len(value_dash_remove_space_dash) > 1:
-                #             if len(value_dash_remove_space_dash[0][1]) == 5:
-                #                 value_u = (
-                #                     value_dash_remove_space_dash[0][0]
-                #                     + "-0"
-                #                     + value_dash_remove_space_dash[0][1]
-                #                 )
-                #                 if value_u in ref_fourn:
-                #                     flag = True
-                #                     list_success_path.append(keys)
-                #                     list_success_list.append(ref_fiche)
-                #                     list_success_values.append(values)
-                #                     list_success_provenance.append("approximation15")
-                #                     break
-                #             elif len(value_dash_remove_space_dash[0][1]) == 4:
-                #                 value_u = (
-                #                     value_dash_remove_space_dash[0][0]
-                #                     + "-00"
-                #                     + value_dash_remove_space_dash[0][1]
-                #                 )
-                #                 if value_u in ref_fourn:
-                #                     flag = True
-                #                     list_success_path.append(keys)
-                #                     list_success_list.append(ref_fiche)
-                #                     list_success_values.append(values)
-                #                     list_success_provenance.append("approximation16")
-                #                     break
-                #             elif len(value_dash_remove_space_dash[0][1]) == 3:
-                #                 value_u = (
-                #                     value_dash_remove_space_dash[0][0]
-                #                     + "-000"
-                #                     + value_dash_remove_space_dash[0][1]
-                #                 )
-                #                 if value_u in ref_fourn:
-                #                     flag = True
-                #                     list_success_path.append(keys)
-                #                     list_success_list.append(ref_fiche)
-                #                     list_success_values.append(values)
-                #                     list_success_provenance.append("approximation17")
-                #                     break
-                #         value_dash_remove_space_add_zero = value.replace(
-                #             dash, dash + "-0"
-                #         )
-                #         value_dash_zero = value[:2] + "-0" + value[-2:]
-                #         value_only_tree_number = re.findall("(\w{2}.?\d{3})", value)
-                #         value_only_tree_number = value_only_tree_number[0]
-                #         if (
-                #             value_only_tree_number[:2]
-                #             + "000"
-                #             + value_only_tree_number[2:]
-                #             in ref_fourn
-                #         ):
-                #             flag = True
-                #             list_success_path.append(keys)
-                #             list_success_list.append(ref_fiche)
-                #             list_success_values.append(value_only_tree_number)
-                #             list_success_provenance.append("approximation18")
-                #             list_test_number.append("10-1")
-                #             list_folder_doublon_succes.append(folder_for_doublon)
-                #             break
-                #         # if value_dash_zero.replace(" ", "") in ref_fourn.replace(
-                #         #     " ", ""
-                #         # ):
-                #         #     if "AQ" in ref_fourn:
-                #         #         flag = True
-                #         #         list_success_path.append(keys)
-                #         #         list_success_list.append(ref_fiche)
-                #         #         list_success_values.append(values)
-                #         #         list_success_provenance.append("approximation19")
-                #         #         break
-                #         #     else:
-                #         #         pass
-                #         if value_dash in ref_fourn:
-                #             flag = True
-                #             list_success_path.append(keys)
-                #             list_success_list.append(ref_fiche)
-                #             list_success_values.append(values)
-                #             list_success_provenance.append("approximation20")
-                #             break
-                #         elif value_dash_remove_space in ref_fourn:
-                #             flag = True
-                #             list_success_path.append(keys)
-                #             list_success_list.append(ref_fiche)
-                #             list_success_values.append(values)
-                #             list_success_provenance.append("approximation21")
-                #             break
-                #         elif value_dash_remove_space_add_zero in ref_fourn:
-                #             flag = True
-                #             list_success_path.append(keys)
-                #             list_success_list.append(ref_fiche)
-                #             list_success_values.append(values)
-                #             list_success_provenance.append("approximation22")
-                #             break
-                #         elif (
-                #             value_dash_remove_space_add_zero.replace(" ", "")
-                #             in ref_fourn
-                #         ):
-                #             flag = True
-                #             list_success_path.append(keys)
-                #             list_success_list.append(ref_fiche)
-                #             list_success_values.append(values)
-                #             list_success_provenance.append("approximation23")
-                #             break
-                #         # if re.match("\w{2}.?\d{5}", value):
-                #         #     value_remove_post = re.findall("(\w{2}.?\d{5})", value)
-                #         #     value_remove_post = value_remove_post[0]
-                #         #     if value_remove_post in ref_fourn:
-                #         #         flag = True
-                #         #         list_success_path.append(keys)
-                #         #         list_success_list.append(ref_fiche)
-                #         #         list_success_values.append(values)
-                #         #         list_success_provenance.append("approximation24")
-                #         #         break
 
-                #         if re.match("(ST\d{6})", value):
-                #             value_remove_post = re.findall("(ST\d{6})", value)
-                #             value_remove_post = value_remove_post[0]
-                #             value_remove_post = value_remove_post.replace("ST", "ST-")
-                #             if value_remove_post in ref_fourn:
-                #                 flag = True
-                #                 list_success_path.append(keys)
-                #                 list_success_list.append(ref_fiche)
-                #                 list_success_values.append(values)
-                #                 list_success_provenance.append("approximation25")
-                #                 break
-                #         if not flag:
-                #             if value in ref_fourn:
-                #                 flag = True
-                #                 list_success_path.append(keys)
-                #                 list_success_list.append(ref_fiche)
-                #                 list_success_values.append(values)
-                #                 list_success_provenance.append("approximation26")
-                #                 break
-                #         if not flag:
-                #             value_no_spaces = value.replace(" ", "")
-                #             if value_no_spaces in ref_fourn:
-                #                 flag = True
-                #                 list_success_path.append(keys)
-                #                 list_success_list.append(ref_fiche)
-                #                 list_success_values.append(values)
-                #                 list_success_provenance.append("approximation27")
-                #                 break
-                #         if dash == "SF":
-                #             if not flag:
-                #                 value_remove_zero = value[:2] + value[3:]
-                #                 if value_remove_zero in ref_fourn:
-                #                     flag = True
-                #                     list_success_path.append(keys)
-                #                     list_success_list.append(ref_fiche)
-                #                     list_success_values.append(values)
-                #                     list_success_provenance.append("approximation28")
-                #                     break
-                #         if dash == "FA":
-                #             if not flag:
-                #                 try:
-                #                     value_add_zero = value.replace("FA-", "FA-0")
-                #                     if value_add_zero in ref_fourn:
-                #                         flag = True
-                #                         list_success_path.append(keys)
-                #                         list_success_list.append(ref_fiche)
-                #                         list_success_values.append(values)
-                #                         list_success_provenance.append(
-                #                             "approximation29"
-                #                         )
-                #                         break
-                #                 except Exception as e:
-                #                     value_add_zero = value.replace("FA", "FA-0")
-                #                     if value_add_zero in ref_fourn:
-                #                         flag = True
-                #                         list_success_path.append(keys)
-                #                         list_success_list.append(ref_fiche)
-                #                         list_success_values.append(values)
-                #                         list_success_provenance.append(
-                #                             "approximation30"
-                #                         )
-                #                         break
-                #         if dash == "HF":
-                #             if not flag:
-                #                 value_add_zero = value.replace("HF-", "HF-0")
-                #                 if value_add_zero in ref_fourn:
-                #                     flag = True
-                #                     list_success_path.append(keys)
-                #                     list_success_list.append(ref_fiche)
-                #                     list_success_values.append(values)
-                #                     list_success_provenance.append("approximation31")
-                #                     break
-                #                 value_add_zero = value.replace("HF", "HF-0")
-                #                 if value_add_zero in ref_fourn:
-                #                     flag = True
-                #                     list_success_path.append(keys)
-                #                     list_success_list.append(ref_fiche)
-                #                     list_success_values.append(values)
-                #                     list_success_provenance.append("approximation32")
-                #                     break
-                #     if len(value) == 6 and value[:2] == "KG":
-                #         value_kg = "KG-00" + value[-4:]
-                #         if value_kg in ref_fourn:
-                #             flag = True
-                #             list_success_path.append(keys)
-                #             list_success_list.append(ref_fiche)
-                #             list_success_values.append(values)
-                #             list_success_provenance.append("approximation33")
-                #             break
+                list_need_dash = [
+                    "AA",
+                    "BA",
+                    "BD",
+                    "BL",
+                    "BT",
+                    "EE",
+                    "EQ",
+                    "FA",
+                    "FB",
+                    "FC",
+                    "FD",
+                    "FE",
+                    "FF",
+                    "FN",
+                    "FV",
+                    "GP",
+                    "GL",
+                    "HF",
+                    "HL",
+                    "KG",
+                    "MA",
+                    "MB",
+                    "NT",
+                    "SE",
+                    "SF",
+                    "SG",
+                    "SM",
+                    "SR",
+                    "ST",
+                    "YA",
+                    "YU",
+                ]
+                for dash in list_need_dash:
+                    if dash in value and re.match("\w{2}.?\d{5,}", value):
+                        value = re.findall("\w{2}.?\d{5,}", value)
+                        value = value[0]
+                        value_dash = value.replace(dash, dash + "-")
+                        value_dash_remove_space = value.replace(dash + " ", dash + "-")
+                        value_dash_remove_space_dash = re.findall(
+                            "(.{2})[-, ]{1}(\d{2,5})", value
+                        )
+                        if len(value_dash_remove_space_dash) > 1:
+                            if len(value_dash_remove_space_dash[0][1]) == 5:
+                                value_u = (
+                                    value_dash_remove_space_dash[0][0]
+                                    + "-0"
+                                    + value_dash_remove_space_dash[0][1]
+                                )
+                                if value_u in ref_fourn:
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    list_success_provenance.append("approximation15")
+                                    list_ref_fourn.append(ref_fourn)
+                                    break
+                            elif len(value_dash_remove_space_dash[0][1]) == 4:
+                                value_u = (
+                                    value_dash_remove_space_dash[0][0]
+                                    + "-00"
+                                    + value_dash_remove_space_dash[0][1]
+                                )
+                                if value_u in ref_fourn:
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    list_success_provenance.append("approximation16")
+                                    list_ref_fourn.append(ref_fourn)
+                                    break
+                            elif len(value_dash_remove_space_dash[0][1]) == 3:
+                                value_u = (
+                                    value_dash_remove_space_dash[0][0]
+                                    + "-000"
+                                    + value_dash_remove_space_dash[0][1]
+                                )
+                                if value_u in ref_fourn:
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    list_success_provenance.append("approximation17")
+                                    list_ref_fourn.append(ref_fourn)
+                                    break
+                        value_dash_remove_space_add_zero = value.replace(
+                            dash, dash + "-0"
+                        )
+                        value_dash_zero = value[:2] + "-0" + value[-2:]
+                        value_only_tree_number = re.findall("(\w{2}.?\d{3})", value)
+                        value_only_tree_number = value_only_tree_number[0]
+                        if (
+                            value_only_tree_number[:2]
+                            + "000"
+                            + value_only_tree_number[2:]
+                            in ref_fourn
+                        ):
+                            flag = True
+                            list_success_path.append(keys)
+                            list_success_list.append(ref_fiche)
+                            list_success_values.append(value_only_tree_number)
+                            list_success_provenance.append("approximation18")
+                            list_ref_fourn.append(ref_fourn)
+                            list_test_number.append("10-1")
+                            list_folder_doublon_succes.append(folder_for_doublon)
+                            break
+                        # if value_dash_zero.replace(" ", "") in ref_fourn.replace(
+                        #     " ", ""
+                        # ):
+                        #     if "AQ" in ref_fourn:
+                        #         flag = True
+                        #         list_success_path.append(keys)
+                        #         list_success_list.append(ref_fiche)
+                        #         list_success_values.append(values)
+                        #         list_success_provenance.append("approximation19")
+                        #         break
+                        #     else:
+                        #         pass
+                        if value_dash in ref_fourn:
+                            flag = True
+                            list_success_path.append(keys)
+                            list_success_list.append(ref_fiche)
+                            list_success_values.append(values)
+                            list_success_provenance.append("approximation20")
+                            list_ref_fourn.append(ref_fourn)
+                            break
+                        # elif value_dash_remove_space in ref_fourn:
+                        #     flag = True
+                        #     list_success_path.append(keys)
+                        #     list_success_list.append(ref_fiche)
+                        #     list_success_values.append(values)
+                        #     list_success_provenance.append("approximation21")
+                        #     list_ref_fourn.append(ref_fourn)
+                        #     break
+                        elif value_dash_remove_space_add_zero in ref_fourn:
+                            flag = True
+                            list_success_path.append(keys)
+                            list_success_list.append(ref_fiche)
+                            list_success_values.append(values)
+                            list_success_provenance.append("approximation22")
+                            list_ref_fourn.append(ref_fourn)
+                            break
+                        elif (
+                            value_dash_remove_space_add_zero.replace(" ", "")
+                            in ref_fourn
+                        ):
+                            flag = True
+                            list_success_path.append(keys)
+                            list_success_list.append(ref_fiche)
+                            list_success_values.append(values)
+                            list_success_provenance.append("approximation23")
+                            list_ref_fourn.append(ref_fourn)
+                            break
+                        # if re.match("\w{2}.?\d{5}", value):
+                        #     value_remove_post = re.findall("(\w{2}.?\d{5})", value)
+                        #     value_remove_post = value_remove_post[0]
+                        #     if value_remove_post in ref_fourn:
+                        #         flag = True
+                        #         list_success_path.append(keys)
+                        #         list_success_list.append(ref_fiche)
+                        #         list_success_values.append(values)
+                        #         list_success_provenance.append("approximation24")
+                        #         break
+
+                        if re.match("(ST\d{6})", value):
+                            value_remove_post = re.findall("(ST\d{6})", value)
+                            value_remove_post = value_remove_post[0]
+                            value_remove_post = value_remove_post.replace("ST", "ST-")
+                            if value_remove_post in ref_fourn:
+                                flag = True
+                                list_success_path.append(keys)
+                                list_success_list.append(ref_fiche)
+                                list_success_values.append(values)
+                                list_success_provenance.append("approximation25")
+                                list_ref_fourn.append(ref_fourn)
+                                break
+                        # if not flag:
+                        #     if value in ref_fourn:
+                        #         flag = True
+                        #         list_success_path.append(keys)
+                        #         list_success_list.append(ref_fiche)
+                        #         list_success_values.append(values)
+                        #         list_success_provenance.append("approximation26")
+                        #         list_ref_fourn.append(ref_fourn)
+                        #         break
+                        # if not flag:
+                        #     value_no_spaces = value.replace(" ", "")
+                        #     if value_no_spaces in ref_fourn:
+                        #         flag = True
+                        #         list_success_path.append(keys)
+                        #         list_success_list.append(ref_fiche)
+                        #         list_success_values.append(values)
+                        #         list_success_provenance.append("approximation27")
+                        #         list_ref_fourn.append(ref_fourn)
+                        #         break
+                        if dash == "SF":
+                            if not flag:
+                                value_remove_zero = value[:2] + value[3:]
+                                if value_remove_zero in ref_fourn:
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    list_success_provenance.append("approximation28")
+                                    list_ref_fourn.append(ref_fourn)
+                                    break
+                        if dash == "FA":
+                            if not flag:
+                                try:
+                                    value_add_zero = value.replace("FA-", "FA-0")
+                                    if value_add_zero in ref_fourn:
+                                        flag = True
+                                        list_success_path.append(keys)
+                                        list_success_list.append(ref_fiche)
+                                        list_success_values.append(values)
+                                        list_success_provenance.append(
+                                            "approximation29"
+                                        )
+                                        list_ref_fourn.append(ref_fourn)
+                                        break
+                                except Exception as e:
+                                    value_add_zero = value.replace("FA", "FA-0")
+                                    if value_add_zero in ref_fourn:
+                                        flag = True
+                                        list_success_path.append(keys)
+                                        list_success_list.append(ref_fiche)
+                                        list_success_values.append(values)
+                                        list_success_provenance.append(
+                                            "approximation30"
+                                        )
+                                        list_ref_fourn.append(ref_fourn)
+                                        break
+                        if dash == "HF":
+                            if not flag:
+                                value_add_zero = value.replace("HF-", "HF-0")
+                                if value_add_zero in ref_fourn:
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    list_success_provenance.append("approximation31")
+                                    list_ref_fourn.append(ref_fourn)
+                                    break
+                                value_add_zero = value.replace("HF", "HF-0")
+                                if value_add_zero in ref_fourn:
+                                    flag = True
+                                    list_success_path.append(keys)
+                                    list_success_list.append(ref_fiche)
+                                    list_success_values.append(values)
+                                    list_success_provenance.append("approximation32")
+                                    list_ref_fourn.append(ref_fourn)
+                                    break
+                    if len(value) == 6 and value[:2] == "KG":
+                        value_kg = "KG-00" + value[-4:]
+                        if value_kg in ref_fourn:
+                            flag = True
+                            list_success_path.append(keys)
+                            list_success_list.append(ref_fiche)
+                            list_success_values.append(values)
+                            list_success_provenance.append("approximation33")
+                            list_ref_fourn.append(ref_fourn)
+                            break
                 # if value[:3] == "ETL":
                 #     ref_fourn_no_zero = ref_fourn.replace("0", "")
                 #     if value == ref_fourn_no_zero:
@@ -1028,7 +1063,9 @@ def compare_list_arbo_csv_bi(
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
             "Commentaires": list_success_provenance,
-            # "lists": list_success_values,
+            "ref fourn": list_ref_fourn,
+            "lists": list_success_values,
+            # "value": list_success_values,
             # "dict": list_success_provenance,
         },
     )
