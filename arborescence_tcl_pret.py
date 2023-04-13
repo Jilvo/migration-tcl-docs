@@ -25,14 +25,15 @@ def create_arbo(DIRNAME, name_file_arbo):
     if type(DIRNAME) == str:
         for path, subdirs, files in os.walk(DIRNAME):
             for name in files:
-                if "Thumbs.db" in os.path.join(path, name):
-                    continue
-                elif os.path.join(path, name)[-4:] != ".pdf":
-                    try:
-                        print(os.path.join(path, name))
-                        list_arbo.append(os.path.join(path, name))
-                    except Exception as e:
-                        print(e.args)
+                try:
+                    if os.path.join(path, name)[-4:] != ".pdf":
+                        if "Thumbs.db" in os.path.join(path, name):
+                            continue
+                        else:
+                            print(os.path.join(path, name))
+                            list_arbo.append(os.path.join(path, name))
+                except Exception as e:
+                    print(e.args)
     else:
         for dir in DIRNAME:
             for path, subdirs, files in os.walk(dir):

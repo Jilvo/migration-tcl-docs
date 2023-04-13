@@ -114,6 +114,7 @@ def compare_list_arbo_csv_bi(
     list_failed_list = []
     list_success_provenance = []
     list_failed_provenance = []
+    list_ref_fourn = []
     for keys, values in dict_arbo.items():
         print(keys)
         flag = False
@@ -135,6 +136,7 @@ def compare_list_arbo_csv_bi(
                     list_success_list.append(ref_fiche)
                     list_success_provenance.append("égalité")
                     list_success_values.append(values)
+                    list_ref_fourn.append(ref_fourn)
                     break
                 ## CONCATENER 2 item de la list
                 if len(values) >= 3:
@@ -158,6 +160,7 @@ def compare_list_arbo_csv_bi(
                         list_success_list.append(ref_fiche)
                         list_success_provenance.append("approximation1")
                         list_success_values.append(values)
+                        list_ref_fourn.append(ref_fourn)
                         break
                     conc_values_exact = values[1] + values[2]
                     if conc_values_exact.replace(" ", "") in ref_fourn.replace(" ", ""):
@@ -167,6 +170,7 @@ def compare_list_arbo_csv_bi(
                         list_success_list.append(ref_fiche)
                         list_success_provenance.append("approximation2")
                         list_success_values.append(values)
+                        list_ref_fourn.append(ref_fourn)
                         break
                     if re.match("[|V|A|-|.|_|]", values[2]) and len(values[2]) > 5:
                         if values[2][0] != "A" and values[2][0] != "V":
@@ -189,6 +193,7 @@ def compare_list_arbo_csv_bi(
                                     list_success_list.append(ref_fiche)
                                     list_success_provenance.append("approximation3")
                                     list_success_values.append(values)
+                                    list_ref_fourn.append(ref_fourn)
                                     break
                             else:
                                 conc_values = values[1] + value_remove_v
@@ -201,20 +206,21 @@ def compare_list_arbo_csv_bi(
                                     list_success_list.append(ref_fiche)
                                     list_success_provenance.append("approximation4")
                                     list_success_values.append(values)
+                                    list_ref_fourn.append(ref_fourn)
                                     break
                         else:
                             pass
 
-                if len(value) >= 6 and values.index(value_basic) > 2:
-                    value_cut_number = re.sub("(\W+[V|-|.|_|\d]+)$", "", value)
-                    if value_cut_number.replace(" ", "") in ref_fourn.replace(" ", ""):
-                        flag = True
-                        list_success_path.append(keys)
-                        list_quel_values.append(value_cut_number)
-                        list_success_list.append(ref_fiche)
-                        list_success_provenance.append("approximation5")
-                        list_success_values.append(values)
-                        break
+                    # if len(value) >= 6 and values.index(value_basic) > 2:
+                    #     value_cut_number = re.sub("(\W+[V|-|.|_|\d]+)$", "", value)
+                    #     if value_cut_number.replace(" ", "") in ref_fourn.replace(" ", ""):
+                    #         flag = True
+                    #         list_success_path.append(keys)
+                    #         list_quel_values.append(value_cut_number)
+                    #         list_success_list.append(ref_fiche)
+                    #         list_success_provenance.append("approximation5")
+                    #         list_success_values.append(values)
+                    #         break
                     value_cut_number = (
                         value_cut_number[:-3] + "000" + value_cut_number[-3:]
                     )
@@ -225,6 +231,7 @@ def compare_list_arbo_csv_bi(
                         list_success_list.append(ref_fiche)
                         list_success_provenance.append("approximation6")
                         list_success_values.append(values)
+                        list_ref_fourn.append(ref_fourn)
                         break
             if flag == True:
                 print("On vient de trouver la référence")
@@ -270,6 +277,7 @@ def compare_list_arbo_csv_bi(
             "Référence Fiche": list_success_list,
             "Version": list_version,
             "Commentaires": list_success_provenance,
+            "ref_fiche": list_ref_fourn,
             # "Valeur": list_quel_values,
             # "lists": list_success_values,
         },

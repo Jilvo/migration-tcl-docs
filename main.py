@@ -37,6 +37,7 @@ def main_lunch_function(list_choices):
         "FUNI COMMUNS + STATIONS",
         "Lignes Fortes - C1 C2 C3 C13",
         "Surface",
+        "Spécifications technique FA",
     ]
     if len(list_choices) == 0:
         for choice in list_possibilities:
@@ -81,8 +82,7 @@ def main_lunch_function(list_choices):
         if "PRÊT" in list_choices:
             # -------- PRÊT --------
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
-                DIRNAME=f"""F:\Tcl\Prêt Plans\Prêt 2020""",
-                # DIRNAME=f"""F:\Tcl\Prêt Plans""",
+                DIRNAME=f"""F:\Tcl\Prêt Plans""",
                 # DIRNAME=[
                 #     f"""F:\Tcl\Prêt Plans\Prêt 2017\Bordereau 17-141""",
                 # f"""F:\Tcl\Prêt Plans\Prêt 2016""",
@@ -122,42 +122,42 @@ def main_lunch_function(list_choices):
             # # -------- Métro A --------
 
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
-                DIRNAME=f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations\Ampère""",
-                # DIRNAME=f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations""",
+                # DIRNAME=f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations\Ampère""",
+                DIRNAME=f"""F:\Tcl\{str(105)} à {str(122)} - Métro A - stations""",
                 name_file_arbo="output_datas/arborescence_metro_ligne_a.csv",
                 name_file_success="output_datas/listes des succes Métro A complet.csv",
                 name_file_failed="output_datas/listes des echecs Métro A première passe.csv",
                 name_file_failed_rattrapage="output_datas/listes des echecs Métro A après seconde passe.csv",
                 input_user=1,
-                list_a_traiter=[
-                    "AMPERE",
-                ],
                 # list_a_traiter=[
                 #     "AMPERE",
-                #     "ARCHIVES USVB",
-                #     "ARCHIVES UTMA",
-                #     "BELLECOUR A & D",
-                #     "BONNEVAY",
-                #     "CHARPENNES A & B",
-                #     "COMMUNS  A",
-                #     "COMMUNS  A & B",
-                #     "COMMUNS  A , B & C",
-                #     "COMMUNS METRO",
-                #     "CORDELIERS",
-                #     "CUSSET",
-                #     "FLACHET",
-                #     "FOCH",
-                #     "GRATTE CIEL",
-                #     "HOTEL DE VILLE A & C",
-                #     "HOTEL DE VILLE LIGNE A",
-                #     "INTERSTATIONS  A",
-                #     "LA SOIE",
-                #     "MASSENA",
-                #     "PERRACHE",
-                #     "POUDRETTE",
-                #     "REPUBLIQUE",
-                #     "UTMA POUDRETTE",
                 # ],
+                list_a_traiter=[
+                    "AMPERE",
+                    "ARCHIVES USVB",
+                    "ARCHIVES UTMA",
+                    "BELLECOUR A & D",
+                    "BONNEVAY",
+                    "CHARPENNES A & B",
+                    "COMMUNS  A",
+                    "COMMUNS  A & B",
+                    "COMMUNS  A , B & C",
+                    "COMMUNS METRO",
+                    "CORDELIERS",
+                    "CUSSET",
+                    "FLACHET",
+                    "FOCH",
+                    "GRATTE CIEL",
+                    "HOTEL DE VILLE A & C",
+                    "HOTEL DE VILLE LIGNE A",
+                    "INTERSTATIONS  A",
+                    "LA SOIE",
+                    "MASSENA",
+                    "PERRACHE",
+                    "POUDRETTE",
+                    "REPUBLIQUE",
+                    "UTMA POUDRETTE",
+                ],
             )
             list_choices.remove("Métro A")
 
@@ -165,39 +165,39 @@ def main_lunch_function(list_choices):
             # -------- Métro B --------
 
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
-                # DIRNAME=f"""F:\Tcl\{str(130)} à {str(137)} - Métro B - stations""",
-                DIRNAME=f"""F:\Tcl\{str(130)} à {str(137)} - Métro B - stations\Part-Dieu""",
+                DIRNAME=f"""F:\Tcl\{str(130)} à {str(137)} - Métro B - stations""",
+                # DIRNAME=f"""F:\Tcl\{str(130)} à {str(137)} - Métro B - stations\Part-Dieu""",
                 name_file_arbo="output_datas/arborescence_metro_ligne_b.csv",
                 name_file_success="output_datas/listes des succes Métro B complet.csv",
                 name_file_failed="output_datas/listes des echecs Métro B première passe.csv",
                 name_file_failed_rattrapage="output_datas/listes des echecs Métro B après seconde passe.csv",
                 input_user=1,
-                list_a_traiter=[
-                    "PART DIEU",
-                    "PART DIEU  AGENCE",
-                ],
                 # list_a_traiter=[
-                #     "ARCHIVES USVB",
-                #     "ARCHIVES UTMA",
-                #     "BROTTEAUX",
-                #     "CHARPENNES A & B",
-                #     "COMMUNS  A & B",
-                #     "COMMUNS  A , B & C",
-                #     "COMMUNS  B",
-                #     "COMMUNS METRO",
-                #     "DEBOURG",
-                #     "GARE OULLINS",
-                #     "GERLAND",
-                #     "GUICHARD",
-                #     "INTERSTATIONS  B",
-                #     "JEAN MACE",
-                #     "LIAISON B/D",
                 #     "PART DIEU",
-                #     "PLACE JEAN JAURES",
-                #     "PLAINE DES JEUX",
-                #     "SAXE GAMBETTA  B & D",
-                #     "SAXE GAMBETTA B",
+                #     "PART DIEU  AGENCE",
                 # ],
+                list_a_traiter=[
+                    "ARCHIVES USVB",
+                    "ARCHIVES UTMA",
+                    "BROTTEAUX",
+                    "CHARPENNES A & B",
+                    "COMMUNS  A & B",
+                    "COMMUNS  A , B & C",
+                    "COMMUNS  B",
+                    "COMMUNS METRO",
+                    "DEBOURG",
+                    "GARE OULLINS",
+                    "GERLAND",
+                    "GUICHARD",
+                    "INTERSTATIONS  B",
+                    "JEAN MACE",
+                    "LIAISON B/D",
+                    "PART DIEU",
+                    "PLACE JEAN JAURES",
+                    "PLAINE DES JEUX",
+                    "SAXE GAMBETTA  B & D",
+                    "SAXE GAMBETTA B",
+                ],
             )
             list_choices.remove("Métro B")
         elif "Métro C" in list_choices:
@@ -227,7 +227,6 @@ def main_lunch_function(list_choices):
             )
             list_choices.remove("Métro C")
         elif "Métro D" in list_choices:
-
             # -------- Métro D --------
 
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
@@ -273,6 +272,10 @@ def main_lunch_function(list_choices):
                 input_user=1,
                 list_a_traiter=[
                     "COMMUNS METRO",
+                    "UTMA POUDRETTE",
+                    "COMMUNS C",
+                    "COMMUNS D",
+                    "THIOLEY",
                 ],
             )
             list_choices.remove("METRO communs")
@@ -281,11 +284,11 @@ def main_lunch_function(list_choices):
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=[
                     # f"""F:\Tcl\{str(0)}02 - Métro ABC - communs""",
-                    f"""F:\Tcl\{str(0)}03 - Métro AB - communs""",
+                    # f"""F:\Tcl\{str(0)}03 - Métro AB - communs""",
                     # f"""F:\Tcl\{str(100)} - Métro A - communs""",
                     # f"""F:\Tcl\{str(102)} - Métro B - communs""",
                     # f"""F:\Tcl\{str(200)} - Métro C - communs""",
-                    # f"""F:\Tcl\{str(300)} - Métro D - communs""",
+                    f"""F:\Tcl\{str(300)} - Métro D - communs""",
                 ],
                 name_file_arbo="output_datas/arborescence_metro_abc_ab_a_b_c_d_communs.csv",
                 name_file_success="output_datas/listes des succes METRO ABC,AB,A,B,C,D COMMUNS complet.csv",
@@ -294,11 +297,11 @@ def main_lunch_function(list_choices):
                 input_user=1,
                 list_a_traiter=[
                     # "COMMUNS  A , B & C",
-                    "COMMUNS  A & B",
+                    # "COMMUNS  A & B",
                     # "COMMUNS  A",
                     # "COMMUNS  B",
                     # "COMMUNS  C",
-                    # "COMMUNS  D",
+                    "COMMUNS  D",
                 ],
             )
             list_choices.remove("METRO ABC,AB,A,B,C,D COMMUNS")
@@ -615,11 +618,11 @@ def main_lunch_function(list_choices):
             name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
                 DIRNAME=[
                     f"""F:\Tcl\{str(500)} - Tramway T1 - communs""",
-                    f"""F:\Tcl\{str(500)} - Tramway T2 - communs""",
-                    f"""F:\Tcl\{str(500)} - Tramway T3 - communs""",
-                    f"""F:\Tcl\{str(500)} - Tramway T4 - communs""",
-                    f"""F:\Tcl\{str(500)} - Tramway T5 - communs""",
-                    f"""F:\Tcl\{str(500)} - Tramway T6 - communs""",
+                    # f"""F:\Tcl\{str(500)} - Tramway T2 - communs""",
+                    # f"""F:\Tcl\{str(500)} - Tramway T3 - communs""",
+                    # f"""F:\Tcl\{str(500)} - Tramway T4 - communs""",
+                    # f"""F:\Tcl\{str(500)} - Tramway T5 - communs""",
+                    # f"""F:\Tcl\{str(500)} - Tramway T6 - communs""",
                 ],
                 name_file_arbo="output_datas/arborescence_tram_communs.csv",
                 name_file_success="output_datas/listes des succes Tram communs complet.csv",
@@ -629,11 +632,18 @@ def main_lunch_function(list_choices):
                 list_a_traiter=[
                     "COMMUNS TRAMWAY",
                     "COMMUNS TRAMWAY T1",
-                    "COMMUNS TRAMWAY T2",
-                    "COMMUNS TRAMWAY T3",
+                    # "COMMUNS TRAMWAY T2",
+                    # "COMMUNS TRAMWAY T3",
                     "COMMUNS TRAMWAY T4",
-                    "COMMUNS TRAMWAY T5",
-                    "COMMUNS TRAMWAY T6",
+                    # "COMMUNS TRAMWAY T5",
+                    # "COMMUNS TRAMWAY T6",
+                    "PERRACHE à CHARPENNES C. HERNU",
+                    "COMMUN TRAMWAY EXT. MONTROCHET",
+                    "PART DIEU - VIVIER MERLE",
+                    "MONTROCHET",
+                    "CHARPENNES - CHARLES HERNU",
+                    "DEBOURG S/STATION",
+                    "LA DOUA GASTON BERGER",
                 ],
             )
             list_choices.remove("TRAM T1 T2 T3 T4 T5 T6 COMMUNS")
@@ -757,6 +767,27 @@ def main_lunch_function(list_choices):
                 ],
             )
             list_choices.remove("Surface")
+        elif "Spécifications technique FA" in list_choices:
+            # -------- Spécifications technique FA --------
+            name_file_success, name_file_failed_rattrapage = Lunch_Menu.main(
+                DIRNAME=f"""F:\Doc_UTM_AB (M-SP)\Gestion documentaire (M-SP)\Spécifications technique (M)""",
+                name_file_arbo="output_datas/arborescence_dossier_specification_technique.csv",
+                name_file_success="output_datas/listes des succes Dossier Specification technique complet.csv",
+                name_file_failed="output_datas/listes des echecs Dossier Specification technique première passe.csv",
+                name_file_failed_rattrapage="output_datas/listes des echecs Dossier Specification technique après seconde passe.csv",
+                input_user=1,
+                list_a_traiter=[
+                    "COMMUNS  A , B & C",
+                    "COMMUNS  A & B",
+                    "COMMUNS  A",
+                    "COMMUNS  B",
+                    "COMMUNS  C",
+                    "COMMUNS  D",
+                    "SURFACE",
+                ],
+            )
+            list_choices.remove("Spécifications technique FA")
+
         print(
             "******************************** ON A FINI UNE LIGNE ********************************"
         )
@@ -821,13 +852,5 @@ def main_lunch_function(list_choices):
 
 
 # main_lunch_function(list_choices=[])
-# main_lunch_function(list_choices=["Liaison B/D"])
-# main_lunch_function(
-# list_choices=[
-# "T1",
-# "T2",
-# "T3",
-# "Lignes Fortes - C1 C2 C3 C13",
-#     ]
-# )
-main_lunch_function(list_choices=["METRO ABC,AB,A,B,C,D COMMUNS"])
+
+main_lunch_function(list_choices=["TRAM T1 T2 T3 T4 T5 T6 COMMUNS"])

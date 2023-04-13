@@ -168,7 +168,17 @@ def compare_list_arbo_csv_bi_pret_seconde_passe(
                 ref_fourn_no_spaces = ref_fourn.replace(" ", "")
                 value_no_spaces = value.replace(" ", "")
                 value = value.upper()
-
+                if "|" in ref_fourn:
+                    ref_fourn_list = ref_fourn.split("|")
+                    ref_fourn_list_sorted_by_length = sorted(
+                        ref_fourn_list, key=len, reverse=True
+                    )
+                    if len(ref_fourn_list_sorted_by_length[0]) == len(
+                        ref_fourn_list_sorted_by_length[1]
+                    ):
+                        ref_fourn = ref_fourn_list[0]
+                    else:
+                        ref_fourn = ref_fourn_list_sorted_by_length[0]
                 ### Recherche basique
                 if value == ref_fourn:
                     flag = True
@@ -227,17 +237,17 @@ def compare_list_arbo_csv_bi_pret_seconde_passe(
                         list_success_provenance.append("approximation2")
 
                 # try:
-                if re.sub("[^A-Za-z0-9]+", "", value) in re.sub(
-                    "[^A-Za-z0-9]+", "", ref_fourn
-                ):
-                    flag = True
-                    list_success_path.append(keys)
-                    list_success_list.append(ref_fiche)
-                    list_success_values.append(values)
-                    list_ref_fourn.append(ref_fourn)
-                    list_success_provenance.append("approximation3")
-                    list_folder_doublon_succes.append(folder_for_doublon)
-                    break
+                # if re.sub("[^A-Za-z0-9]+", "", value) in re.sub(
+                #     "[^A-Za-z0-9]+", "", ref_fourn
+                # ):
+                #     flag = True
+                #     list_success_path.append(keys)
+                #     list_success_list.append(ref_fiche)
+                #     list_success_values.append(values)
+                #     list_ref_fourn.append(ref_fourn)
+                #     list_success_provenance.append("approximation3")
+                #     list_folder_doublon_succes.append(folder_for_doublon)
+                #     break
                 if re.match(".*\D{2}\d{3}$", value.replace(" ", "")):
                     value_u = value.replace(" ", "")
                     values_u = value_u[:-3] + "000" + value_u[-3:]
@@ -439,7 +449,6 @@ def compare_list_arbo_csv_bi_pret_seconde_passe(
                         list_folder_doublon_succes.append(folder_for_doublon)
                         break
                     if flag == False:
-
                         if value_no_spaces[-8:] in ref_fourn_no_spaces[-8:]:
                             flag = True
                             list_success_path.append(keys)
@@ -617,7 +626,6 @@ def compare_list_arbo_csv_bi_pret_seconde_passe(
                                 list_folder_doublon_succes.append(folder_for_doublon)
                                 break
                         if not flag:
-
                             if value_no_spaces in ref_fourn:
                                 flag = True
                                 list_success_path.append(keys)
@@ -738,7 +746,6 @@ def compare_list_arbo_csv_bi_pret_seconde_passe(
                             break
 
                     if re.match("(\d{3,6}\W*\D{3,5}\W*\d{3,6})", value):
-
                         if value_no_spaces == ref_fourn_no_spaces:
                             flag = True
                             list_success_path.append(keys)
@@ -908,6 +915,7 @@ def compare_list_arbo_csv_bi_pret_seconde_passe(
             "Chemin du fichier": list_success_path,
             "Référence Fiche": list_success_list,
             # "lists": list_success_values,
+            "ref fourn": list_ref_fourn,
             "Commentaires": list_success_provenance,
             # "Dossier pour vérification doublons": list_folder_doublon_succes,
             # "list_test_number": list_test_number,

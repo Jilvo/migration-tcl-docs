@@ -163,6 +163,25 @@ def compare_list_arbo_csv_bi_rattrapage(
                         list_success_values.append(values)
                         list_success_provenance.append("égalité avec ajout 0")
                         list_ref_fourn.append(ref_fourn)
+                if re.match("(\D\d{4})_", value.replace(" ", "")):
+                    value_before_underscore = value.replace(" ", "")
+                    value_before_underscore = re.findall(
+                        "(\D\d{4})", value_before_underscore
+                    )[0]
+                    if value_before_underscore == ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("égalité avec X9999")
+                        list_ref_fourn.append(ref_fourn)
+                    if value_before_underscore in ref_fourn.replace(" ", ""):
+                        flag = True
+                        list_success_path.append(keys)
+                        list_success_list.append(ref_fiche)
+                        list_success_values.append(values)
+                        list_success_provenance.append("approximation38 avec X9999")
+                        list_ref_fourn.append(ref_fourn)
                 # if re.match("(\D{3}\d{4})", value.replace(" ", "")):
                 #     value_m = value.replace(" ", "")
                 #     value_m = value_m[:3] + "-00" + value_m[-4:]
